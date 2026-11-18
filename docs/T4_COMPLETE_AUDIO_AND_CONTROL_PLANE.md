@@ -59,12 +59,12 @@ Identifiants autorisés, dans l’ordre propriétaire :
 
 Règles :
 
-- le choix automatique est déterministe à partir de `SHA-256(render_job_id)` ;
-- la dernière réussite est retirée du pool avant le modulo ;
-- un choix explicite identique à la dernière réussite est rejeté ;
+- l’état initial sélectionne exclusivement la piste 1 ;
+- chaque nouvelle réussite sélectionne exclusivement le successeur exact `1→2→3→4→1` ;
+- un choix explicite ne peut que confirmer ce successeur, sans répétition ni saut ;
 - un échec ou un QC non PASS ne modifie pas l’état ;
-- un callback réussi rejoué avec le même job est sans effet ;
-- deux réussites concurrentes qui tentent la même musique ne peuvent pas toutes deux être commitée ;
+- le registre durable `successful_render_jobs` rend idempotent le rejeu de tout ancien succès, même après un tour complet ;
+- deux réussites concurrentes hors séquence ne peuvent pas toutes deux être commitées ;
 - l’état n’avance qu’après `COMPLETED` + `quality.status=PASS` + MP4 vérifié dans R2.
 
 Schéma : `schemas/T4_music_selection_state.schema.json`.
@@ -121,6 +121,6 @@ npm ci --prefix cloudflare
 npm test --prefix cloudflare
 ```
 
-Le test d’intégration démarre Wrangler localement, un faux endpoint GitHub, puis couvre les rejeux, échecs, répétitions explicites et conflits concurrents.
+Le test d’intégration démarre Wrangler localement, un faux endpoint GitHub, puis couvre le cycle exact, les échecs sans mutation, les sauts explicites rejetés, les conflits concurrents et le rejeu d’un ancien succès après un tour complet.
 
 **Aucun test local ni `wrangler deploy --dry-run` n’est un déploiement Cloudflare production.** Un déploiement réel exige un compte, le bucket R2, les secrets `CLIENT_API_TOKEN`, `CALLBACK_TOKEN`, `GITHUB_TOKEN`, ainsi que l’URL publique finale.

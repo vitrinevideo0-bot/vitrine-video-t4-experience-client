@@ -64,7 +64,7 @@ Les rushes bruts ne sont jamais suivis par Git ni publiés séparément.
 
 La voix propriétaire est **VOIX-B / `voice-07`**, approuvée dans `approvals/APPROBATION_VOIX_B_T4_2026-11-20.json`. Son stem mono 48 kHz de 30 secondes est verrouillé par le SHA-256 `74ec6378ba0b724631793c02c2d3f0308913c1790f6606784e587ccd2e34a759`.
 
-Le paquet `config/T4_MUSIC_PACK_V1_0_0.json` contient exactement quatre pistes Pixabay approuvées : Ovrsoull (`260354`), 37660440 (`154868`), Gis_photography (`162186`) et 47643651 (`321930`). Une vidéo n’en utilise qu’une. L’algorithme retire toujours la dernière réussite ; un choix explicite identique est rejeté et un échec ne modifie pas l’état.
+Le paquet `config/T4_MUSIC_PACK_V1_0_0.json` contient exactement quatre pistes Pixabay approuvées : Ovrsoull (`260354`), 37660440 (`154868`), Gis_photography (`162186`) et 47643651 (`321930`). Une vidéo n’en utilise qu’une. L’état initial impose `260354`, puis chaque réussite impose exactement `154868`, `162186`, `321930` et de nouveau `260354`. Un choix explicite ne peut confirmer que ce successeur; un saut est rejeté et un échec ne modifie pas l’état.
 
 Le mix suit le modèle P1/T1 :
 
@@ -80,9 +80,9 @@ Au moment des captures datées, aucune des quatre pages Pixabay n’affichait **
 
 ## Plan de contrôle Cloudflare
 
-`cloudflare/src/index.ts` porte les capacités T2 : R2, SHA-256, RenderJob, dispatch GitHub, RenderResult/RenderError, callback validé, stockage du MP4 final et rotation transactionnelle après `COMPLETED` + QC PASS seulement. Cloudflare ne rend pas la vidéo.
+`cloudflare/src/index.ts` porte les capacités T2 : R2, SHA-256, RenderJob, dispatch GitHub, RenderResult/RenderError, callback validé, stockage du MP4 final et rotation transactionnelle stricte `1→2→3→4→1` après `COMPLETED` + QC PASS seulement. Le registre `successful_render_jobs` conserve durablement chaque succès. Cloudflare ne rend pas la vidéo.
 
-Le test d’intégration couvre notamment : rejeu idempotent, échec sans mutation, choix explicite répétitif rejeté et conflit concurrent sur la même prochaine musique. Le détail est dans `docs/T4_COMPLETE_AUDIO_AND_CONTROL_PLANE.md`.
+Le test d’intégration couvre notamment : rejeu de tout ancien succès après un tour complet, échec sans mutation, saut explicite rejeté et conflit concurrent sur la même prochaine musique. Le détail est dans `docs/T4_COMPLETE_AUDIO_AND_CONTROL_PLANE.md`.
 
 ## Contrat catalogue et paquet intégrateur
 

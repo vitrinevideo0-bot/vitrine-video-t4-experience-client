@@ -74,6 +74,7 @@ interface MusicState {
   last_successful_music_id: MusicId | null;
   last_successful_render_job_id: string | null;
   successful_render_count: number;
+  successful_render_jobs: Record<string, MusicId>;
 }
 
 const SLOTS: CaptureSlot[] = ["S1", "S2", "S3", "S4"];
@@ -139,18 +140,31 @@ function outputUri(jobId: string): string {
 }
 
 function initialMusicState(): MusicState {
-  return { schema_version: "1.0.0", last_successful_music_id: null, last_successful_render_job_id: null, successful_render_count: 0 };
+  return {
+    schema_version: "1.0.0",
+    last_successful_music_id: null,
+    last_successful_render_job_id: null,
+    successful_render_count: 0,
+    successful_render_jobs: {},
+  };
 }
 
 function validateMusicState(state: MusicState): MusicState {
+  const receipts = record(state.successful_render_jobs);
   if (
     state.schema_version !== "1.0.0"
     || (state.last_successful_music_id !== null && !MUSIC_IDS.includes(state.last_successful_music_id))
     || !Number.isInteger(state.successful_render_count)
     || state.successful_render_count < 0
+    || !receipts
+    || Object.keys(receipts).length !== state.successful_render_count
+    || Object.entries(receipts).some(([jobId, musicId]) => !validId(jobId) || !MUSIC_IDS.includes(musicId as MusicId))
     || ((state.last_successful_music_id === null) !== (state.last_successful_render_job_id === null))
+    || ((state.successful_render_count === 0) !== (state.last_successful_music_id === null))
+    || (state.last_successful_render_job_id !== null
+      && receipts[state.last_successful_render_job_id] !== state.last_successful_music_id)
   ) throw new Error("État musical T4 persistant invalide.");
-  return state;
+  return { ...state, successful_render_jobs: receipts as Record<string, MusicId> };
 }
 
 async function readMusicState(env: Env): Promise<MusicState> {
@@ -164,42 +178,43 @@ async function sha256Text(text: string): Promise<string> {
 }
 
 async function selectMusic(jobId: string, requested: RequestedMusic, last: MusicId | null): Promise<any> {
+  if (!jobId) throw new Error("render_job_id est obligatoire.");
   const candidates = MUSIC_PACK_CONTRACT.tracks;
-  let selected: (typeof candidates)[number];
-  let mode: "explicit" | "deterministic_excluding_last_successful";
-  if (requested !== "auto") {
-    if (requested === last) throw new Error("Répétition musicale immédiate interdite.");
-    const found = candidates.find((candidate) => candidate.id === requested);
-    if (!found) throw new Error("Musique T4 demandée inconnue.");
-    selected = found;
-    mode = "explicit";
-  } else {
-    const eligible = candidates.filter((candidate) => candidate.id !== last);
-    const digest = await sha256Text(jobId);
-    selected = eligible[Number(BigInt(`0x${digest.slice(0, 16)}`) % BigInt(eligible.length))];
-    mode = "deterministic_excluding_last_successful";
+  const previousIndex = last === null ? -1 : MUSIC_IDS.indexOf(last);
+  const expected = candidates[(previousIndex + 1) % candidates.length];
+  if (requested !== "auto" && requested !== expected.id) {
+    throw new Error(`Le cycle T4 strict attend ${expected.id}; ${requested} ne peut pas le contourner.`);
   }
-  return { ...selected, selection_mode: mode, last_successful_music_id: last };
+  return {
+    ...expected,
+    selection_mode: requested === "auto" ? "strict_success_cycle" : "explicit",
+    last_successful_music_id: last,
+  };
 }
 
 async function commitMusicSuccess(env: Env, jobId: string, selected: MusicId): Promise<void> {
   for (let attempt = 0; attempt < 5; attempt += 1) {
     const object = await env.T4_MEDIA.get(MUSIC_STATE_KEY);
     const current = object ? validateMusicState(await object.json<MusicState>()) : initialMusicState();
-    if (current.last_successful_render_job_id === jobId) {
-      if (current.last_successful_music_id !== selected) {
+    if (Object.prototype.hasOwnProperty.call(current.successful_render_jobs, jobId)) {
+      if (current.successful_render_jobs[jobId] !== selected) {
         throw new Error("Un callback T4 rejoué ne peut pas changer de musique.");
       }
       return;
     }
-    if (current.last_successful_music_id === selected) {
-      throw new Error("Répétition musicale immédiate interdite au commit.");
+    const previousIndex = current.last_successful_music_id === null
+      ? -1
+      : MUSIC_IDS.indexOf(current.last_successful_music_id);
+    const expected = MUSIC_IDS[(previousIndex + 1) % MUSIC_IDS.length];
+    if (selected !== expected) {
+      throw new Error(`Le succès T4 doit respecter le cycle strict : ${expected} attendu, ${selected} reçu.`);
     }
     const updated: MusicState = {
       schema_version: "1.0.0",
       last_successful_music_id: selected,
       last_successful_render_job_id: jobId,
       successful_render_count: current.successful_render_count + 1,
+      successful_render_jobs: { ...current.successful_render_jobs, [jobId]: selected },
     };
     const written = await env.T4_MEDIA.put(MUSIC_STATE_KEY, JSON.stringify(updated), {
       onlyIf: object ? { etagMatches: object.etag } : { etagDoesNotMatch: "*" },

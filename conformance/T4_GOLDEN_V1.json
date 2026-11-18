@@ -33,15 +33,21 @@
       "t4_music_321930"
     ],
     "no_immediate_repeat": true,
-    "state_commit_policy": "after_completed_qc_pass_and_verified_output_only"
+    "state_commit_policy": "after_completed_qc_pass_and_verified_output_only",
+    "strict_cycle": "t4_music_260354→t4_music_154868→t4_music_162186→t4_music_321930→t4_music_260354",
+    "explicit_selection_policy": "exact_successor_only",
+    "idempotency_ledger_key": "successful_render_jobs",
+    "old_success_replay": "idempotent_after_full_cycle"
   },
   "contracts": {
     "form/questions_T4.json": "909670712fe3a12acf244789ed4d360cd7c22aff7ee3550e97a0b8904648fd96",
     "config/T4_CAPTURE_FLOW_V1_0_0.json": "083eef9607ba5b26149a61815062d10334c605f4610dcc769a24ebec5ab9fa80",
-    "config/T4_MUSIC_PACK_V1_0_0.json": "d56270011d6a10a7e4d3251bcac2dbed933dd60d2dde9b019fc44063c562a6ad",
+    "config/T4_MUSIC_PACK_V1_0_0.json": "d57805d8f4e0df2b83e47ef08aea05d7413553c34ab7b7da38b1bc825eff04d2",
     "config/T4_VOICE_MIX_V1_0_0.json": "16ccb6ef69effb75f033a149ddbc7cd71f2a85c0b69e66d8ad1178433de66f07",
-    "schemas/T4_render_job.schema.json": "891b1f06daa03aeb46be2727d966b00f27a4ed9807a94e6ec525093c69a5af23",
-    "schemas/T4_render_result.schema.json": "9fadf6a83919136c81f96927f537d5e3d66f6355ce1165508563d4cf5da66b63"
+    "schemas/T4_render_job.schema.json": "cbc60ef762d6dd7b5210d22b5e9cab96505d4aeb66bd67a4f5950deb51de929c",
+    "schemas/T4_render_result.schema.json": "9fadf6a83919136c81f96927f537d5e3d66f6355ce1165508563d4cf5da66b63",
+    "schemas/T4_music_pack.schema.json": "7c1aa6229f9ed1f2885982bbbdf25ff6ad52176c462138b9937e366177551f2c",
+    "schemas/T4_music_selection_state.schema.json": "e6d7d84a4645f7413ca86dc2a4908af9fd09b770058595c9e216f1d743d86fc0"
   },
   "complete_master": {
     "github_run_id": "44702885815",

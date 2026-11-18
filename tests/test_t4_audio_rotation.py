@@ -37,23 +37,29 @@ def captures() -> dict[str, dict[str, str]]:
     return {slot: {"source": f"rushes/manifest.json#{slot}"} for slot in ("S1", "S2", "S3", "S4")}
 
 
-def test_exact_owner_approved_pool_and_no_repeat_selection() -> None:
+def test_exact_owner_approved_pool_and_strict_cycle_selection() -> None:
     tracks = approved_tracks()
     assert [track["id"] for track in tracks] == EXPECTED_VARIANTS
     assert len(tracks) == 4
     assert all(track["content_id_registered"] is False for track in tracks)
     assert all(track["claim_management_required"] is False for track in tracks)
-    for last in EXPECTED_VARIANTS:
-        for index in range(40):
-            selected = select_music_variant(f"rotation-job-{last}-{index}", last)
-            assert selected["id"] in EXPECTED_VARIANTS
-            assert selected["id"] != last
-            assert selected["selection_mode"] == "deterministic_excluding_last_successful"
+    last = None
+    observed = []
+    for index in range(40):
+        selected = select_music_variant(f"rotation-job-{index}", last)
+        observed.append(selected["id"])
+        assert selected["selection_mode"] == "strict_success_cycle"
+        last = selected["id"]
+    assert observed == EXPECTED_VARIANTS * 10
 
 
-def test_explicit_repeat_and_unknown_music_are_rejected() -> None:
+def test_explicit_music_must_be_the_exact_successor() -> None:
     with pytest.raises(MusicRepeatError):
         select_music_variant("explicit-repeat-job", EXPECTED_VARIANTS[0], EXPECTED_VARIANTS[0])
+    with pytest.raises(MusicRepeatError):
+        select_music_variant("explicit-skip-job", EXPECTED_VARIANTS[0], EXPECTED_VARIANTS[2])
+    with pytest.raises(MusicRepeatError):
+        select_music_variant("explicit-initial-skip-job", None, EXPECTED_VARIANTS[1])
     with pytest.raises(ValueError):
         select_music_variant("unknown-job", explicit_music_id="not-approved")
     selected = select_music_variant("explicit-ok-job", EXPECTED_VARIANTS[0], EXPECTED_VARIANTS[1])
@@ -93,6 +99,7 @@ def test_state_advances_only_after_completed_qc_pass_and_is_idempotent(tmp_path:
     )
     assert committed["successful_render_count"] == 1
     assert committed["last_successful_music_id"] == EXPECTED_VARIANTS[0]
+    assert committed["successful_render_jobs"] == {"state-success-job": EXPECTED_VARIANTS[0]}
 
     replay = record_music_render_result(
         state_path=state_path,
@@ -129,6 +136,41 @@ def test_state_advances_only_after_completed_qc_pass_and_is_idempotent(tmp_path:
     )
     assert advanced["successful_render_count"] == 2
     assert advanced["last_successful_music_id"] == EXPECTED_VARIANTS[1]
+    assert len(advanced["successful_render_jobs"]) == 2
+
+
+def test_old_success_replay_after_full_cycle_is_idempotent(tmp_path: Path) -> None:
+    state_path = tmp_path / "full-cycle-state.json"
+    for index, selected in enumerate(EXPECTED_VARIANTS, 1):
+        record_music_render_result(
+            state_path=state_path,
+            render_job_id=f"full-cycle-job-{index:04d}",
+            selected_music_id=selected,
+            completed=True,
+            quality_status="PASS",
+        )
+    after_cycle = load_music_selection_state(state_path)
+    replayed = record_music_render_result(
+        state_path=state_path,
+        render_job_id="full-cycle-job-0001",
+        selected_music_id=EXPECTED_VARIANTS[0],
+        completed=True,
+        quality_status="PASS",
+    )
+    assert replayed == after_cycle
+    assert replayed["successful_render_count"] == 4
+    assert replayed["last_successful_music_id"] == EXPECTED_VARIANTS[3]
+    assert len(replayed["successful_render_jobs"]) == 4
+    with pytest.raises(ValueError):
+        record_music_render_result(
+            state_path=state_path,
+            render_job_id="full-cycle-job-0001",
+            selected_music_id=EXPECTED_VARIANTS[1],
+            completed=True,
+            quality_status="PASS",
+        )
+    state_schema = json.loads((ROOT / "schemas/T4_music_selection_state.schema.json").read_text())
+    Draft202012Validator(state_schema).validate(replayed)
 
 
 def test_concurrent_successes_cannot_commit_the_same_music_twice(tmp_path: Path) -> None:
@@ -139,7 +181,7 @@ def test_concurrent_successes_cannot_commit_the_same_music_twice(tmp_path: Path)
             record_music_render_result(
                 state_path=state_path,
                 render_job_id=job_id,
-                selected_music_id=EXPECTED_VARIANTS[2],
+                selected_music_id=EXPECTED_VARIANTS[0],
                 completed=True,
                 quality_status="PASS",
             )
@@ -150,7 +192,9 @@ def test_concurrent_successes_cannot_commit_the_same_music_twice(tmp_path: Path)
     with ThreadPoolExecutor(max_workers=2) as executor:
         outcomes = list(executor.map(commit, ("concurrent-job-alpha", "concurrent-job-bravo")))
     assert sorted(outcomes) == ["committed", "rejected"]
-    assert load_music_selection_state(state_path)["successful_render_count"] == 1
+    state = load_music_selection_state(state_path)
+    assert state["successful_render_count"] == 1
+    assert len(state["successful_render_jobs"]) == 1
 
 
 def test_complete_render_job_is_schema_valid_and_locks_voice_visual_mix() -> None:

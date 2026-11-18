@@ -39,15 +39,37 @@
     "silent_master_video_bitstream_sha256_verified": true,
     "complete_preflight_status": "PASS",
     "complete_preflight_is_production_delivery": false,
-    "python_tests_passed": 37,
+    "python_tests_passed": 38,
     "cloudflare_typescript_passed": true,
     "cloudflare_dry_run_passed": true,
-    "cloudflare_black_box_integration_passed": false,
+    "cloudflare_black_box_integration_passed": true,
     "all_four_replacement_tracks_complete_preflight": "PASS_4_OF_4_EACH_26_OF_26",
     "all_four_preflights_are_production_delivery": false,
     "simple_french_screen_count": 12,
     "merchant_question_count": 6,
-    "visual_text_truncation_used": false
+    "visual_text_truncation_used": false,
+    "strict_music_rotation": {
+      "order": [
+        260354,
+        154868,
+        162186,
+        321930
+      ],
+      "initial_track": 260354,
+      "explicit_selection_policy": "exact_successor_only",
+      "idempotency_ledger_key": "successful_render_jobs",
+      "old_success_replay_after_full_cycle": "PASS_NO_MUTATION",
+      "failure_state_policy": "unchanged",
+      "concurrent_out_of_sequence_policy": "reject_without_mutation"
+    },
+    "strict_migration_integrator_package": {
+      "status": "PASS_30_OF_30",
+      "deterministic_two_builds_identical": true,
+      "entry_count": 150,
+      "included_test_suite": "38/38 PASS",
+      "golden_master_locked": true,
+      "cloudflare_deployed": false
+    }
   },
   "server_validation": {
     "historical_previous_pool": {

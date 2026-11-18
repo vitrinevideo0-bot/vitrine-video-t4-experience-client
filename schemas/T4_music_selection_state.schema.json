@@ -8,17 +8,12 @@
     "schema_version",
     "last_successful_music_id",
     "last_successful_render_job_id",
-    "successful_render_count"
+    "successful_render_count",
+    "successful_render_jobs"
   ],
   "properties": {
-    "schema_version": {
-      "const": "1.0.0"
-    },
+    "schema_version": {"const": "1.0.0"},
     "last_successful_music_id": {
-      "type": [
-        "string",
-        "null"
-      ],
       "enum": [
         null,
         "t4_music_260354",
@@ -28,41 +23,38 @@
       ]
     },
     "last_successful_render_job_id": {
-      "type": [
-        "string",
-        "null"
-      ],
+      "type": ["string", "null"],
       "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]{7,127}$"
     },
-    "successful_render_count": {
-      "type": "integer",
-      "minimum": 0
+    "successful_render_count": {"type": "integer", "minimum": 0},
+    "successful_render_jobs": {
+      "type": "object",
+      "propertyNames": {"pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]{7,127}$"},
+      "additionalProperties": {
+        "enum": [
+          "t4_music_260354",
+          "t4_music_154868",
+          "t4_music_162186",
+          "t4_music_321930"
+        ]
+      }
     }
   },
   "allOf": [
     {
-      "if": {
-        "properties": {
-          "last_successful_music_id": {
-            "type": "null"
-          }
-        }
-      },
+      "if": {"properties": {"last_successful_music_id": {"type": "null"}}},
       "then": {
         "properties": {
-          "last_successful_render_job_id": {
-            "type": "null"
-          },
-          "successful_render_count": {
-            "const": 0
-          }
+          "last_successful_render_job_id": {"type": "null"},
+          "successful_render_count": {"const": 0},
+          "successful_render_jobs": {"maxProperties": 0}
         }
       },
       "else": {
         "properties": {
-          "last_successful_render_job_id": {
-            "type": "string"
-          }
+          "last_successful_render_job_id": {"type": "string"},
+          "successful_render_count": {"type": "integer", "minimum": 1},
+          "successful_render_jobs": {"minProperties": 1}
         }
       }
     }

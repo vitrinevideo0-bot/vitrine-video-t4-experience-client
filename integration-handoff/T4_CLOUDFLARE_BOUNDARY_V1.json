@@ -7,6 +7,7 @@
   "wrangler_config": "cloudflare/wrangler.toml",
   "r2_binding": "T4_MEDIA",
   "music_state_key": "music/t4-last-success.json",
+  "music_state_idempotency_ledger": "successful_render_jobs",
   "required_secrets": [
     "CLIENT_API_TOKEN",
     "CALLBACK_TOKEN",

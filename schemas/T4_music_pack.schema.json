@@ -81,10 +81,11 @@
         "default_request",
         "automatic_algorithm",
         "no_immediate_repeat",
-        "explicit_repeat_policy",
+        "explicit_selection_policy",
         "first_render_pool_size",
         "subsequent_pool_size",
         "state_key",
+        "idempotency_ledger_key",
         "state_update_policy",
         "failed_render_state_policy",
         "idempotent_success_callback",
@@ -108,22 +109,25 @@
           "const": "auto"
         },
         "automatic_algorithm": {
-          "const": "sha256(render_job_id) modulo eligible variants excluding last_successful_music_id"
+          "const": "strict owner-approved order 1→2→3→4→1 from last successful music"
         },
         "no_immediate_repeat": {
           "const": true
         },
-        "explicit_repeat_policy": {
-          "const": "reject"
+        "explicit_selection_policy": {
+          "const": "exact_successor_only"
         },
         "first_render_pool_size": {
-          "const": 4
+          "const": 1
         },
         "subsequent_pool_size": {
-          "const": 3
+          "const": 1
         },
         "state_key": {
           "const": "last_successful_music_id"
+        },
+        "idempotency_ledger_key": {
+          "const": "successful_render_jobs"
         },
         "state_update_policy": {
           "const": "after_completed_qc_pass_only"

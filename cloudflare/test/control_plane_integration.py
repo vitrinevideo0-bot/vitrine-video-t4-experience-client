@@ -15,12 +15,12 @@ import urllib.request
 from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[2]
-MUSIC_IDS = {
+MUSIC_IDS = (
     "t4_music_260354",
     "t4_music_154868",
     "t4_music_162186",
     "t4_music_321930",
-}
+)
 SLOTS = ("S1", "S2", "S3", "S4")
 
 
@@ -73,7 +73,7 @@ def main() -> None:
     assert music_pack == json.loads((ROOT / "config/T4_MUSIC_PACK_V1_0_0.json").read_text())
     assert voice_mix == json.loads((ROOT / "config/T4_VOICE_MIX_V1_0_0.json").read_text())
     assert len(form["fields"]) == 6 and capture_flow["counts"]["stable_capture_screens"] == 12
-    assert {track["id"] for track in music_pack["tracks"]} == MUSIC_IDS
+    assert tuple(track["id"] for track in music_pack["tracks"]) == MUSIC_IDS
     assert voice_mix["voice"]["candidate"] == "VOIX-B" and voice_mix["voice"]["voice_id"] == "voice-07"
     assert "Cloudflare ne réalise jamais le rendu vidéo" in call(args.base, "/")[0].decode("utf-8")
 
@@ -240,6 +240,7 @@ def main() -> None:
         "last_successful_music_id": selected_id,
         "last_successful_render_job_id": job_id,
         "successful_render_count": 1,
+        "successful_render_jobs": {job_id: selected_id},
     }
 
     def prepare(music_id: str, expected_dispatch: int = 202) -> tuple[str, str, dict[str, Any] | None, dict[str, Any]]:
@@ -257,7 +258,8 @@ def main() -> None:
     assert repeat_error["code"] == "T4_INVALID_REQUEST"
     assert as_json(call(args.base, "/v1/music-state", headers=callback_auth)[0]) == music_state
 
-    alternative_id = next(candidate for candidate in MUSIC_IDS if candidate != selected_id)
+    assert selected_id == MUSIC_IDS[0]
+    alternative_id = MUSIC_IDS[1]
     failed_id, _, failed_job, _ = prepare(alternative_id)
     assert failed_job and failed_job["music"]["selected_music_id"] == alternative_id
     render_error = {
@@ -282,10 +284,10 @@ def main() -> None:
 
     concurrent_jobs = [prepare(alternative_id), prepare(alternative_id)]
 
-    def complete_concurrently(prepared: tuple[str, str, dict[str, Any] | None, dict[str, Any]]) -> tuple[int, dict[str, Any]]:
+    def complete_prepared(prepared: tuple[str, str, dict[str, Any] | None, dict[str, Any]]) -> tuple[int, dict[str, Any]]:
         prepared_id, idem, prepared_job, _ = prepared
         assert prepared_job is not None
-        concurrent_event = {
+        prepared_event = {
             "status": "COMPLETED",
             "github_run_id": prepared_id,
             "github_run_url": f"https://github.com/example/actions/runs/{prepared_id}",
@@ -295,21 +297,41 @@ def main() -> None:
             args.base,
             f"/v1/jobs/{prepared_id}/events",
             method="POST",
-            body=json.dumps(concurrent_event).encode(),
+            body=json.dumps(prepared_event).encode(),
             headers={**callback_auth, "content-type": "application/json"},
             expected=(200, 409),
         )
         return status, as_json(payload)
 
     with ThreadPoolExecutor(max_workers=2) as executor:
-        concurrent_results = list(executor.map(complete_concurrently, concurrent_jobs))
+        concurrent_results = list(executor.map(complete_prepared, concurrent_jobs))
     assert sorted(status for status, _ in concurrent_results) == [200, 409], concurrent_results
     conflict = next(payload for status, payload in concurrent_results if status == 409)
     assert conflict["code"] == "T4_MUSIC_STATE_CONFLICT"
     final_state = as_json(call(args.base, "/v1/music-state", headers=callback_auth)[0])
     assert final_state["last_successful_music_id"] == alternative_id
     assert final_state["successful_render_count"] == 2
-    print("T4_CLOUDFLARE_CONTROL_PLANE_INTEGRATION_OK", job_id)
+    assert len(final_state["successful_render_jobs"]) == 2
+
+    # Finish the first complete A→B→C→D cycle, then replay the old A success.
+    # A state that remembers only the latest job would incorrectly advance D→A.
+    for expected_music in MUSIC_IDS[2:]:
+        status, payload = complete_prepared(prepare(expected_music))
+        assert status == 200 and payload["status"] == "COMPLETED"
+    before_old_replay = as_json(call(args.base, "/v1/music-state", headers=callback_auth)[0])
+    assert before_old_replay["last_successful_music_id"] == MUSIC_IDS[3]
+    assert before_old_replay["successful_render_count"] == 4
+    assert len(before_old_replay["successful_render_jobs"]) == 4
+    replay_payload, _, replay_status = call(
+        args.base,
+        f"/v1/jobs/{job_id}/events",
+        method="POST",
+        body=json.dumps(event).encode(),
+        headers={**callback_auth, "content-type": "application/json"},
+    )
+    assert replay_status == 200 and as_json(replay_payload) == {"job_id": job_id, "status": "COMPLETED"}
+    assert as_json(call(args.base, "/v1/music-state", headers=callback_auth)[0]) == before_old_replay
+    print("T4_CLOUDFLARE_CONTROL_PLANE_STRICT_ROTATION_OK", "→".join(MUSIC_IDS))
 
 
 if __name__ == "__main__":

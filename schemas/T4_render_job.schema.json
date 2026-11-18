@@ -124,7 +124,7 @@
         "selection_mode": {
           "enum": [
             "explicit",
-            "deterministic_excluding_last_successful"
+            "strict_success_cycle"
           ]
         },
         "selected_music_id": {

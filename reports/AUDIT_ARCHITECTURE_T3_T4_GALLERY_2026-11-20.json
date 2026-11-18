@@ -31,8 +31,8 @@
     { "capability": "four_track_music_pack_and_schema", "t3_reference": true, "t4": true, "evidence": "config/T4_MUSIC_PACK_V1_0_0.json" },
     { "capability": "persistent_music_state_schema", "t3_reference": true, "t4": true, "evidence": "schemas/T4_music_selection_state.schema.json" },
     { "capability": "render_job_result_error_schemas", "t3_reference": true, "t4": true, "evidence": "schemas/T4_render_job.schema.json" },
-    { "capability": "adapter_deterministic_rotation", "t3_reference": true, "t4": true, "evidence": "adapter/t4_adapter.py" },
-    { "capability": "success_only_idempotent_state_commit", "t3_reference": true, "t4": true, "evidence": "tests/test_t4_audio_rotation.py" },
+    { "capability": "adapter_strict_success_cycle", "t3_reference": true, "t4": true, "evidence": "adapter/t4_adapter.py" },
+    { "capability": "durable_all_success_idempotency_ledger", "t3_reference": true, "t4": true, "evidence": "tests/test_t4_audio_rotation.py" },
     { "capability": "cloudflare_control_plane", "t3_reference": "handoff_only", "t4": true, "evidence": "cloudflare/src/index.ts" },
     { "capability": "cloudflare_black_box_integration", "t3_reference": false, "t4": true, "evidence": "cloudflare/test/control_plane_integration.py" },
     { "capability": "github_complete_render_workflow", "t3_reference": "server_validated", "t4": "server_validated_run_44696445339_release_revalidated", "evidence": "proofs/T4_GITHUB_COMPLETE_MASTER_REVALIDATION_2026-11-20.json" },
@@ -70,5 +70,18 @@
     "No Cloudflare production deployment or R2 production bucket is proven.",
     "Android integration and OTA implementation are not proven."
   ],
-  "claim_100_percent": false
+  "claim_100_percent": false,
+  "current_strict_rotation_migration": {
+    "status": "PASS_LOCAL_NOT_DEPLOYED",
+    "approved_pixabay_order": [260354, 154868, 162186, 321930],
+    "initial_track": 260354,
+    "success_cycle": "1→2→3→4→1 exact successor only",
+    "explicit_selection_policy": "exact_successor_only",
+    "idempotency_ledger_key": "successful_render_jobs",
+    "old_success_replay_after_full_cycle": "idempotent_without_mutation",
+    "failure_state_policy": "unchanged",
+    "python_tests": "38/38 PASS",
+    "cloudflare_black_box_integration": "PASS local",
+    "cloudflare_deployed": false
+  }
 }

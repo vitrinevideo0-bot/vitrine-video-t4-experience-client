@@ -6,6 +6,8 @@ Date effective : 20 novembre 2026.
 
 L’audit a comparé T4 au niveau d’intégration atteint par T3 et au dossier T4 obsolète de la galerie commune. Les manques ont été corrigés automatiquement : schémas, adaptateur, état musical, simulation exécutable, Worker Cloudflare, tests d’intégration, workflows complets, spécification, fermeture de l’inventaire et outils du paquet intégrateur.
 
+**Addendum de migration stricte :** le pool actif de remplacement est `260354→154868→162186→321930`. L’état initial impose la première piste; chaque succès/QC PASS impose le successeur exact; échec sans mutation; choix explicite sans saut; registre durable `successful_render_jobs`; rejeu d’un ancien succès après un tour complet sans mutation. La suite locale passe 38 tests, l’intégration Worker/R2 locale couvre le cycle complet et aucun déploiement production n’a été effectué. Les références de runs et de Releases ci-dessous restent les preuves historiques additives auxquelles elles se rapportent.
+
 Le commit complet `0a02f82bf1fe4726f21900362929e1ff5529c037` a été poussé et sa CI GitHub `44696224313` est PASS. Le rendu complet GitHub `44696445339` est PASS. Sa pré-Release additive `t4-experience-client-v4.0.0-complete-candidate-1` a été téléchargée et revalidée indépendamment : quinze actifs sur quinze correspondent au manifeste SHA-256, le QC vaut 26/26, et le master complet est verrouillé par taille, SHA-256 et hash du flux vidéo.
 
 Le verrouillage a été poussé dans `7ab0090d6dd0928a3e7bdb2723ac69b2d4d844a2`, avec CI `44697117316` PASS. Le workflow intégrateur `44697329915` a ensuite construit deux ZIP bit à bit identiques, validé une extraction propre 28/28 et publié la pré-Release additive `t4-experience-client-integrator-v1.0.0-1`. Cette Release a été téléchargée ; ses quatre actifs contrôlés correspondent au manifeste, puis le ZIP a repassé indépendamment les 28 contrôles d’extraction propre.
@@ -24,7 +26,7 @@ Le statut **100 % n’est toujours pas déclaré**. La galerie commune reste en 
 | Quatre voix comparables | Oui | `audio/voice/t4-voice-candidates-v1/manifest.json` |
 | Sélection propriétaire | VOIX-B | `approvals/APPROBATION_VOIX_B_T4_2026-11-20.json` |
 | Quatre musiques approuvées | Oui | `config/T4_MUSIC_PACK_V1_0_0.json` |
-| Rotation persistante anti-répétition | Oui | `adapter/t4_adapter.py` |
+| Rotation persistante stricte `1→2→3→4→1` avec registre durable | Oui | `adapter/t4_adapter.py`, `cloudflare/src/index.ts` |
 | RenderJob / Result / Error | Oui | `schemas/` |
 | Worker R2 + callback + état transactionnel | Oui, testé hors production | `cloudflare/src/index.ts` |
 | Test noir Worker | PASS local et CI | `cloudflare/test/control_plane_integration.py` |

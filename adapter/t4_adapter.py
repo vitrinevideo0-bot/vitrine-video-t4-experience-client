@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import argparse
 import fcntl
-import hashlib
 import json
 import os
 import tempfile
@@ -25,7 +24,7 @@ EXPECTED_PIXABAY_IDS = [260354, 154868, 162186, 321930]
 
 
 class MusicRepeatError(ValueError):
-    """Raised when a selection or successful commit repeats the last success."""
+    """Raised when a selection or successful commit violates the strict cycle."""
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -49,10 +48,17 @@ def approved_tracks(music_pack_path: Path = MUSIC_PACK) -> list[dict[str, Any]]:
     if any(track.get("claim_management_required") is not False for track in tracks):
         raise ValueError("T4 replacement tracks must not require Content ID claim management")
     contract = pack["selection_contract"]
-    if contract.get("no_immediate_repeat") is not True:
-        raise ValueError("T4 music contract must forbid immediate repetition")
-    if contract.get("state_update_policy") != "after_completed_qc_pass_only":
-        raise ValueError("T4 music state may advance only after completed QC PASS")
+    if (
+        contract.get("automatic_algorithm") != "strict owner-approved order 1→2→3→4→1 from last successful music"
+        or contract.get("no_immediate_repeat") is not True
+        or contract.get("explicit_selection_policy") != "exact_successor_only"
+        or contract.get("first_render_pool_size") != 1
+        or contract.get("subsequent_pool_size") != 1
+        or contract.get("idempotency_ledger_key") != "successful_render_jobs"
+        or contract.get("state_update_policy") != "after_completed_qc_pass_only"
+        or contract.get("failed_render_state_policy") != "unchanged"
+    ):
+        raise ValueError("T4 music contract must enforce the exact success cycle and durable idempotency")
     return tracks
 
 
@@ -62,23 +68,24 @@ def select_music_variant(
     explicit_music_id: str | None = None,
     music_pack_path: Path = MUSIC_PACK,
 ) -> dict[str, Any]:
-    """Select one track deterministically while excluding the previous success."""
+    """Select one track in the strict owner-approved 1 → 2 → 3 → 4 cycle."""
     if not render_job_id:
         raise ValueError("render_job_id is required")
     tracks = approved_tracks(music_pack_path)
     by_id = {track["id"]: track for track in tracks}
     if last_successful_music_id is not None and last_successful_music_id not in by_id:
         raise ValueError("Unknown last successful T4 music ID")
+    previous_index = -1 if last_successful_music_id is None else EXPECTED_VARIANTS.index(last_successful_music_id)
+    selected = tracks[(previous_index + 1) % len(tracks)]
     if explicit_music_id is not None:
         if explicit_music_id not in by_id:
             raise ValueError("Explicit T4 music ID is not owner-approved")
-        if explicit_music_id == last_successful_music_id:
-            raise MusicRepeatError("Explicit T4 music choice repeats the immediately previous success")
-        return {**by_id[explicit_music_id], "selection_mode": "explicit", "last_successful_music_id": last_successful_music_id}
-    eligible = [track for track in tracks if track["id"] != last_successful_music_id]
-    digest = hashlib.sha256(render_job_id.encode("utf-8")).digest()
-    selected = eligible[int.from_bytes(digest[:8], "big") % len(eligible)]
-    return {**selected, "selection_mode": "deterministic_excluding_last_successful", "last_successful_music_id": last_successful_music_id}
+        if explicit_music_id != selected["id"]:
+            raise MusicRepeatError(
+                f"Strict T4 cycle expects {selected['id']}; {explicit_music_id} cannot bypass it"
+            )
+        return {**selected, "selection_mode": "explicit", "last_successful_music_id": last_successful_music_id}
+    return {**selected, "selection_mode": "strict_success_cycle", "last_successful_music_id": last_successful_music_id}
 
 
 def initial_music_state() -> dict[str, Any]:
@@ -87,6 +94,7 @@ def initial_music_state() -> dict[str, Any]:
         "last_successful_music_id": None,
         "last_successful_render_job_id": None,
         "successful_render_count": 0,
+        "successful_render_jobs": {},
     }
 
 
@@ -99,6 +107,7 @@ def load_music_selection_state(state_path: Path) -> dict[str, Any]:
         "last_successful_music_id",
         "last_successful_render_job_id",
         "successful_render_count",
+        "successful_render_jobs",
     }
     if set(state) != required or state["schema_version"] != MUSIC_STATE_SCHEMA_VERSION:
         raise ValueError("Invalid T4 music rotation state")
@@ -106,8 +115,19 @@ def load_music_selection_state(state_path: Path) -> dict[str, Any]:
         raise ValueError("Unknown T4 music ID in persistent state")
     if not isinstance(state["successful_render_count"], int) or state["successful_render_count"] < 0:
         raise ValueError("Invalid T4 successful render count")
+    receipts = state["successful_render_jobs"]
+    if (
+        not isinstance(receipts, dict)
+        or any(not isinstance(job_id, str) or not job_id or music_id not in EXPECTED_VARIANTS for job_id, music_id in receipts.items())
+        or len(receipts) != state["successful_render_count"]
+    ):
+        raise ValueError("Invalid T4 successful render ledger")
     if (state["last_successful_music_id"] is None) != (state["last_successful_render_job_id"] is None):
         raise ValueError("T4 state must pair successful music and render job IDs")
+    if (state["successful_render_count"] == 0) != (state["last_successful_music_id"] is None):
+        raise ValueError("An empty T4 state cannot contain a successful render, and conversely")
+    if state["last_successful_render_job_id"] is not None and receipts.get(state["last_successful_render_job_id"]) != state["last_successful_music_id"]:
+        raise ValueError("The last T4 success must exist in the idempotency ledger")
     return state
 
 
@@ -145,17 +165,22 @@ def _record_music_render_result_unlocked(
     succeeded = completed and quality_status == "PASS"
     if not succeeded:
         return current
-    if current["last_successful_render_job_id"] == render_job_id:
-        if current["last_successful_music_id"] != selected_music_id:
+    if render_job_id in current["successful_render_jobs"]:
+        if current["successful_render_jobs"][render_job_id] != selected_music_id:
             raise ValueError("An idempotent successful callback cannot change T4 music")
         return current
-    if current["last_successful_music_id"] == selected_music_id:
-        raise MusicRepeatError("Successful T4 render repeats the immediately previous music")
+    previous_id = current["last_successful_music_id"]
+    expected_id = EXPECTED_VARIANTS[0] if previous_id is None else EXPECTED_VARIANTS[(EXPECTED_VARIANTS.index(previous_id) + 1) % len(EXPECTED_VARIANTS)]
+    if selected_music_id != expected_id:
+        raise MusicRepeatError(
+            f"Successful T4 render must follow the strict cycle: expected {expected_id}, got {selected_music_id}"
+        )
     updated = {
         "schema_version": MUSIC_STATE_SCHEMA_VERSION,
         "last_successful_music_id": selected_music_id,
         "last_successful_render_job_id": render_job_id,
         "successful_render_count": current["successful_render_count"] + 1,
+        "successful_render_jobs": {**current["successful_render_jobs"], render_job_id: selected_music_id},
     }
     state_path.parent.mkdir(parents=True, exist_ok=True)
     descriptor, temporary_name = tempfile.mkstemp(prefix=f".{state_path.name}.", dir=state_path.parent)

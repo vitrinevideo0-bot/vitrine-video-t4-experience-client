@@ -103,6 +103,20 @@ def main() -> int:
             except Exception as error:  # noqa: BLE001
                 schema_errors.append({"data": data_path, "schema": schema_path, "error": str(error)})
         checks.append(check("strict_schemas_validate", not schema_errors, schema_errors))
+        state_schema = load(root / "schemas/T4_music_selection_state.schema.json")
+        Draft202012Validator.check_schema(state_schema)
+        initial_state = {
+            "schema_version": "1.0.0",
+            "last_successful_music_id": None,
+            "last_successful_render_job_id": None,
+            "successful_render_count": 0,
+            "successful_render_jobs": {},
+        }
+        checks.append(check(
+            "music_state_schema_accepts_strict_initial_state",
+            not list(Draft202012Validator(state_schema).iter_errors(initial_state)),
+            initial_state,
+        ))
 
         questions = load(root / "form/questions_T4.json")
         flow = load(root / "config/T4_CAPTURE_FLOW_V1_0_0.json")
@@ -130,21 +144,52 @@ def main() -> int:
         adapter = importlib.import_module("adapter.t4_adapter")
         variants = adapter.EXPECTED_VARIANTS
         counts = {variant: 0 for variant in variants}
-        repeat_ok = True
+        observed = []
         last = None
         for index in range(10_000):
             selected = adapter.select_music_variant(f"t4-package-stress-{index:05d}", last)
-            repeat_ok &= selected["id"] != last
+            observed.append(selected["id"])
             counts[selected["id"]] += 1
             last = selected["id"]
-        checks.append(check("music_rotation_10000_zero_adjacent_repeat", repeat_ok, counts))
+        checks.append(check("music_rotation_10000_exact_strict_cycle", observed == variants * 2500, counts))
         state_path = temporary / "music-state.json"
         first = adapter.select_music_variant("t4-package-state-0001")["id"]
         adapter.record_music_render_result(state_path=state_path, render_job_id="t4-package-state-failed", selected_music_id=first, completed=False, quality_status="FAIL")
         failure_unchanged = not state_path.exists()
         committed = adapter.record_music_render_result(state_path=state_path, render_job_id="t4-package-state-0001", selected_music_id=first, completed=True, quality_status="PASS")
         second = adapter.select_music_variant("t4-package-state-0002", first)["id"]
-        checks.append(check("music_state_success_only_and_no_repeat", failure_unchanged and committed["last_successful_music_id"] == first and second != first, committed))
+        checks.append(check(
+            "music_state_success_only_and_exact_successor",
+            failure_unchanged
+            and committed["last_successful_music_id"] == first
+            and committed["successful_render_jobs"] == {"t4-package-state-0001": first}
+            and second == variants[1],
+            committed,
+        ))
+        for index, selected in enumerate(variants[1:], 2):
+            adapter.record_music_render_result(
+                state_path=state_path,
+                render_job_id=f"t4-package-state-{index:04d}",
+                selected_music_id=selected,
+                completed=True,
+                quality_status="PASS",
+            )
+        after_cycle = adapter.load_music_selection_state(state_path)
+        replayed = adapter.record_music_render_result(
+            state_path=state_path,
+            render_job_id="t4-package-state-0001",
+            selected_music_id=variants[0],
+            completed=True,
+            quality_status="PASS",
+        )
+        checks.append(check(
+            "old_success_replay_after_full_cycle_is_idempotent",
+            replayed == after_cycle
+            and replayed["successful_render_count"] == 4
+            and replayed["last_successful_music_id"] == variants[3]
+            and len(replayed["successful_render_jobs"]) == 4,
+            replayed,
+        ))
 
         golden = spec["external_complete_master"]
         golden_path = root / golden["package_path"]
