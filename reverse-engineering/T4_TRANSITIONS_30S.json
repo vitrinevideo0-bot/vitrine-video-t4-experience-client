@@ -1,8 +1,9 @@
 {
   "schema_version": "1.0.0",
   "template_id": "RESTAURATION-T4",
-  "title": "Fusion transitionnelle A+B+C+D sur 30 secondes",
-  "status": "implemented_candidate_pending_owner_review_of_silent_render",
+  "title": "HISTORIQUE V1 — Fusion transitionnelle A+B+C+D sur 30 secondes",
+  "status": "superseded_after_owner_rejected_exaggerated_transitions",
+  "superseded_by": "reverse-engineering/T4_TRANSITIONS_NATURELLES_30S_V2.json",
   "approval_state": {
     "reference_fusion_owner_approved": true,
     "reference_fusion_approval": "approvals/APPROBATION_TRANSITIONS_T4_V3_2026-11-19.json",

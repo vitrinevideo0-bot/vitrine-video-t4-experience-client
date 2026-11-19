@@ -1,0 +1,49 @@
+{
+  "schema_version": "2.0.0",
+  "template_id": "RESTAURATION-T4",
+  "decision_type": "owner_creative_correction",
+  "status": "active_instruction",
+  "date_local": "2026-11-18",
+  "decision_channel": "arena_chat",
+  "reviewed_candidate": {
+    "version": "v1",
+    "github_run_id": 44632286515,
+    "release_tag": "t4-experience-client-v1.0.0-silent-candidate-1",
+    "verdict": "rejected_for_transition_exaggeration"
+  },
+  "owner_feedback_normalized": [
+    "Les transitions du candidat v1 sont trop exagérées.",
+    "Les plans doivent rester naturels et lisibles.",
+    "Les transitions doivent être rapides, sans être démonstratives.",
+    "Une transition doit apparaître seulement lorsqu'un rush change.",
+    "Aucun effet décoratif ne doit interrompre un rush en cours."
+  ],
+  "active_decisions": {
+    "transition_count": 3,
+    "transition_cut_seconds": [6, 14, 21],
+    "maximum_transition_frames_at_30_fps": 4,
+    "transition_style": "fast_soft_motion_dissolve",
+    "full_frame_between_cuts": true,
+    "mosaic_forbidden": true,
+    "dynamic_grid_forbidden": true,
+    "shake_forbidden": true,
+    "glitch_forbidden": true,
+    "rectangular_block_stutter_forbidden": true,
+    "solid_color_transition_forbidden": true,
+    "audio_forbidden_in_silent_candidate": true,
+    "burned_text_forbidden_in_silent_candidate": true
+  },
+  "supersedes": [
+    "config/T4_CREATIVE_CONTRACT_V1_0_0.json#active_transition_style",
+    "reverse-engineering/T4_TRANSITIONS_30S.json@schema_version=1.0.0"
+  ],
+  "preserves": [
+    "six_merchant_questions",
+    "twelve_capture_screens",
+    "four_scenes",
+    "scene_durations_6_8_7_9_seconds",
+    "silent_github_actions_delivery",
+    "three_second_stable_final_tail"
+  ],
+  "cloudflare_production_deployment_authorized": false
+}

@@ -24,12 +24,13 @@ class T4ContractTest(unittest.TestCase):
         cls.questions = load("form/questions_T4.json")
         cls.guide = load("capture-guide/consignes_T4.json")
         cls.flow = load("config/T4_CAPTURE_FLOW_V1_0_0.json")
-        cls.template = load("config/T4_EXPERIENCE_CLIENT_TEMPLATE_V1_0_0.json")
-        cls.creative = load("config/T4_CREATIVE_CONTRACT_V1_0_0.json")
-        cls.transitions = load("reverse-engineering/T4_TRANSITIONS_30S.json")
+        cls.template = load("config/T4_EXPERIENCE_CLIENT_TEMPLATE_V2_0_0.json")
+        cls.creative = load("config/T4_NATURAL_TRANSITIONS_CONTRACT_V2_0_0.json")
+        cls.feedback = load("approvals/CORRECTION_TRANSITIONS_NATURELLES_V2_2026-11-18.json")
+        cls.transitions = load("reverse-engineering/T4_TRANSITIONS_NATURELLES_30S_V2.json")
         cls.rushes = load("rushes/manifest.json")
         cls.ui = load("ui-screens/manifest.json")
-        cls.job = load("demo/render_job_silent_demo.json")
+        cls.job = load("demo/render_job_natural_v2.json")
 
     def test_exact_format_and_scene_durations(self) -> None:
         fmt = self.template["format"]
@@ -91,47 +92,79 @@ class T4ContractTest(unittest.TestCase):
         board = ROOT / "ui-screens" / self.ui["board"]
         self.assertEqual(sha256(board), self.ui["board_sha256"])
 
-    def test_approved_reference_fusion_is_a_b_c_d(self) -> None:
-        self.assertTrue(self.creative["approval_state"]["reference_fusion_owner_approved"])
-        self.assertEqual([item["slot"] for item in self.creative["source_references"]], ["A", "B", "C", "D"])
-        self.assertEqual(self.creative["creative_fusion"]["structural_base"], "A")
-        self.assertEqual(self.creative["creative_fusion"]["tile_choreography"], "B")
-        self.assertEqual(self.creative["creative_fusion"]["impact_grammar"], "C")
-        self.assertEqual(self.creative["creative_fusion"]["micro_break_grammar"], "D")
+    def test_owner_correction_supersedes_exaggerated_v1_style(self) -> None:
+        self.assertEqual(self.feedback["reviewed_candidate"]["verdict"], "rejected_for_transition_exaggeration")
+        decisions = self.feedback["active_decisions"]
+        self.assertEqual(decisions["transition_count"], 3)
+        self.assertEqual(decisions["transition_cut_seconds"], [6, 14, 21])
+        self.assertEqual(decisions["maximum_transition_frames_at_30_fps"], 4)
+        self.assertTrue(decisions["full_frame_between_cuts"])
+        self.assertTrue(all(decisions[key] for key in [
+            "mosaic_forbidden",
+            "dynamic_grid_forbidden",
+            "shake_forbidden",
+            "glitch_forbidden",
+            "rectangular_block_stutter_forbidden",
+        ]))
+        self.assertEqual(self.creative["previous_candidate"]["status"], "rejected")
 
-    def test_exact_transition_timeline(self) -> None:
+    def test_exact_three_natural_transition_windows(self) -> None:
         events = self.transitions["timeline_events"]
-        self.assertEqual(len(events), 48)
+        self.assertEqual(len(events), 3)
+        self.assertEqual([event["cut_frame"] for event in events], [180, 420, 630])
+        self.assertEqual([event["frames"] for event in events], [[180, 183], [420, 423], [630, 633]])
+        self.assertTrue(all(event["family"] == "T4_NATURAL_SPEED_CUT" for event in events))
+        self.assertTrue(all(event["variant"] == "fast_soft_motion_dissolve" for event in events))
+        self.assertTrue(all(event["duration_frames"] == 4 for event in events))
+        self.assertTrue(all(event["full_frame_only"] for event in events))
         for left, right in zip(events, events[1:]):
             self.assertLess(left["frames"][1], right["frames"][0])
-        families = {event["family"] for event in events}
-        self.assertEqual(families, {
-            "T4_TILE_REVEAL",
-            "T4_DYNAMIC_GRID_RECONFIG",
-            "T4_SHAKE_IMPACT",
-            "T4_RECTANGULAR_BLOCK_STUTTER",
-            "T4_MICRO_GLITCH",
-        })
-        micro = [event for event in events if event["family"] == "T4_MICRO_GLITCH"]
-        self.assertTrue(all(1 <= event["duration_frames"] <= 3 for event in micro))
-        self.assertFalse(any(event["frames"][0] <= 899 and event["frames"][1] >= 810 for event in events))
-        audit = self.transitions["cadence_audit"]
-        self.assertEqual(audit["covered_effect_frames"] + audit["default_stable_frames"], 900)
-        self.assertGreaterEqual(audit["default_stable_share"], 0.42)
-        self.assertLessEqual(audit["default_stable_share"], 0.58)
-        self.assertGreaterEqual(audit["tile_plus_grid_share"], 0.24)
-        self.assertLessEqual(audit["tile_plus_grid_share"], 0.38)
 
-    def test_no_blue_cyan_separators_and_no_silent_text(self) -> None:
+    def test_no_transition_inside_a_rush_and_98_percent_stable(self) -> None:
+        audit = self.transitions["cadence_audit"]
+        self.assertEqual(audit["total_events"], 3)
+        self.assertEqual(audit["events_outside_rush_changes"], 0)
+        self.assertEqual(audit["covered_transition_frames"], 12)
+        self.assertEqual(audit["stable_full_frame_frames"], 888)
+        self.assertGreaterEqual(audit["stable_full_frame_share"], 0.98)
+        self.assertEqual(audit["maximum_event_duration_frames"], 4)
+        self.assertFalse(any(event["frames"][0] <= 899 and event["frames"][1] >= 810 for event in self.transitions["timeline_events"]))
+
+    def test_all_exaggerated_effect_families_are_forbidden(self) -> None:
         owner = self.transitions["owner_constraints"]
-        self.assertTrue(owner["blue_or_cyan_separator_lines_forbidden"])
+        self.assertTrue(owner["transitions_only_at_rush_changes_required"])
+        self.assertTrue(owner["full_frame_between_cuts_required"])
+        for key in [
+            "mosaic_forbidden",
+            "dynamic_grid_forbidden",
+            "shake_forbidden",
+            "glitch_forbidden",
+            "rectangular_block_stutter_forbidden",
+            "solid_color_transition_bars_forbidden",
+            "blue_or_cyan_separator_lines_forbidden",
+        ]:
+            self.assertTrue(owner[key], key)
+        profile = self.transitions["transition_parameter_profiles"]["T4_NATURAL_SPEED_CUT"]
+        self.assertEqual(profile["maximum_motion_blur_kernel_px"], 5)
+        self.assertEqual(profile["translation_px"], 0)
+        self.assertEqual(profile["rotation_degrees"], 0)
+        self.assertEqual(profile["scale"], 1.0)
+        self.assertEqual(profile["panels"], 1)
+        self.assertTrue(profile["full_frame_only"])
+
+    def test_no_audio_or_burned_text(self) -> None:
+        owner = self.transitions["owner_constraints"]
         self.assertTrue(owner["silent_render_text_forbidden"])
         self.assertTrue(owner["silent_render_audio_forbidden"])
-        profile = self.transitions["transition_parameter_profiles"]["T4_DYNAMIC_GRID_RECONFIG"]
-        self.assertFalse(profile["separator_lines"])
-        self.assertIsNone(profile["separator_color"])
         self.assertFalse(self.template["format"]["silent_candidate_burned_text"])
         self.assertEqual(self.template["format"]["silent_candidate_audio_streams"], 0)
+        profile = self.job["render_profile"]
+        self.assertFalse(profile["burn_merchant_text"])
+        self.assertFalse(profile["include_capture_audio"])
+        self.assertFalse(profile["include_music"])
+        self.assertFalse(profile["include_voice_over"])
+        self.assertFalse(self.job["output"]["audio"])
+        self.assertFalse(self.job["output"]["burned_text"])
 
     def test_four_licensed_hash_locked_rushes(self) -> None:
         self.assertEqual(len(self.rushes["scenes"]), 4)
@@ -141,17 +174,13 @@ class T4ContractTest(unittest.TestCase):
         self.assertTrue(all(len(scene["sha256"]) == 64 for scene in self.rushes["scenes"]))
         self.assertTrue(all(scene["source_duration_seconds"] - scene["trim_start_seconds"] >= scene["duration_seconds"] for scene in self.rushes["scenes"]))
 
-    def test_render_job_is_strictly_silent_and_textless(self) -> None:
+    def test_render_job_is_v2_natural_and_silent(self) -> None:
+        self.assertEqual(self.job["template_version"], "2.0.0")
         self.assertEqual(list(self.job["merchant_payload"]), ["nom", "produit", "prix", "whatsapp", "quartier", "accroche"])
-        profile = self.job["render_profile"]
-        self.assertFalse(profile["burn_merchant_text"])
-        self.assertFalse(profile["include_capture_audio"])
-        self.assertFalse(profile["include_music"])
-        self.assertFalse(profile["include_voice_over"])
-        self.assertFalse(self.job["output"]["audio"])
-        self.assertFalse(self.job["output"]["burned_text"])
+        self.assertEqual(self.job["render_profile"]["transition_style"], "three_fast_soft_motion_dissolves_at_rush_changes_only")
+        self.assertEqual(self.job["output"]["filename"], "VIDEO_T4_EXPERIENCE_CLIENT_TRANSITIONS_NATURELLES_V2_A_VALIDER.mp4")
 
-    def test_all_linked_contract_files_exist(self) -> None:
+    def test_all_active_linked_contract_files_exist(self) -> None:
         paths = [
             self.template["merchant_payload"]["source"],
             self.template["capture"]["guide"],
@@ -159,9 +188,10 @@ class T4ContractTest(unittest.TestCase):
             self.template["capture"]["visual_proof_manifest"],
             self.template["capture"]["visual_proof_board"],
             self.template["creative_contracts"]["implementation_authorization"],
-            self.template["creative_contracts"]["reference_fusion_approval"],
-            self.template["creative_contracts"]["creative_contract"],
-            self.template["creative_contracts"]["transition_timeline"],
+            self.template["creative_contracts"]["owner_transition_correction"],
+            self.template["creative_contracts"]["active_creative_contract"],
+            self.template["creative_contracts"]["active_transition_timeline"],
+            self.template["creative_contracts"]["legacy_v1_contract"],
             self.template["demo_media"]["manifest"],
             self.template["runtime_contracts"]["render_job"],
             self.template["runtime_contracts"]["renderer"],
@@ -170,6 +200,7 @@ class T4ContractTest(unittest.TestCase):
         self.assertTrue(all((ROOT / path).exists() for path in paths), paths)
         self.assertEqual(self.template["runtime_contracts"]["production_render_plane"], "github_actions")
         self.assertTrue(self.template["runtime_contracts"]["cloudflare_rendering_forbidden"])
+        self.assertTrue(self.template["guardrails"]["transitions_only_at_rush_changes"])
 
 
 if __name__ == "__main__":

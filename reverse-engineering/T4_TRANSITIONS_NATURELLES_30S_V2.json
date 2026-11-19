@@ -1,0 +1,200 @@
+{
+  "schema_version": "2.0.0",
+  "template_id": "RESTAURATION-T4",
+  "title": "Transitions naturelles rapides — uniquement aux changements de rush",
+  "status": "owner_corrected_candidate_pending_review",
+  "owner_correction": "approvals/CORRECTION_TRANSITIONS_NATURELLES_V2_2026-11-18.json",
+  "superseded_candidate": {
+    "version": "v1",
+    "reason": "Transitions jugées trop exagérées par le propriétaire.",
+    "retired_event_count": 48,
+    "retired_families": [
+      "T4_TILE_REVEAL",
+      "T4_DYNAMIC_GRID_RECONFIG",
+      "T4_SHAKE_IMPACT",
+      "T4_RECTANGULAR_BLOCK_STUTTER",
+      "T4_MICRO_GLITCH"
+    ]
+  },
+  "truth_model": {
+    "OWNER_DIRECTED": "Les transitions doivent être naturelles, rapides et réservées aux changements de rush.",
+    "ENGINE_DECISION": "Un raccord plein écran de quatre images utilise un fondu de mouvement très léger, sans translation, zoom, rotation ni élément graphique.",
+    "rule": "Le rush demeure intact et plein écran en dehors des trois fenêtres de raccord."
+  },
+  "format_contract": {
+    "orientation": "portrait",
+    "aspect_ratio": "9:16",
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "total_frames": 900,
+    "duration_seconds": 30,
+    "scene_boundaries_frames": [
+      0,
+      180,
+      420,
+      630,
+      900
+    ],
+    "rush_change_frames": [
+      180,
+      420,
+      630
+    ],
+    "scene_durations_seconds": [
+      6,
+      8,
+      7,
+      9
+    ],
+    "scene_frame_ranges_inclusive": {
+      "S1": [
+        0,
+        179
+      ],
+      "S2": [
+        180,
+        419
+      ],
+      "S3": [
+        420,
+        629
+      ],
+      "S4": [
+        630,
+        899
+      ]
+    }
+  },
+  "owner_constraints": {
+    "transitions_only_at_rush_changes_required": true,
+    "full_frame_between_cuts_required": true,
+    "maximum_transition_duration_frames": 4,
+    "mosaic_forbidden": true,
+    "dynamic_grid_forbidden": true,
+    "shake_forbidden": true,
+    "glitch_forbidden": true,
+    "rectangular_block_stutter_forbidden": true,
+    "solid_color_transition_bars_forbidden": true,
+    "blue_or_cyan_separator_lines_forbidden": true,
+    "silent_render_text_forbidden": true,
+    "silent_render_audio_forbidden": true,
+    "s4_final_stable_tail_frames": 90
+  },
+  "transition_parameter_profiles": {
+    "T4_NATURAL_SPEED_CUT": {
+      "truth": "ENGINE_DECISION",
+      "duration_frames": 4,
+      "duration_milliseconds": 133.333,
+      "blend_curve": "smoothstep",
+      "maximum_motion_blur_kernel_px": 5,
+      "translation_px": 0,
+      "rotation_degrees": 0,
+      "scale": 1.0,
+      "crop_change": false,
+      "panels": 1,
+      "full_frame_only": true,
+      "flash": false,
+      "color_overlay": false
+    }
+  },
+  "protected_stable_windows": [
+    {
+      "frames": [
+        0,
+        179
+      ],
+      "reason": "S1 reste intact jusqu'au changement de rush."
+    },
+    {
+      "frames": [
+        184,
+        419
+      ],
+      "reason": "S2 reste intact après son raccord d'entrée."
+    },
+    {
+      "frames": [
+        424,
+        629
+      ],
+      "reason": "S3 reste intact après son raccord d'entrée."
+    },
+    {
+      "frames": [
+        634,
+        899
+      ],
+      "reason": "S4 reste intact après son raccord d'entrée, dont les trois dernières secondes."
+    }
+  ],
+  "cadence_audit": {
+    "total_events": 3,
+    "rush_change_count": 3,
+    "events_outside_rush_changes": 0,
+    "covered_transition_frames": 12,
+    "stable_full_frame_frames": 888,
+    "stable_full_frame_share": 0.986667,
+    "transition_share": 0.013333,
+    "maximum_event_duration_frames": 4
+  },
+  "timeline_events": [
+    {
+      "event_id": "T4-NAT-CUT-01",
+      "family": "T4_NATURAL_SPEED_CUT",
+      "variant": "fast_soft_motion_dissolve",
+      "outgoing_scene_id": "S1",
+      "incoming_scene_id": "S2",
+      "cut_frame": 180,
+      "cut_seconds_exact": 6.0,
+      "frames": [
+        180,
+        183
+      ],
+      "start_seconds_exact": 6.0,
+      "end_seconds_exclusive_exact": 6.133333,
+      "duration_frames": 4,
+      "duration_seconds": 0.133333,
+      "blur_axis": "horizontal",
+      "full_frame_only": true
+    },
+    {
+      "event_id": "T4-NAT-CUT-02",
+      "family": "T4_NATURAL_SPEED_CUT",
+      "variant": "fast_soft_motion_dissolve",
+      "outgoing_scene_id": "S2",
+      "incoming_scene_id": "S3",
+      "cut_frame": 420,
+      "cut_seconds_exact": 14.0,
+      "frames": [
+        420,
+        423
+      ],
+      "start_seconds_exact": 14.0,
+      "end_seconds_exclusive_exact": 14.133333,
+      "duration_frames": 4,
+      "duration_seconds": 0.133333,
+      "blur_axis": "vertical",
+      "full_frame_only": true
+    },
+    {
+      "event_id": "T4-NAT-CUT-03",
+      "family": "T4_NATURAL_SPEED_CUT",
+      "variant": "fast_soft_motion_dissolve",
+      "outgoing_scene_id": "S3",
+      "incoming_scene_id": "S4",
+      "cut_frame": 630,
+      "cut_seconds_exact": 21.0,
+      "frames": [
+        630,
+        633
+      ],
+      "start_seconds_exact": 21.0,
+      "end_seconds_exclusive_exact": 21.133333,
+      "duration_frames": 4,
+      "duration_seconds": 0.133333,
+      "blur_axis": "horizontal",
+      "full_frame_only": true
+    }
+  ]
+}

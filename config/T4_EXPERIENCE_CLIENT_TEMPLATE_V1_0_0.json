@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "display_name": "Expérience client",
   "sector": "RESTAURATION",
-  "catalog_status": "owner_directed_implementation_pending_silent_candidate_review",
+  "catalog_status": "superseded_for_transition_style_by_v2",
+  "superseded_by": "config/T4_EXPERIENCE_CLIENT_TEMPLATE_V2_0_0.json",
   "purpose": "Présenter l'accueil, le service, une dégustation réelle et l'ambiance du lieu.",
   "format": {
     "width": 720,

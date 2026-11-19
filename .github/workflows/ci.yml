@@ -1,4 +1,4 @@
-name: Contrats et moteur T4
+name: Contrats et moteur T4 V2
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
       - name: Installer les dépendances verrouillées
         run: python -m pip install -r requirements.txt
 
-      - name: Compiler et tester
+      - name: Compiler et tester la correction naturelle V2
         run: |
           python -m compileall -q engine tools tests
           python -m unittest discover -s tests -v
@@ -34,10 +34,10 @@ jobs:
           python tools/build_t4_capture_flow.py --output /tmp/T4_CAPTURE_FLOW_V1_0_0.json
           cmp config/T4_CAPTURE_FLOW_V1_0_0.json /tmp/T4_CAPTURE_FLOW_V1_0_0.json
 
-      - name: Prouver la reproductibilité du calendrier A+B+C+D
+      - name: Prouver la timeline naturelle aux trois changements de rush
         run: |
-          python tools/build_t4_transition_contract.py --output /tmp/T4_TRANSITIONS_30S.json
-          cmp reverse-engineering/T4_TRANSITIONS_30S.json /tmp/T4_TRANSITIONS_30S.json
+          python tools/build_t4_transition_contract.py --output /tmp/T4_TRANSITIONS_NATURELLES_30S_V2.json
+          cmp reverse-engineering/T4_TRANSITIONS_NATURELLES_30S_V2.json /tmp/T4_TRANSITIONS_NATURELLES_30S_V2.json
 
       - name: Prouver la reproductibilité des 12 maquettes PNG
         run: |

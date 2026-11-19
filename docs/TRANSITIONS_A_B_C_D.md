@@ -1,6 +1,8 @@
-# T4 — Adaptation des références A+B+C+D
+# T4 V1 — Adaptation historique des références A+B+C+D
 
-La décision propriétaire valide une fusion contrôlée, pas une copie de template.
+> **Statut : remplacé par la correction V2.** Le propriétaire a jugé le rendu V1 trop exagéré. Ce document reste une trace historique et n’est plus le contrat actif. Voir `docs/TRANSITIONS_NATURELLES_V2.md`.
+
+La décision propriétaire V1 validait une fusion contrôlée, pas une copie de template.
 
 - **A — PuzzleGlitch** : structure les mosaïques et les révélations par blocs.
 - **B — Grid Style** : organise plusieurs fenêtres temporelles dans des grilles mobiles.

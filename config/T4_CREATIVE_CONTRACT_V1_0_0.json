@@ -3,8 +3,9 @@
   "contract_id": "restauration_t4_experience_client_creative_v1_0_0",
   "template_id": "RESTAURATION-T4",
   "version": "1.0.0",
-  "title": "Expérience client — fusion glitch, blocs, mosaïque et shake",
-  "status": "owner_directed_implementation_pending_silent_render_review",
+  "title": "HISTORIQUE V1 — fusion glitch, blocs, mosaïque et shake",
+  "status": "superseded_after_owner_rejected_exaggerated_transitions",
+  "superseded_by": "config/T4_NATURAL_TRANSITIONS_CONTRACT_V2_0_0.json",
   "purpose": "Présenter l'accueil, le service, une réaction réelle de dégustation et l'appel à venir ou commander, avec une narration visuelle premium très captivante.",
   "approval_state": {
     "reference_fusion_owner_approved": true,

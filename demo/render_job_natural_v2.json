@@ -1,0 +1,37 @@
+{
+  "schema_version": "2.0.0",
+  "job_id": "t4-natural-transitions-fixture-experience-client-v2-0-0",
+  "template_id": "RESTAURATION-T4",
+  "template_version": "2.0.0",
+  "merchant_payload": {
+    "nom": "La Table de Kandi",
+    "produit": "Poulet braisé et alloco",
+    "prix": "3500",
+    "whatsapp": "+229 01 97 00 00 00",
+    "quartier": "Kandi · près du marché central",
+    "accroche": "Bien accueillis, bien servis"
+  },
+  "captures": {
+    "S1": {"source": "rushes/manifest.json#S1"},
+    "S2": {"source": "rushes/manifest.json#S2"},
+    "S3": {"source": "rushes/manifest.json#S3"},
+    "S4": {"source": "rushes/manifest.json#S4"}
+  },
+  "render_profile": {
+    "mode": "silent_natural_transition_validation",
+    "transition_style": "three_fast_soft_motion_dissolves_at_rush_changes_only",
+    "burn_merchant_text": false,
+    "include_capture_audio": false,
+    "include_music": false,
+    "include_voice_over": false
+  },
+  "output": {
+    "filename": "VIDEO_T4_EXPERIENCE_CLIENT_TRANSITIONS_NATURELLES_V2_A_VALIDER.mp4",
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "frames": 900,
+    "audio": false,
+    "burned_text": false
+  }
+}

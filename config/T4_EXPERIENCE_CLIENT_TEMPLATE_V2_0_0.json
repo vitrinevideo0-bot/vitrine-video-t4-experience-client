@@ -1,0 +1,81 @@
+{
+  "schema_version": "2.0.0",
+  "template_id": "RESTAURATION-T4",
+  "version": "2.0.0",
+  "display_name": "Expérience client — transitions naturelles",
+  "sector": "RESTAURATION",
+  "catalog_status": "owner_corrected_v2_pending_natural_candidate_review",
+  "previous_version": {
+    "contract": "config/T4_EXPERIENCE_CLIENT_TEMPLATE_V1_0_0.json",
+    "creative_verdict": "transitions_too_exaggerated"
+  },
+  "purpose": "Présenter l'accueil, le service, une dégustation réelle et l'ambiance du lieu sans interrompre les rushes par des effets décoratifs.",
+  "format": {
+    "width": 720,
+    "height": 1280,
+    "orientation": "portrait",
+    "fps": 30,
+    "frames": 900,
+    "duration_s": 30.0,
+    "scene_durations_s": [6, 8, 7, 9],
+    "video_codec": "h264",
+    "pixel_format": "yuv420p",
+    "silent_candidate_audio_streams": 0,
+    "silent_candidate_burned_text": false
+  },
+  "merchant_payload": {
+    "ordered_fields": ["nom", "produit", "prix", "whatsapp", "quartier", "accroche"],
+    "required_fields": ["nom", "produit", "prix", "whatsapp", "quartier"],
+    "optional_fields": ["accroche"],
+    "source": "form/questions_T4.json"
+  },
+  "capture": {
+    "guide": "capture-guide/consignes_T4.json",
+    "flow_contract": "config/T4_CAPTURE_FLOW_V1_0_0.json",
+    "visual_proof_manifest": "ui-screens/manifest.json",
+    "visual_proof_board": "ui-screens/T4_PLANCHE_12_ECRANS.png",
+    "stable_screens": 12,
+    "camera_captures": 4,
+    "source_speed": 1.0
+  },
+  "creative_contracts": {
+    "implementation_authorization": "approvals/AUTORISATION_IMPLEMENTATION_ETAPE_2_2026-11-19.json",
+    "owner_transition_correction": "approvals/CORRECTION_TRANSITIONS_NATURELLES_V2_2026-11-18.json",
+    "active_creative_contract": "config/T4_NATURAL_TRANSITIONS_CONTRACT_V2_0_0.json",
+    "active_transition_timeline": "reverse-engineering/T4_TRANSITIONS_NATURELLES_30S_V2.json",
+    "legacy_v1_contract": "config/T4_CREATIVE_CONTRACT_V1_0_0.json",
+    "legacy_v1_status": "superseded_for_transition_style"
+  },
+  "demo_media": {
+    "manifest": "rushes/manifest.json",
+    "raw_media_committed": false,
+    "raw_media_published": false,
+    "provider": "Pexels"
+  },
+  "runtime_contracts": {
+    "render_job": "demo/render_job_natural_v2.json",
+    "renderer": "engine/render_silent.py",
+    "validator": "tools/validate_silent.py",
+    "production_render_plane": "github_actions",
+    "cloudflare_rendering_forbidden": true
+  },
+  "natural_transition_candidate": {
+    "status": "not_rendered_at_contract_creation",
+    "workflow": ".github/workflows/render-silent.yml",
+    "expected_filename": "VIDEO_T4_EXPERIENCE_CLIENT_TRANSITIONS_NATURELLES_V2_A_VALIDER.mp4",
+    "transition_count": 3,
+    "transition_frames": [180, 420, 630],
+    "stable_full_frame_share": 0.986667,
+    "owner_approval_required": true
+  },
+  "guardrails": {
+    "transitions_only_at_rush_changes": true,
+    "mosaic_grid_shake_glitch_forbidden": true,
+    "consent_required_for_recognizable_clients": true,
+    "fake_review_forbidden": true,
+    "invented_claim_forbidden": true,
+    "silent_candidate_text_forbidden": true,
+    "silent_candidate_audio_forbidden": true,
+    "cloudflare_deployment_performed": false
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": "2.0.0",
+  "contract_id": "restauration_t4_natural_transitions_v2_0_0",
+  "template_id": "RESTAURATION-T4",
+  "version": "2.0.0",
+  "title": "Expérience client — raccords naturels rapides",
+  "status": "owner_corrected_implementation_pending_v2_review",
+  "owner_correction": "approvals/CORRECTION_TRANSITIONS_NATURELLES_V2_2026-11-18.json",
+  "previous_candidate": {
+    "version": "1.0.0",
+    "status": "rejected",
+    "reason": "Les transitions internes étaient trop nombreuses et trop exagérées.",
+    "historical_contract": "config/T4_CREATIVE_CONTRACT_V1_0_0.json"
+  },
+  "active_creative_rule": {
+    "summary": "Laisser chaque rush respirer en plein écran et ne faire un raccord qu'au changement réel de rush.",
+    "transition_count": 3,
+    "cut_seconds": [6, 14, 21],
+    "duration_frames_each": 4,
+    "duration_milliseconds_each": 133.333,
+    "family": "T4_NATURAL_SPEED_CUT",
+    "technique": "Fondu de mouvement plein écran très court avec courbe smoothstep et flou directionnel maximal de cinq pixels.",
+    "stable_full_frame_share": 0.986667
+  },
+  "allowed": [
+    "single_full_frame_outgoing_rush",
+    "single_full_frame_incoming_rush",
+    "four_frame_smooth_blend",
+    "subtle_motion_blur_up_to_five_pixels",
+    "direct_clean_cut_when_needed"
+  ],
+  "forbidden": [
+    "mosaic",
+    "multi_panel_grid",
+    "shake",
+    "glitch",
+    "rgb_split",
+    "rectangular_block_stutter",
+    "flash",
+    "solid_color_bar",
+    "blue_or_cyan_separator",
+    "transition_inside_a_rush",
+    "zoom_or_rotation_during_transition",
+    "persistent_visual_effect"
+  ],
+  "format_contract": {
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "total_frames": 900,
+    "duration_seconds": 30,
+    "scene_durations_seconds": [6, 8, 7, 9],
+    "rush_change_frames": [180, 420, 630],
+    "silent": true,
+    "burned_text": false
+  },
+  "active_timeline": "reverse-engineering/T4_TRANSITIONS_NATURELLES_30S_V2.json",
+  "capture_contract": "config/T4_CAPTURE_FLOW_V1_0_0.json",
+  "questions_contract": "form/questions_T4.json",
+  "render_job": "demo/render_job_natural_v2.json",
+  "render_plane": "github_actions_only",
+  "owner_approval_required": true
+}
