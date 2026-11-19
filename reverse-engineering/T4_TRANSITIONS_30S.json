@@ -1,0 +1,931 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "title": "Fusion transitionnelle A+B+C+D sur 30 secondes",
+  "status": "implemented_candidate_pending_owner_review_of_silent_render",
+  "approval_state": {
+    "reference_fusion_owner_approved": true,
+    "reference_fusion_approval": "approvals/APPROBATION_TRANSITIONS_T4_V3_2026-11-19.json",
+    "questions_capture_and_12_screens_implemented": true,
+    "numeric_timeline": "engine_decision_pending_silent_render_review",
+    "silent_render": "not_created_at_contract_build_time"
+  },
+  "truth_model": {
+    "OBSERVED": "Famille de mouvement visible dans une preview CapCut inspectée à dix images par seconde.",
+    "OWNER_APPROVED": "Rôle A+B+C+D explicitement validé par le propriétaire.",
+    "ENGINE_DECISION": "Fenêtre, amplitude et cadence déterministes choisies pour le moteur T4; elles ne prétendent pas mesurer exactement CapCut.",
+    "rule": "La grammaire est adaptée avec des médias T4 distincts; aucun contenu, texte, son, watermark ou univers des previews n'est repris."
+  },
+  "format_contract": {
+    "orientation": "portrait",
+    "aspect_ratio": "9:16",
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "total_frames": 900,
+    "duration_seconds": 30,
+    "scene_boundaries_frames": [
+      0,
+      180,
+      420,
+      630,
+      900
+    ],
+    "scene_durations_seconds": [
+      6,
+      8,
+      7,
+      9
+    ],
+    "scene_frame_ranges_inclusive": {
+      "S1": [
+        0,
+        179
+      ],
+      "S2": [
+        180,
+        419
+      ],
+      "S3": [
+        420,
+        629
+      ],
+      "S4": [
+        630,
+        899
+      ]
+    }
+  },
+  "source_references": [
+    {
+      "slot": "A",
+      "title": "PuzzleGlitch",
+      "url": "https://www.capcut.com/template-detail/PuzzleGlitch/7573632958570106117",
+      "preview_sha256": "a63b1f05a11c3e5abb288599941bbdf4f91c811081a2bfe0cb6e9942cad62dad",
+      "approved_role": "structural_core_tile_reveal"
+    },
+    {
+      "slot": "B",
+      "title": "Grid Style",
+      "url": "https://www.capcut.com/template-detail/Grid-Style/7270677670365629702",
+      "preview_sha256": "e6f78ba1d53396aa39794b4203670bdfdbdc33c4529e7389be2848eaec73a21d",
+      "approved_role": "multi_plan_grid_reconfiguration"
+    },
+    {
+      "slot": "C",
+      "title": "Shake Transition",
+      "url": "https://www.capcut.com/template-detail/fyp-foryou-caredit-capcuttopcreator-popo-hrtz/7601360400000568577",
+      "preview_sha256": "0cecb596c09cac559ca907c9bf7fe386eb5460555b23839fa13ce86422a52af0",
+      "approved_role": "impact_shake_and_rectangular_breaks"
+    },
+    {
+      "slot": "D",
+      "title": "Glitch effect shake",
+      "url": "https://www.capcut.com/template-detail/Glitch-effect-shake/7346375274763914501",
+      "preview_sha256": "e2392212174cf233adc7f917e8669a2279b7d8b23734c1e7462748ee7254f7a9",
+      "approved_role": "one_to_three_frame_micro_glitches"
+    }
+  ],
+  "owner_constraints": {
+    "copy_reference_content_forbidden": true,
+    "visible_blocks_inside_scenes_required": true,
+    "constant_reconfiguration_in_active_passages_required": true,
+    "impact_vibration_required": true,
+    "return_to_stable_full_frame_required": true,
+    "blue_or_cyan_separator_lines_forbidden": true,
+    "solid_color_transition_bars_forbidden": true,
+    "silent_render_text_forbidden": true,
+    "silent_render_audio_forbidden": true,
+    "s4_final_stable_tail_frames": 90
+  },
+  "transition_parameter_profiles": {
+    "T4_TILE_REVEAL": {
+      "truth": "ENGINE_DECISION",
+      "grid_candidates": [
+        "4x6",
+        "5x8"
+      ],
+      "visible_tile_count_range": [
+        5,
+        16
+      ],
+      "alternate_time_offsets_frames": [
+        12,
+        24,
+        39,
+        57
+      ],
+      "frame_coverage_peak_range": [
+        0.42,
+        0.72
+      ],
+      "gap_px": 0,
+      "edge_softness_px_max": 1.5,
+      "exact_frame_duplicate_forbidden": true
+    },
+    "T4_DYNAMIC_GRID_RECONFIG": {
+      "truth": "ENGINE_DECISION",
+      "panel_count_range": [
+        3,
+        7
+      ],
+      "layouts": [
+        "central_dominant",
+        "three_columns",
+        "offset_2x2",
+        "face_safe_satellites"
+      ],
+      "panel_gap_px_range": [
+        0,
+        4
+      ],
+      "panel_gap_color": "source_derived_near_black",
+      "dominant_panel_min_area_ratio": 0.34,
+      "separator_lines": false,
+      "separator_color": null
+    },
+    "T4_SHAKE_IMPACT": {
+      "truth": "ENGINE_DECISION",
+      "translation_x_px_at_720_range": [
+        7,
+        14
+      ],
+      "translation_y_px_at_720_range": [
+        4,
+        10
+      ],
+      "rotation_deg_range": [
+        -0.65,
+        0.65
+      ],
+      "scale_pulse_range": [
+        1.015,
+        1.04
+      ],
+      "overscan_scale": 1.05,
+      "decay": "alternating_damped",
+      "face_safe_amplitude_multiplier": 0.62,
+      "continuous_shake_forbidden": true
+    },
+    "T4_RECTANGULAR_BLOCK_STUTTER": {
+      "truth": "ENGINE_DECISION",
+      "block_count_range": [
+        2,
+        7
+      ],
+      "block_height_ratio_range": [
+        0.025,
+        0.12
+      ],
+      "content": "alternate_temporal_window_only",
+      "solid_color_bars_forbidden": true
+    },
+    "T4_MICRO_GLITCH": {
+      "truth": "ENGINE_DECISION",
+      "duration_frames_range": [
+        1,
+        3
+      ],
+      "horizontal_slice_count_range": [
+        3,
+        8
+      ],
+      "slice_offset_px_at_720_range": [
+        -18,
+        18
+      ],
+      "rgb_offset_px_at_720_range": [
+        2,
+        7
+      ],
+      "affected_frame_area_max_ratio": 0.28,
+      "face_safe_center_box_normalized": [
+        0.2,
+        0.12,
+        0.8,
+        0.72
+      ],
+      "persistent_vhs_noise_forbidden": true,
+      "full_frame_white_flash_forbidden": true
+    }
+  },
+  "protected_stable_windows": [
+    {
+      "scene_id": "S3",
+      "frames": [
+        467,
+        548
+      ],
+      "reason": "Préserver la bouchée et le début de la réaction réelle."
+    },
+    {
+      "scene_id": "S4",
+      "frames": [
+        810,
+        899
+      ],
+      "reason": "Atterrissage plein écran stable de trois secondes."
+    }
+  ],
+  "cadence_audit": {
+    "total_events": 48,
+    "covered_effect_frames": 431,
+    "default_stable_frames": 469,
+    "default_stable_share": 0.521111,
+    "tile_plus_grid_share": 0.373333,
+    "shake_micro_and_block_share": 0.105556,
+    "family_event_counts": {
+      "T4_DYNAMIC_GRID_RECONFIG": 9,
+      "T4_MICRO_GLITCH": 12,
+      "T4_RECTANGULAR_BLOCK_STUTTER": 4,
+      "T4_SHAKE_IMPACT": 10,
+      "T4_TILE_REVEAL": 13
+    },
+    "family_frame_counts": {
+      "T4_DYNAMIC_GRID_RECONFIG": 152,
+      "T4_MICRO_GLITCH": 25,
+      "T4_RECTANGULAR_BLOCK_STUTTER": 32,
+      "T4_SHAKE_IMPACT": 38,
+      "T4_TILE_REVEAL": 184
+    },
+    "active_break_interval_seconds_target": [
+      0.35,
+      0.7
+    ],
+    "stable_windows_are_intentional_exceptions": true
+  },
+  "timeline_events": [
+    {
+      "event_id": "T4-E01",
+      "scene_id": "S1",
+      "family": "T4_TILE_REVEAL",
+      "variant": "future_windows_open",
+      "seed": 11,
+      "frames": [
+        0,
+        14
+      ],
+      "start_seconds_exact": 0.0,
+      "end_seconds_exclusive_exact": 0.5,
+      "duration_frames": 15
+    },
+    {
+      "event_id": "T4-E02",
+      "scene_id": "S1",
+      "family": "T4_DYNAMIC_GRID_RECONFIG",
+      "variant": "central_dominant",
+      "seed": 12,
+      "frames": [
+        18,
+        33
+      ],
+      "start_seconds_exact": 0.6,
+      "end_seconds_exclusive_exact": 1.133333,
+      "duration_frames": 16
+    },
+    {
+      "event_id": "T4-E03",
+      "scene_id": "S1",
+      "family": "T4_MICRO_GLITCH",
+      "variant": "slices_rgb",
+      "seed": 13,
+      "frames": [
+        38,
+        39
+      ],
+      "start_seconds_exact": 1.266667,
+      "end_seconds_exclusive_exact": 1.333333,
+      "duration_frames": 2
+    },
+    {
+      "event_id": "T4-E04",
+      "scene_id": "S1",
+      "family": "T4_RECTANGULAR_BLOCK_STUTTER",
+      "variant": "horizontal_media_blocks",
+      "seed": 14,
+      "frames": [
+        50,
+        57
+      ],
+      "start_seconds_exact": 1.666667,
+      "end_seconds_exclusive_exact": 1.933333,
+      "duration_frames": 8
+    },
+    {
+      "event_id": "T4-E05",
+      "scene_id": "S1",
+      "family": "T4_SHAKE_IMPACT",
+      "variant": "damped_impact",
+      "seed": 15,
+      "frames": [
+        60,
+        63
+      ],
+      "start_seconds_exact": 2.0,
+      "end_seconds_exclusive_exact": 2.133333,
+      "duration_frames": 4
+    },
+    {
+      "event_id": "T4-E06",
+      "scene_id": "S1",
+      "family": "T4_TILE_REVEAL",
+      "variant": "staggered_mosaic",
+      "seed": 16,
+      "frames": [
+        74,
+        87
+      ],
+      "start_seconds_exact": 2.466667,
+      "end_seconds_exclusive_exact": 2.933333,
+      "duration_frames": 14
+    },
+    {
+      "event_id": "T4-E07",
+      "scene_id": "S1",
+      "family": "T4_MICRO_GLITCH",
+      "variant": "thin_slices",
+      "seed": 17,
+      "frames": [
+        92,
+        93
+      ],
+      "start_seconds_exact": 3.066667,
+      "end_seconds_exclusive_exact": 3.133333,
+      "duration_frames": 2
+    },
+    {
+      "event_id": "T4-E08",
+      "scene_id": "S1",
+      "family": "T4_DYNAMIC_GRID_RECONFIG",
+      "variant": "three_columns",
+      "seed": 18,
+      "frames": [
+        105,
+        122
+      ],
+      "start_seconds_exact": 3.5,
+      "end_seconds_exclusive_exact": 4.1,
+      "duration_frames": 18
+    },
+    {
+      "event_id": "T4-E09",
+      "scene_id": "S1",
+      "family": "T4_MICRO_GLITCH",
+      "variant": "rgb_offset",
+      "seed": 19,
+      "frames": [
+        127,
+        128
+      ],
+      "start_seconds_exact": 4.233333,
+      "end_seconds_exclusive_exact": 4.3,
+      "duration_frames": 2
+    },
+    {
+      "event_id": "T4-E10",
+      "scene_id": "S1",
+      "family": "T4_TILE_REVEAL",
+      "variant": "checker_reveal",
+      "seed": 20,
+      "frames": [
+        140,
+        153
+      ],
+      "start_seconds_exact": 4.666667,
+      "end_seconds_exclusive_exact": 5.133333,
+      "duration_frames": 14
+    },
+    {
+      "event_id": "T4-E11",
+      "scene_id": "S1",
+      "family": "T4_SHAKE_IMPACT",
+      "variant": "damped_impact",
+      "seed": 21,
+      "frames": [
+        159,
+        162
+      ],
+      "start_seconds_exact": 5.3,
+      "end_seconds_exclusive_exact": 5.433333,
+      "duration_frames": 4
+    },
+    {
+      "event_id": "T4-E12",
+      "scene_id": "S1",
+      "family": "T4_MICRO_GLITCH",
+      "variant": "slices_rgb",
+      "seed": 22,
+      "frames": [
+        171,
+        172
+      ],
+      "start_seconds_exact": 5.7,
+      "end_seconds_exclusive_exact": 5.766667,
+      "duration_frames": 2
+    },
+    {
+      "event_id": "T4-E13",
+      "scene_id": "S2",
+      "family": "T4_TILE_REVEAL",
+      "variant": "previous_scene_to_current",
+      "seed": 31,
+      "frames": [
+        180,
+        194
+      ],
+      "start_seconds_exact": 6.0,
+      "end_seconds_exclusive_exact": 6.5,
+      "duration_frames": 15
+    },
+    {
+      "event_id": "T4-E14",
+      "scene_id": "S2",
+      "family": "T4_SHAKE_IMPACT",
+      "variant": "damped_impact",
+      "seed": 32,
+      "frames": [
+        198,
+        201
+      ],
+      "start_seconds_exact": 6.6,
+      "end_seconds_exclusive_exact": 6.733333,
+      "duration_frames": 4
+    },
+    {
+      "event_id": "T4-E15",
+      "scene_id": "S2",
+      "family": "T4_DYNAMIC_GRID_RECONFIG",
+      "variant": "offset_2x2",
+      "seed": 33,
+      "frames": [
+        210,
+        227
+      ],
+      "start_seconds_exact": 7.0,
+      "end_seconds_exclusive_exact": 7.6,
+      "duration_frames": 18
+    },
+    {
+      "event_id": "T4-E16",
+      "scene_id": "S2",
+      "family": "T4_MICRO_GLITCH",
+      "variant": "slices_rgb",
+      "seed": 34,
+      "frames": [
+        232,
+        233
+      ],
+      "start_seconds_exact": 7.733333,
+      "end_seconds_exclusive_exact": 7.8,
+      "duration_frames": 2
+    },
+    {
+      "event_id": "T4-E17",
+      "scene_id": "S2",
+      "family": "T4_RECTANGULAR_BLOCK_STUTTER",
+      "variant": "horizontal_media_blocks",
+      "seed": 35,
+      "frames": [
+        244,
+        251
+      ],
+      "start_seconds_exact": 8.133333,
+      "end_seconds_exclusive_exact": 8.4,
+      "duration_frames": 8
+    },
+    {
+      "event_id": "T4-E18",
+      "scene_id": "S2",
+      "family": "T4_TILE_REVEAL",
+      "variant": "staggered_mosaic",
+      "seed": 36,
+      "frames": [
+        254,
+        267
+      ],
+      "start_seconds_exact": 8.466667,
+      "end_seconds_exclusive_exact": 8.933333,
+      "duration_frames": 14
+    },
+    {
+      "event_id": "T4-E19",
+      "scene_id": "S2",
+      "family": "T4_SHAKE_IMPACT",
+      "variant": "damped_impact",
+      "seed": 37,
+      "frames": [
+        272,
+        275
+      ],
+      "start_seconds_exact": 9.066667,
+      "end_seconds_exclusive_exact": 9.2,
+      "duration_frames": 4
+    },
+    {
+      "event_id": "T4-E20",
+      "scene_id": "S2",
+      "family": "T4_DYNAMIC_GRID_RECONFIG",
+      "variant": "central_dominant",
+      "seed": 38,
+      "frames": [
+        286,
+        303
+      ],
+      "start_seconds_exact": 9.533333,
+      "end_seconds_exclusive_exact": 10.133333,
+      "duration_frames": 18
+    },
+    {
+      "event_id": "T4-E21",
+      "scene_id": "S2",
+      "family": "T4_MICRO_GLITCH",
+      "variant": "thin_slices",
+      "seed": 39,
+      "frames": [
+        308,
+        310
+      ],
+      "start_seconds_exact": 10.266667,
+      "end_seconds_exclusive_exact": 10.366667,
+      "duration_frames": 3
+    },
+    {
+      "event_id": "T4-E22",
+      "scene_id": "S2",
+      "family": "T4_TILE_REVEAL",
+      "variant": "checker_reveal",
+      "seed": 40,
+      "frames": [
+        320,
+        334
+      ],
+      "start_seconds_exact": 10.666667,
+      "end_seconds_exclusive_exact": 11.166667,
+      "duration_frames": 15
+    },
+    {
+      "event_id": "T4-E23",
+      "scene_id": "S2",
+      "family": "T4_RECTANGULAR_BLOCK_STUTTER",
+      "variant": "horizontal_media_blocks",
+      "seed": 41,
+      "frames": [
+        339,
+        346
+      ],
+      "start_seconds_exact": 11.3,
+      "end_seconds_exclusive_exact": 11.566667,
+      "duration_frames": 8
+    },
+    {
+      "event_id": "T4-E24",
+      "scene_id": "S2",
+      "family": "T4_SHAKE_IMPACT",
+      "variant": "damped_impact",
+      "seed": 42,
+      "frames": [
+        349,
+        352
+      ],
+      "start_seconds_exact": 11.633333,
+      "end_seconds_exclusive_exact": 11.766667,
+      "duration_frames": 4
+    },
+    {
+      "event_id": "T4-E25",
+      "scene_id": "S2",
+      "family": "T4_DYNAMIC_GRID_RECONFIG",
+      "variant": "three_columns",
+      "seed": 43,
+      "frames": [
+        363,
+        380
+      ],
+      "start_seconds_exact": 12.1,
+      "end_seconds_exclusive_exact": 12.7,
+      "duration_frames": 18
+    },
+    {
+      "event_id": "T4-E26",
+      "scene_id": "S2",
+      "family": "T4_MICRO_GLITCH",
+      "variant": "rgb_offset",
+      "seed": 44,
+      "frames": [
+        385,
+        386
+      ],
+      "start_seconds_exact": 12.833333,
+      "end_seconds_exclusive_exact": 12.9,
+      "duration_frames": 2
+    },
+    {
+      "event_id": "T4-E27",
+      "scene_id": "S2",
+      "family": "T4_TILE_REVEAL",
+      "variant": "staggered_mosaic",
+      "seed": 45,
+      "frames": [
+        398,
+        415
+      ],
+      "start_seconds_exact": 13.266667,
+      "end_seconds_exclusive_exact": 13.866667,
+      "duration_frames": 18
+    },
+    {
+      "event_id": "T4-E28",
+      "scene_id": "S3",
+      "family": "T4_TILE_REVEAL",
+      "variant": "previous_scene_to_current",
+      "seed": 51,
+      "frames": [
+        420,
+        431
+      ],
+      "start_seconds_exact": 14.0,
+      "end_seconds_exclusive_exact": 14.4,
+      "duration_frames": 12
+    },
+    {
+      "event_id": "T4-E29",
+      "scene_id": "S3",
+      "family": "T4_DYNAMIC_GRID_RECONFIG",
+      "variant": "face_safe_satellites",
+      "seed": 52,
+      "frames": [
+        436,
+        449
+      ],
+      "start_seconds_exact": 14.533333,
+      "end_seconds_exclusive_exact": 15.0,
+      "duration_frames": 14
+    },
+    {
+      "event_id": "T4-E30",
+      "scene_id": "S3",
+      "family": "T4_MICRO_GLITCH",
+      "variant": "face_safe_slices",
+      "seed": 53,
+      "frames": [
+        454,
+        455
+      ],
+      "start_seconds_exact": 15.133333,
+      "end_seconds_exclusive_exact": 15.2,
+      "duration_frames": 2
+    },
+    {
+      "event_id": "T4-E31",
+      "scene_id": "S3",
+      "family": "T4_SHAKE_IMPACT",
+      "variant": "face_safe_impact",
+      "seed": 54,
+      "frames": [
+        464,
+        466
+      ],
+      "start_seconds_exact": 15.466667,
+      "end_seconds_exclusive_exact": 15.566667,
+      "duration_frames": 3
+    },
+    {
+      "event_id": "T4-E32",
+      "scene_id": "S3",
+      "family": "T4_TILE_REVEAL",
+      "variant": "face_safe_mosaic",
+      "seed": 55,
+      "frames": [
+        549,
+        562
+      ],
+      "start_seconds_exact": 18.3,
+      "end_seconds_exclusive_exact": 18.766667,
+      "duration_frames": 14
+    },
+    {
+      "event_id": "T4-E33",
+      "scene_id": "S3",
+      "family": "T4_MICRO_GLITCH",
+      "variant": "face_safe_slices",
+      "seed": 56,
+      "frames": [
+        567,
+        568
+      ],
+      "start_seconds_exact": 18.9,
+      "end_seconds_exclusive_exact": 18.966667,
+      "duration_frames": 2
+    },
+    {
+      "event_id": "T4-E34",
+      "scene_id": "S3",
+      "family": "T4_DYNAMIC_GRID_RECONFIG",
+      "variant": "face_safe_satellites",
+      "seed": 57,
+      "frames": [
+        580,
+        593
+      ],
+      "start_seconds_exact": 19.333333,
+      "end_seconds_exclusive_exact": 19.8,
+      "duration_frames": 14
+    },
+    {
+      "event_id": "T4-E35",
+      "scene_id": "S3",
+      "family": "T4_SHAKE_IMPACT",
+      "variant": "face_safe_impact",
+      "seed": 58,
+      "frames": [
+        598,
+        600
+      ],
+      "start_seconds_exact": 19.933333,
+      "end_seconds_exclusive_exact": 20.033333,
+      "duration_frames": 3
+    },
+    {
+      "event_id": "T4-E36",
+      "scene_id": "S3",
+      "family": "T4_MICRO_GLITCH",
+      "variant": "face_safe_slices",
+      "seed": 59,
+      "frames": [
+        610,
+        611
+      ],
+      "start_seconds_exact": 20.333333,
+      "end_seconds_exclusive_exact": 20.4,
+      "duration_frames": 2
+    },
+    {
+      "event_id": "T4-E37",
+      "scene_id": "S4",
+      "family": "T4_TILE_REVEAL",
+      "variant": "previous_scene_to_current",
+      "seed": 71,
+      "frames": [
+        630,
+        644
+      ],
+      "start_seconds_exact": 21.0,
+      "end_seconds_exclusive_exact": 21.5,
+      "duration_frames": 15
+    },
+    {
+      "event_id": "T4-E38",
+      "scene_id": "S4",
+      "family": "T4_SHAKE_IMPACT",
+      "variant": "damped_impact",
+      "seed": 72,
+      "frames": [
+        648,
+        651
+      ],
+      "start_seconds_exact": 21.6,
+      "end_seconds_exclusive_exact": 21.733333,
+      "duration_frames": 4
+    },
+    {
+      "event_id": "T4-E39",
+      "scene_id": "S4",
+      "family": "T4_DYNAMIC_GRID_RECONFIG",
+      "variant": "central_dominant",
+      "seed": 73,
+      "frames": [
+        660,
+        677
+      ],
+      "start_seconds_exact": 22.0,
+      "end_seconds_exclusive_exact": 22.6,
+      "duration_frames": 18
+    },
+    {
+      "event_id": "T4-E40",
+      "scene_id": "S4",
+      "family": "T4_MICRO_GLITCH",
+      "variant": "slices_rgb",
+      "seed": 74,
+      "frames": [
+        682,
+        683
+      ],
+      "start_seconds_exact": 22.733333,
+      "end_seconds_exclusive_exact": 22.8,
+      "duration_frames": 2
+    },
+    {
+      "event_id": "T4-E41",
+      "scene_id": "S4",
+      "family": "T4_RECTANGULAR_BLOCK_STUTTER",
+      "variant": "horizontal_media_blocks",
+      "seed": 75,
+      "frames": [
+        694,
+        701
+      ],
+      "start_seconds_exact": 23.133333,
+      "end_seconds_exclusive_exact": 23.4,
+      "duration_frames": 8
+    },
+    {
+      "event_id": "T4-E42",
+      "scene_id": "S4",
+      "family": "T4_TILE_REVEAL",
+      "variant": "staggered_mosaic",
+      "seed": 76,
+      "frames": [
+        704,
+        717
+      ],
+      "start_seconds_exact": 23.466667,
+      "end_seconds_exclusive_exact": 23.933333,
+      "duration_frames": 14
+    },
+    {
+      "event_id": "T4-E43",
+      "scene_id": "S4",
+      "family": "T4_SHAKE_IMPACT",
+      "variant": "damped_impact",
+      "seed": 77,
+      "frames": [
+        722,
+        725
+      ],
+      "start_seconds_exact": 24.066667,
+      "end_seconds_exclusive_exact": 24.2,
+      "duration_frames": 4
+    },
+    {
+      "event_id": "T4-E44",
+      "scene_id": "S4",
+      "family": "T4_DYNAMIC_GRID_RECONFIG",
+      "variant": "offset_2x2",
+      "seed": 78,
+      "frames": [
+        736,
+        753
+      ],
+      "start_seconds_exact": 24.533333,
+      "end_seconds_exclusive_exact": 25.133333,
+      "duration_frames": 18
+    },
+    {
+      "event_id": "T4-E45",
+      "scene_id": "S4",
+      "family": "T4_MICRO_GLITCH",
+      "variant": "rgb_offset",
+      "seed": 79,
+      "frames": [
+        758,
+        759
+      ],
+      "start_seconds_exact": 25.266667,
+      "end_seconds_exclusive_exact": 25.333333,
+      "duration_frames": 2
+    },
+    {
+      "event_id": "T4-E46",
+      "scene_id": "S4",
+      "family": "T4_TILE_REVEAL",
+      "variant": "checker_reveal",
+      "seed": 80,
+      "frames": [
+        770,
+        783
+      ],
+      "start_seconds_exact": 25.666667,
+      "end_seconds_exclusive_exact": 26.133333,
+      "duration_frames": 14
+    },
+    {
+      "event_id": "T4-E47",
+      "scene_id": "S4",
+      "family": "T4_SHAKE_IMPACT",
+      "variant": "damped_impact",
+      "seed": 81,
+      "frames": [
+        788,
+        791
+      ],
+      "start_seconds_exact": 26.266667,
+      "end_seconds_exclusive_exact": 26.4,
+      "duration_frames": 4
+    },
+    {
+      "event_id": "T4-E48",
+      "scene_id": "S4",
+      "family": "T4_TILE_REVEAL",
+      "variant": "settle_to_stable_tail",
+      "seed": 82,
+      "frames": [
+        800,
+        809
+      ],
+      "start_seconds_exact": 26.666667,
+      "end_seconds_exclusive_exact": 27.0,
+      "duration_frames": 10
+    }
+  ]
+}

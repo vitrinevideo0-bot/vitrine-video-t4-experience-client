@@ -1,0 +1,131 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "title": "Questions commerçant — T4 Expérience client",
+  "status": "owner_directed_implementation",
+  "additionalProperties": false,
+  "fields": [
+    {
+      "id": "nom",
+      "question": "Comment s'appelle ton restaurant, ton maquis ou ton activité ?",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 40,
+      "example": "La Table de Kandi",
+      "json_target": "merchant_payload.nom",
+      "usage": [
+        "ouverture",
+        "identité",
+        "conclusion"
+      ]
+    },
+    {
+      "id": "produit",
+      "question": "Quel plat ou quelle offre les clients vont-ils découvrir ?",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 32,
+      "example": "Poulet braisé et alloco",
+      "json_target": "merchant_payload.produit",
+      "usage": [
+        "service",
+        "dégustation",
+        "conclusion"
+      ]
+    },
+    {
+      "id": "prix",
+      "question": "Quel prix exact veux-tu afficher ?",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 7,
+      "pattern": "^[0-9 .]+$",
+      "helper": "Écris seulement le nombre. FCFA sera ajouté à l'affichage final.",
+      "example": "3500",
+      "json_target": "merchant_payload.prix",
+      "usage": [
+        "rappel commercial",
+        "conclusion"
+      ]
+    },
+    {
+      "id": "whatsapp",
+      "question": "Quel numéro WhatsApp les clients doivent-ils utiliser ?",
+      "required": true,
+      "minLength": 4,
+      "maxLength": 20,
+      "example": "+229 01 97 00 00 00",
+      "json_target": "merchant_payload.whatsapp",
+      "usage": [
+        "appel à l'action final"
+      ]
+    },
+    {
+      "id": "quartier",
+      "question": "Dans quel quartier ou quelle zone peut-on te trouver ?",
+      "required": true,
+      "minLength": 1,
+      "maxLength": 40,
+      "example": "Kandi, près du marché central",
+      "json_target": "merchant_payload.quartier",
+      "usage": [
+        "bienvenue",
+        "conclusion"
+      ]
+    },
+    {
+      "id": "accroche",
+      "question": "Quelle courte phrase vraie décrit l'accueil ou l'expérience chez toi ?",
+      "required": false,
+      "minLength": 0,
+      "maxLength": 48,
+      "helper": "N'invente ni avis client ni promesse. Si tu ne veux pas de phrase, laisse le champ vide.",
+      "example": "Bien accueillis, bien servis",
+      "json_target": "merchant_payload.accroche",
+      "usage": [
+        "dégustation ou ambiance",
+        "jamais comme faux témoignage"
+      ]
+    }
+  ],
+  "language_assistance": {
+    "is_merchant_field": false,
+    "reason": "La langue parlée n'est pas une septième donnée commerciale obligatoire.",
+    "guide_footer": "Tu peux parler pendant que tu filmes, en français, en fon, en yoruba, en anglais ou dans une autre langue que tu maîtrises.",
+    "silence_footer": "Tu peux aussi ne pas parler si tu préfères.",
+    "captured_voice_kept_for_future_mix": true,
+    "silent_candidate_uses_capture_audio": false,
+    "automatic_subtitles": false
+  },
+  "compatibility_with_t1_t2_t3": {
+    "same_six_keys": [
+      "nom",
+      "produit",
+      "prix",
+      "whatsapp",
+      "quartier",
+      "accroche"
+    ],
+    "same_required_fields": [
+      "nom",
+      "produit",
+      "prix",
+      "whatsapp",
+      "quartier"
+    ],
+    "optional_field": "accroche",
+    "new_required_fields": 0,
+    "invented_content_forbidden": true
+  },
+  "implementation_authorization": {
+    "date_utc": "2026-11-19",
+    "decision_channel": "arena_chat",
+    "instruction": "Passer à l'étape 2, créer les questions et les douze écrans adaptés à T4, les relier aux JSON et les déposer sur GitHub.",
+    "scope": [
+      "six questions canoniques adaptées à Expérience client",
+      "cinq champs requis",
+      "accroche facultative et vraie",
+      "liaison vers merchant_payload"
+    ]
+  }
+}

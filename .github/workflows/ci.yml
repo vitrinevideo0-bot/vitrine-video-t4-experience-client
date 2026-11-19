@@ -1,0 +1,46 @@
+name: Contrats et moteur T4
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Installer les dépendances verrouillées
+        run: python -m pip install -r requirements.txt
+
+      - name: Compiler et tester
+        run: |
+          python -m compileall -q engine tools tests
+          python -m unittest discover -s tests -v
+
+      - name: Prouver la reproductibilité du contrat des 12 écrans
+        run: |
+          python tools/build_t4_capture_flow.py --output /tmp/T4_CAPTURE_FLOW_V1_0_0.json
+          cmp config/T4_CAPTURE_FLOW_V1_0_0.json /tmp/T4_CAPTURE_FLOW_V1_0_0.json
+
+      - name: Prouver la reproductibilité du calendrier A+B+C+D
+        run: |
+          python tools/build_t4_transition_contract.py --output /tmp/T4_TRANSITIONS_30S.json
+          cmp reverse-engineering/T4_TRANSITIONS_30S.json /tmp/T4_TRANSITIONS_30S.json
+
+      - name: Prouver la reproductibilité des 12 maquettes PNG
+        run: |
+          rm -rf /tmp/t4-ui-screens
+          python tools/generate_t4_ui_screens.py --output-dir /tmp/t4-ui-screens
+          diff -qr ui-screens /tmp/t4-ui-screens

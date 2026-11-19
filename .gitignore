@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.tmp/
+output/
+release/
+rushes/cache/*
+!rushes/cache/.gitkeep
+*.part
+.DS_Store

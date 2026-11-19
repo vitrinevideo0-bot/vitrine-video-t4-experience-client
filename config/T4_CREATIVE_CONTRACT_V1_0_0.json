@@ -1,0 +1,521 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "restauration_t4_experience_client_creative_v1_0_0",
+  "template_id": "RESTAURATION-T4",
+  "version": "1.0.0",
+  "title": "Expérience client — fusion glitch, blocs, mosaïque et shake",
+  "status": "owner_directed_implementation_pending_silent_render_review",
+  "purpose": "Présenter l'accueil, le service, une réaction réelle de dégustation et l'appel à venir ou commander, avec une narration visuelle premium très captivante.",
+  "approval_state": {
+    "reference_fusion_owner_approved": true,
+    "reference_fusion_approval": "approvals/APPROBATION_TRANSITIONS_T4_V3_2026-11-19.json",
+    "creative_json_formalized": true,
+    "numeric_engine_parameters": "implemented_candidate_pending_silent_render_review",
+    "four_scene_content": "owner_directed_implementation",
+    "merchant_questions": "form/questions_T4.json",
+    "twelve_capture_screens": "config/T4_CAPTURE_FLOW_V1_0_0.json",
+    "silent_render": "not_created",
+    "music": "not_researched",
+    "voice": "not_generated",
+    "complete_master": "not_created",
+    "cloudflare": "not_integrated"
+  },
+  "truth_model": {
+    "OBSERVED": "Mécanique et fenêtre visibles dans une preview CapCut inspectée à 10 images par seconde.",
+    "OWNER_APPROVED": "Fusion A+B+C+D explicitement choisie par le propriétaire.",
+    "ENGINE_DECISION": "Valeur numérique proposée pour une implémentation déterministe; elle n'est pas présentée comme une mesure exacte de CapCut.",
+    "rule": "Les références définissent une grammaire. Le moteur T4 ne copie ni leurs médias, ni leurs textes, ni leur palette, ni leur musique."
+  },
+  "format_contract": {
+    "orientation": "portrait",
+    "aspect_ratio": "9:16",
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "duration_s": 30.0,
+    "total_frames": 900,
+    "scene_durations_s": [
+      6,
+      8,
+      7,
+      9
+    ],
+    "scene_boundaries_f": [
+      0,
+      180,
+      420,
+      630,
+      900
+    ],
+    "scene_frame_ranges_inclusive": {
+      "S1": [
+        0,
+        179
+      ],
+      "S2": [
+        180,
+        419
+      ],
+      "S3": [
+        420,
+        629
+      ],
+      "S4": [
+        630,
+        899
+      ]
+    },
+    "delivery_codec": "h264",
+    "pixel_format": "yuv420p",
+    "render_plane": "github_actions_only"
+  },
+  "merchant_payload_contract": {
+    "ordered_fields": [
+      "nom",
+      "produit",
+      "prix",
+      "whatsapp",
+      "quartier",
+      "accroche"
+    ],
+    "required_fields": [
+      "nom",
+      "produit",
+      "prix",
+      "whatsapp",
+      "quartier"
+    ],
+    "optional_fields": [
+      "accroche"
+    ],
+    "new_required_fields": 0,
+    "invented_claims_forbidden": true
+  },
+  "scene_slots": [
+    {
+      "id": "S1",
+      "name_proposal": "BIENVENUE",
+      "duration_s": 6,
+      "frame_range_inclusive": [
+        0,
+        179
+      ],
+      "commercial_role_proposal": "Faire entrer le spectateur dans le lieu et montrer un accueil réel.",
+      "content_status": "owner_directed_implementation",
+      "motion_profile": "hook_dense_tiles"
+    },
+    {
+      "id": "S2",
+      "name_proposal": "LE SERVICE",
+      "duration_s": 8,
+      "frame_range_inclusive": [
+        180,
+        419
+      ],
+      "commercial_role_proposal": "Montrer la commande, le trajet du plat et le geste de service.",
+      "content_status": "owner_directed_implementation",
+      "motion_profile": "service_kinetic_grid"
+    },
+    {
+      "id": "S3",
+      "name_proposal": "LA DÉGUSTATION",
+      "duration_s": 7,
+      "frame_range_inclusive": [
+        420,
+        629
+      ],
+      "commercial_role_proposal": "Montrer une dégustation et une réaction authentiques avec consentement.",
+      "content_status": "owner_directed_implementation",
+      "motion_profile": "reaction_face_protected"
+    },
+    {
+      "id": "S4",
+      "name_proposal": "VENEZ OU COMMANDEZ",
+      "duration_s": 9,
+      "frame_range_inclusive": [
+        630,
+        899
+      ],
+      "commercial_role_proposal": "Réunir ambiance, plat, localisation et contact dans une conclusion stable.",
+      "content_status": "owner_directed_implementation",
+      "motion_profile": "ambience_to_stable_cta"
+    }
+  ],
+  "source_references": [
+    {
+      "slot": "A",
+      "title": "PuzzleGlitch",
+      "url": "https://www.capcut.com/template-detail/PuzzleGlitch/7573632958570106117",
+      "evidence_sha256": "a63b1f05a11c3e5abb288599941bbdf4f91c811081a2bfe0cb6e9942cad62dad",
+      "role": "structural_core_tile_reveal",
+      "truth": "OWNER_APPROVED"
+    },
+    {
+      "slot": "B",
+      "title": "Grid Style",
+      "url": "https://www.capcut.com/template-detail/Grid-Style/7270677670365629702",
+      "evidence_sha256": "e6f78ba1d53396aa39794b4203670bdfdbdc33c4529e7389be2848eaec73a21d",
+      "role": "multi_plan_grid_reconfiguration",
+      "truth": "OWNER_APPROVED"
+    },
+    {
+      "slot": "C",
+      "title": "Shake Transition",
+      "url": "https://www.capcut.com/template-detail/fyp-foryou-caredit-capcuttopcreator-popo-hrtz/7601360400000568577",
+      "evidence_sha256": "0cecb596c09cac559ca907c9bf7fe386eb5460555b23839fa13ce86422a52af0",
+      "approved_observation_window_s": [
+        5.3,
+        11.2
+      ],
+      "role": "impact_shake_rectangular_breaks",
+      "truth": "OWNER_APPROVED"
+    },
+    {
+      "slot": "D",
+      "title": "Glitch effect shake",
+      "url": "https://www.capcut.com/template-detail/Glitch-effect-shake/7346375274763914501",
+      "evidence_sha256": "e2392212174cf233adc7f917e8669a2279b7d8b23734c1e7462748ee7254f7a9",
+      "excluded_observation_window_s": [
+        0.0,
+        4.0
+      ],
+      "role": "one_to_three_frame_micro_glitch",
+      "truth": "OWNER_APPROVED"
+    }
+  ],
+  "creative_fusion": {
+    "structural_base": "A",
+    "tile_choreography": "B",
+    "impact_grammar": "C",
+    "micro_break_grammar": "D",
+    "copy_whole_reference_forbidden": true,
+    "constant_scene_change_required": true,
+    "visible_blocks_inside_scene_required": true,
+    "impact_vibration_required": true,
+    "stable_readability_landings_required": true
+  },
+  "transition_vocabulary": [
+    {
+      "id": "T4_TILE_REVEAL",
+      "source_slots": [
+        "A"
+      ],
+      "truth": "ENGINE_DECISION",
+      "duration_f_range": [
+        8,
+        15
+      ],
+      "grid_candidates": [
+        "3x4",
+        "4x6",
+        "5x8"
+      ],
+      "visible_tile_count_range": [
+        4,
+        14
+      ],
+      "frame_coverage_range": [
+        0.2,
+        0.72
+      ],
+      "incoming_media_rule": "Tiles must reveal a distinct temporal window or the adjacent scene; exact-frame duplication is forbidden.",
+      "background_rule": "Use outgoing media or a source-derived near-black field; never use a colored separator.",
+      "edge_rule": "Hard geometric edges softened by at most 1.5 px at 720 px width."
+    },
+    {
+      "id": "T4_DYNAMIC_GRID_RECONFIG",
+      "source_slots": [
+        "B"
+      ],
+      "truth": "ENGINE_DECISION",
+      "duration_f_range": [
+        12,
+        24
+      ],
+      "simultaneous_panel_count_range": [
+        3,
+        9
+      ],
+      "layouts": [
+        "offset_2x2",
+        "three_vertical_columns",
+        "staggered_3x3",
+        "central_dominant_with_satellites"
+      ],
+      "reconfiguration_step_f_range": [
+        6,
+        12
+      ],
+      "dominant_panel_min_area_ratio": 0.34,
+      "panel_gap_px_at_720": [
+        0,
+        6
+      ],
+      "panel_gap_color": "source_derived_near_black_only"
+    },
+    {
+      "id": "T4_SHAKE_IMPACT",
+      "source_slots": [
+        "C"
+      ],
+      "truth": "ENGINE_DECISION",
+      "duration_f_range": [
+        2,
+        4
+      ],
+      "translation_x_px_at_720_range": [
+        7,
+        14
+      ],
+      "translation_y_px_at_720_range": [
+        4,
+        10
+      ],
+      "rotation_deg_range": [
+        -0.65,
+        0.65
+      ],
+      "scale_pulse_range": [
+        1.015,
+        1.04
+      ],
+      "overscan_scale": 1.05,
+      "decay": "alternating_damped",
+      "continuous_shake_forbidden": true
+    },
+    {
+      "id": "T4_RECTANGULAR_BLOCK_STUTTER",
+      "source_slots": [
+        "C"
+      ],
+      "truth": "ENGINE_DECISION",
+      "duration_f_range": [
+        3,
+        8
+      ],
+      "block_count_range": [
+        2,
+        7
+      ],
+      "block_height_ratio_range": [
+        0.025,
+        0.12
+      ],
+      "content": "incoming_or_outgoing_media_only",
+      "solid_color_bars_forbidden": true,
+      "blue_cyan_separator_forbidden": true
+    },
+    {
+      "id": "T4_MICRO_GLITCH",
+      "source_slots": [
+        "D"
+      ],
+      "truth": "ENGINE_DECISION",
+      "duration_f_range": [
+        1,
+        3
+      ],
+      "horizontal_slice_count_range": [
+        3,
+        8
+      ],
+      "slice_offset_px_at_720_range": [
+        -18,
+        18
+      ],
+      "rgb_offset_px_at_720_range": [
+        2,
+        7
+      ],
+      "affected_frame_area_max_ratio": 0.28,
+      "scanline_opacity_max": 0.12,
+      "persistent_vhs_noise_forbidden": true,
+      "full_frame_white_flash_forbidden": true
+    },
+    {
+      "id": "T4_STABLE_LANDING",
+      "source_slots": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "truth": "ENGINE_DECISION",
+      "duration_f_range": [
+        12,
+        24
+      ],
+      "full_frame_required": true,
+      "shake_allowed": false,
+      "glitch_allowed": false,
+      "purpose": "Restore subject, food, face and future text readability after an impact cluster."
+    }
+  ],
+  "cadence_policy": {
+    "truth": "ENGINE_DECISION",
+    "active_break_interval_s_range": [
+      0.35,
+      0.7
+    ],
+    "active_break_interval_f_range": [
+      11,
+      21
+    ],
+    "target_breaks_per_active_second": 1.9,
+    "micro_glitch_frames_per_event_range": [
+      1,
+      3
+    ],
+    "stable_full_frame_share_range": [
+      0.42,
+      0.58
+    ],
+    "tile_or_grid_share_range": [
+      0.24,
+      0.38
+    ],
+    "shake_or_micro_glitch_share_max": 0.16,
+    "same_family_repeat_max": 2,
+    "required_family_rotation": [
+      "T4_TILE_REVEAL",
+      "T4_DYNAMIC_GRID_RECONFIG",
+      "T4_SHAKE_IMPACT",
+      "T4_MICRO_GLITCH",
+      "T4_STABLE_LANDING"
+    ],
+    "black_gap_max_f": 0,
+    "static_hold_max_f_active_sections": 24
+  },
+  "scene_motion_profiles": {
+    "hook_dense_tiles": {
+      "scene_id": "S1",
+      "active_until_f_in_scene": 179,
+      "preferred_families": [
+        "T4_TILE_REVEAL",
+        "T4_DYNAMIC_GRID_RECONFIG",
+        "T4_MICRO_GLITCH",
+        "T4_SHAKE_IMPACT"
+      ],
+      "opening_rule": "Start on content, not black; expose location and welcome through tiles within the first 12 frames."
+    },
+    "service_kinetic_grid": {
+      "scene_id": "S2",
+      "active_until_f_in_scene": 239,
+      "preferred_families": [
+        "T4_DYNAMIC_GRID_RECONFIG",
+        "T4_RECTANGULAR_BLOCK_STUTTER",
+        "T4_SHAKE_IMPACT",
+        "T4_TILE_REVEAL"
+      ],
+      "action_match_rule": "Cuts align with a real service action: order, pickup, walk, set-down or reveal."
+    },
+    "reaction_face_protected": {
+      "scene_id": "S3",
+      "active_until_f_in_scene": 209,
+      "preferred_families": [
+        "T4_TILE_REVEAL",
+        "T4_MICRO_GLITCH",
+        "T4_STABLE_LANDING"
+      ],
+      "shake_amplitude_multiplier": 0.65,
+      "face_safe_center_box_normalized": [
+        0.2,
+        0.12,
+        0.8,
+        0.72
+      ],
+      "face_occlusion_max_f_per_event": 1,
+      "mouth_required_clear_share": 0.8
+    },
+    "ambience_to_stable_cta": {
+      "scene_id": "S4",
+      "active_until_f_in_scene": 179,
+      "stable_tail_start_f_in_scene": 180,
+      "stable_tail_duration_f": 90,
+      "preferred_families_active": [
+        "T4_DYNAMIC_GRID_RECONFIG",
+        "T4_TILE_REVEAL",
+        "T4_SHAKE_IMPACT",
+        "T4_MICRO_GLITCH"
+      ],
+      "stable_tail_rule": "Final three seconds remain full-frame and stable so future location, WhatsApp and CTA can be read."
+    }
+  },
+  "media_source_policy": {
+    "camera_capture_count": 4,
+    "extra_capture_required": false,
+    "subshots_are_temporal_windows_of_accepted_capture": true,
+    "minimum_subshot_offset_f": 10,
+    "exact_frame_duplicate_across_visible_panels_forbidden": true,
+    "adjacent_scene_preview_allowed_only_within_boundary_transition_f": 15,
+    "duplicate_audio_layers_muted": true,
+    "primary_capture_audio_time_map": "identity",
+    "source_speed": 1.0,
+    "retiming_for_visual_layers": "forbidden_before_owner_validation_of_silent_rush"
+  },
+  "look_and_readability": {
+    "look": "warm_human_premium_restaurant",
+    "skin_protection": true,
+    "food_color_protection": true,
+    "exposure_flicker_forbidden": true,
+    "fixed_blue_cyan_graphic_elements_forbidden": true,
+    "visible_separator_lines_forbidden": true,
+    "thin_low_contrast_text_forbidden": true,
+    "silent_rush_overlay_text_allowed": false,
+    "reference_watermarks_allowed": false,
+    "reference_text_allowed": false,
+    "reference_music_allowed": false
+  },
+  "silent_render_contract": {
+    "audio_stream": "absent",
+    "overlay_text": "absent",
+    "burned_subtitles": "absent",
+    "render_source": "github_actions_artifact_only",
+    "local_render_may_be_used_for_development_but_never_presented_as_final": true,
+    "must_validate_before_music": [
+      "plans",
+      "rhythm",
+      "tile_visibility",
+      "scene_change_density",
+      "shake_strength",
+      "face_and_food_readability",
+      "transition_family_rotation"
+    ]
+  },
+  "future_audio_contract": {
+    "music_selection_before_voice": true,
+    "music_tracks_unique_to_t4_required": 4,
+    "reuse_other_template_music_forbidden": true,
+    "voice_after_music_selection_only": true,
+    "voice_timing_must_follow_t1_structure": true,
+    "ducking_required": true
+  },
+  "qa_acceptance": {
+    "scene_count_exact": 4,
+    "duration_exact_s": 30.0,
+    "frame_count_exact": 900,
+    "resolution_exact": [
+      720,
+      1280
+    ],
+    "fps_exact": 30,
+    "visible_block_events_required_per_scene_min": 3,
+    "shake_impacts_required_per_scene_range": [
+      2,
+      6
+    ],
+    "micro_glitch_event_duration_f_max": 3,
+    "no_blue_cyan_separator": true,
+    "no_black_gaps": true,
+    "s4_final_stable_tail_f_min": 90,
+    "face_protection_required_in_s3": true,
+    "silent_render_has_no_audio": true,
+    "silent_render_has_no_text": true
+  },
+  "implementation_authorization": {
+    "date_utc": "2026-11-19",
+    "decision_channel": "arena_chat",
+    "instruction": "Passer à l’étape 2, relier questions et douze écrans aux JSON sur GitHub, puis produire le candidat sans voix off depuis GitHub Actions.",
+    "human_review_after_render_required": true
+  }
+}

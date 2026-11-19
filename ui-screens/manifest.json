@@ -1,0 +1,185 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "status": "owner_directed_implementation_proof",
+  "sources": {
+    "questions": "form/questions_T4.json",
+    "guide": "capture-guide/consignes_T4.json",
+    "capture_flow": "config/T4_CAPTURE_FLOW_V1_0_0.json"
+  },
+  "stable_screen_count": 12,
+  "states": [
+    "A_GUIDE",
+    "B_RECORDING",
+    "C_REVIEW"
+  ],
+  "screens": [
+    {
+      "screen_number": 1,
+      "scene": 1,
+      "state": "A_GUIDE",
+      "screen_id": "T4_CAPTURE_S1_A_GUIDE",
+      "file": "T4_CAPTURE_S1_A_GUIDE.png",
+      "size": [
+        720,
+        1280
+      ],
+      "sha256": "3c7a8aec5457c8ce49dd39abe009eb524a175668f1c67d4679e983925824519d",
+      "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/0"
+    },
+    {
+      "screen_number": 2,
+      "scene": 1,
+      "state": "B_RECORDING",
+      "screen_id": "T4_CAPTURE_S1_B_RECORDING",
+      "file": "T4_CAPTURE_S1_B_RECORDING.png",
+      "size": [
+        720,
+        1280
+      ],
+      "sha256": "9efe97f52edc33d9d729f01aa89db60689d6aa1736c050557a9997ef5517b87e",
+      "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/1"
+    },
+    {
+      "screen_number": 3,
+      "scene": 1,
+      "state": "C_REVIEW",
+      "screen_id": "T4_CAPTURE_S1_C_REVIEW",
+      "file": "T4_CAPTURE_S1_C_REVIEW.png",
+      "size": [
+        720,
+        1280
+      ],
+      "sha256": "6d59909fa78f1d1ab3d3817923f17556021b4db94897e3ca09df480942947495",
+      "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/2"
+    },
+    {
+      "screen_number": 4,
+      "scene": 2,
+      "state": "A_GUIDE",
+      "screen_id": "T4_CAPTURE_S2_A_GUIDE",
+      "file": "T4_CAPTURE_S2_A_GUIDE.png",
+      "size": [
+        720,
+        1280
+      ],
+      "sha256": "0ae741bee186070d69977c34e21cee141d31f17a78624d6744844b069da34307",
+      "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/3"
+    },
+    {
+      "screen_number": 5,
+      "scene": 2,
+      "state": "B_RECORDING",
+      "screen_id": "T4_CAPTURE_S2_B_RECORDING",
+      "file": "T4_CAPTURE_S2_B_RECORDING.png",
+      "size": [
+        720,
+        1280
+      ],
+      "sha256": "a12811145a6c372507dc24476b8e0b3e1832dc0923033d5e153018aa002ff135",
+      "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/4"
+    },
+    {
+      "screen_number": 6,
+      "scene": 2,
+      "state": "C_REVIEW",
+      "screen_id": "T4_CAPTURE_S2_C_REVIEW",
+      "file": "T4_CAPTURE_S2_C_REVIEW.png",
+      "size": [
+        720,
+        1280
+      ],
+      "sha256": "f1463bb1c38c3922135914210d55f516b03cff28e3cd958edc87361151ecba75",
+      "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/5"
+    },
+    {
+      "screen_number": 7,
+      "scene": 3,
+      "state": "A_GUIDE",
+      "screen_id": "T4_CAPTURE_S3_A_GUIDE",
+      "file": "T4_CAPTURE_S3_A_GUIDE.png",
+      "size": [
+        720,
+        1280
+      ],
+      "sha256": "ca7e984c06d2f0b0ef0e92886349314d1668d29207e45f30c36a3d7719753f81",
+      "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/6"
+    },
+    {
+      "screen_number": 8,
+      "scene": 3,
+      "state": "B_RECORDING",
+      "screen_id": "T4_CAPTURE_S3_B_RECORDING",
+      "file": "T4_CAPTURE_S3_B_RECORDING.png",
+      "size": [
+        720,
+        1280
+      ],
+      "sha256": "435cbe07275477f72cefc36f8deac94f68d5710cffb9a5f43f075f8562f4839d",
+      "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/7"
+    },
+    {
+      "screen_number": 9,
+      "scene": 3,
+      "state": "C_REVIEW",
+      "screen_id": "T4_CAPTURE_S3_C_REVIEW",
+      "file": "T4_CAPTURE_S3_C_REVIEW.png",
+      "size": [
+        720,
+        1280
+      ],
+      "sha256": "e338f1f21ddbd0c5f52ee57489aafbfa1a78aac66ce76788e86fece01917440a",
+      "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/8"
+    },
+    {
+      "screen_number": 10,
+      "scene": 4,
+      "state": "A_GUIDE",
+      "screen_id": "T4_CAPTURE_S4_A_GUIDE",
+      "file": "T4_CAPTURE_S4_A_GUIDE.png",
+      "size": [
+        720,
+        1280
+      ],
+      "sha256": "8215c59c9558e8650c53599b45762d283f3199ad9b694fc47b3741d155021aed",
+      "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/9"
+    },
+    {
+      "screen_number": 11,
+      "scene": 4,
+      "state": "B_RECORDING",
+      "screen_id": "T4_CAPTURE_S4_B_RECORDING",
+      "file": "T4_CAPTURE_S4_B_RECORDING.png",
+      "size": [
+        720,
+        1280
+      ],
+      "sha256": "0faf1894f0548b371558ff799a42f55092413a20f5bc39f318ef3412ca9fb0a3",
+      "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/10"
+    },
+    {
+      "screen_number": 12,
+      "scene": 4,
+      "state": "C_REVIEW",
+      "screen_id": "T4_CAPTURE_S4_C_REVIEW",
+      "file": "T4_CAPTURE_S4_C_REVIEW.png",
+      "size": [
+        720,
+        1280
+      ],
+      "sha256": "48900a19b257a768c86491c9b1791695960c57d220d02e08a753d0350df7bc11",
+      "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/11"
+    }
+  ],
+  "board": "T4_PLANCHE_12_ECRANS.png",
+  "board_size": [
+    898,
+    2116
+  ],
+  "board_sha256": "da27b16b693421f5239dbed56b6e79d4810f30f7f96fa271a2b64c55d8fdcffd",
+  "external_media_used": false,
+  "font_files": [
+    "assets/fonts/DejaVuSans.ttf",
+    "assets/fonts/DejaVuSans-Bold.ttf"
+  ]
+}

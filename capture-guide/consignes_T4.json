@@ -1,0 +1,216 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "status": "owner_directed_implementation",
+  "total_duration_seconds": 30,
+  "scene_durations_seconds": [
+    6,
+    8,
+    7,
+    9
+  ],
+  "stable_screen_count": 12,
+  "states_per_scene": [
+    "A_GUIDE",
+    "B_RECORDING",
+    "C_REVIEW"
+  ],
+  "mention_langues_commune": "Tu peux parler pendant que tu filmes, en français, en fon, en yoruba, en anglais ou dans une autre langue que tu maîtrises.",
+  "mention_silence_facultatif": "Tu peux aussi ne pas parler si tu préfères.",
+  "bouton_principal": "COMMENCER À FILMER",
+  "audio": {
+    "parole_obligatoire": false,
+    "conserver_voix_capturee_pour_futur_mix": true,
+    "vitesse_parole": 1.0,
+    "sous_titres_automatiques": false,
+    "rendu_silencieux_audio": false
+  },
+  "capture_rule": "Le commerçant filme exactement quatre prises simples. Les mosaïques, grilles, blocs, impacts et micro-glitchs sont ajoutés ensuite par le moteur; aucune cinquième captation n'est demandée.",
+  "scenes": [
+    {
+      "n": 1,
+      "total": 4,
+      "secondes": 6,
+      "titre": "BIENVENUE",
+      "fonction_commerciale": "Faire entrer immédiatement le spectateur dans le lieu et montrer un accueil réel.",
+      "consigne": "Commence sur l'entrée, l'enseigne ou un repère clair. Avance doucement vers la salle, puis termine sur un sourire ou un geste d'accueil naturel.",
+      "a_filmer": [
+        "L'entrée, l'enseigne ou un repère reconnaissable.",
+        "Une avancée simple vers l'intérieur.",
+        "Une personne consentante qui accueille naturellement."
+      ],
+      "a_eviter": [
+        "Une entrée vide ou trop sombre.",
+        "Un contre-jour qui cache le visage.",
+        "Un geste exagéré ou une personne non consentante."
+      ],
+      "ce_que_tu_dois_faire": "Dégage le passage, garde le téléphone vertical et termine par une seconde stable sur l'accueil.",
+      "exemple_facultatif": "Bienvenue chez nous, nous sommes heureux de vous recevoir.",
+      "recording_prompts": [
+        {
+          "from_ms": 0,
+          "to_ms": 2000,
+          "text": "MONTRE L'ENTRÉE"
+        },
+        {
+          "from_ms": 2000,
+          "to_ms": 4000,
+          "text": "AVANCE VERS L'ACCUEIL"
+        },
+        {
+          "from_ms": 4000,
+          "to_ms": 6000,
+          "text": "GARDE LE SOURIRE NET"
+        }
+      ],
+      "review_question": "VOIT-ON CLAIREMENT LE LIEU ET L'ACCUEIL ?",
+      "review_checks": [
+        "Le lieu se reconnaît dès le début.",
+        "La personne est nette et consentante.",
+        "La fin est stable."
+      ],
+      "review_error": "Refais la prise si l'entrée est sombre, coupée ou si l'accueil n'est pas lisible.",
+      "positive_action": "SCÈNE SUIVANTE"
+    },
+    {
+      "n": 2,
+      "total": 4,
+      "secondes": 8,
+      "titre": "LE SERVICE",
+      "fonction_commerciale": "Montrer la prise en charge, le trajet du plat et sa présentation au client.",
+      "consigne": "Commence quand le plat est pris en charge, suis-le sur un trajet court, puis garde-le dans le cadre lorsqu'il est posé ou présenté au client.",
+      "a_filmer": [
+        "La prise du plat ou le départ du service.",
+        "Le déplacement du plat vers la table.",
+        "La pose finale avec le plat entièrement visible."
+      ],
+      "a_eviter": [
+        "Couper les mains ou l'assiette.",
+        "Faire un trajet long ou encombré.",
+        "Laisser une personne traverser devant l'objectif."
+      ],
+      "ce_que_tu_dois_faire": "Reste près de l'action, marche doucement et termine par une pose stable du plat.",
+      "exemple_facultatif": "Votre commande arrive, préparée et servie avec soin.",
+      "recording_prompts": [
+        {
+          "from_ms": 0,
+          "to_ms": 2000,
+          "text": "CADRE LA PRISE DU PLAT"
+        },
+        {
+          "from_ms": 2000,
+          "to_ms": 6000,
+          "text": "SUIS LE SERVICE"
+        },
+        {
+          "from_ms": 6000,
+          "to_ms": 8000,
+          "text": "GARDE LA POSE FINALE"
+        }
+      ],
+      "review_question": "LE SERVICE SE COMPREND-IL DU DÉBUT À LA FIN ?",
+      "review_checks": [
+        "La prise du plat est visible.",
+        "Le déplacement reste net.",
+        "La pose finale montre le plat."
+      ],
+      "review_error": "Refais la prise si le plat sort du cadre ou si quelqu'un masque l'action.",
+      "positive_action": "SCÈNE SUIVANTE"
+    },
+    {
+      "n": 3,
+      "total": 4,
+      "secondes": 7,
+      "titre": "LA DÉGUSTATION",
+      "fonction_commerciale": "Apporter une preuve humaine avec une vraie bouchée et une réaction naturelle.",
+      "consigne": "Cadre ensemble la personne consentante et le plat. Filme une bouchée complète, puis laisse la réaction se produire naturellement sans la faire jouer.",
+      "a_filmer": [
+        "Le visage et le plat dans le même cadre.",
+        "Une bouchée complète et simple.",
+        "Une réaction naturelle avec les yeux et la bouche visibles."
+      ],
+      "a_eviter": [
+        "Demander une fausse réaction ou un faux avis.",
+        "Masquer le visage avec une main ou un objet.",
+        "Zoomer pendant la bouchée."
+      ],
+      "ce_que_tu_dois_faire": "Obtiens l'accord de la personne, garde le téléphone stable et laisse la réaction respirer à la fin.",
+      "exemple_facultatif": "Goûte simplement le plat et réagis comme tu le ressens.",
+      "recording_prompts": [
+        {
+          "from_ms": 0,
+          "to_ms": 2000,
+          "text": "CADRE LE PLAT ET LE VISAGE"
+        },
+        {
+          "from_ms": 2000,
+          "to_ms": 4500,
+          "text": "FILME LA BOUCHÉE"
+        },
+        {
+          "from_ms": 4500,
+          "to_ms": 7000,
+          "text": "LAISSE VENIR LA RÉACTION"
+        }
+      ],
+      "review_question": "LA BOUCHÉE ET LA RÉACTION SONT-ELLES NATURELLES ?",
+      "review_checks": [
+        "Le visage est net et éclairé.",
+        "La bouchée est complète.",
+        "La réaction n'est ni masquée ni forcée."
+      ],
+      "review_error": "Refais la prise si le visage, la bouche ou l'assiette sont coupés.",
+      "positive_action": "SCÈNE SUIVANTE"
+    },
+    {
+      "n": 4,
+      "total": 4,
+      "secondes": 9,
+      "titre": "VENEZ / COMMANDEZ",
+      "fonction_commerciale": "Conclure avec l'ambiance réelle et un cadre stable pour le futur contact.",
+      "consigne": "Pars d'un plat ou d'une table, révèle l'ambiance générale, puis ne bouge plus pendant les trois dernières secondes.",
+      "a_filmer": [
+        "Un détail appétissant ou une table servie.",
+        "La salle, l'équipe ou une ambiance réelle.",
+        "Un cadre propre et stable pendant les trois dernières secondes."
+      ],
+      "a_eviter": [
+        "Une caisse ou un espace désordonné.",
+        "Une personne reconnaissable sans son accord.",
+        "Bouger le téléphone pendant la fin stable."
+      ],
+      "ce_que_tu_dois_faire": "À six secondes, verrouille tes mains et garde exactement le même cadre jusqu'à la fin.",
+      "exemple_facultatif": "Venez nous retrouver ou commandez directement sur WhatsApp.",
+      "recording_prompts": [
+        {
+          "from_ms": 0,
+          "to_ms": 3000,
+          "text": "MONTRE LE PLAT OU LA TABLE"
+        },
+        {
+          "from_ms": 3000,
+          "to_ms": 6000,
+          "text": "RÉVÈLE L'AMBIANCE"
+        },
+        {
+          "from_ms": 6000,
+          "to_ms": 9000,
+          "text": "NE BOUGE PLUS"
+        }
+      ],
+      "review_question": "LA FIN RESTE-T-ELLE STABLE PENDANT TROIS SECONDES ?",
+      "review_checks": [
+        "Le plat ou l'ambiance donne envie.",
+        "Toutes les personnes visibles sont consentantes.",
+        "Les trois dernières secondes sont stables."
+      ],
+      "review_error": "Refais la prise si le téléphone bouge pendant les trois dernières secondes.",
+      "positive_action": "VOIR MON MONTAGE"
+    }
+  ],
+  "implementation_authorization": {
+    "date_utc": "2026-11-19",
+    "decision_channel": "arena_chat",
+    "instruction": "Créer les contenus des douze écrans adaptés à RESTAURATION-T4 et les relier aux structures JSON sur GitHub."
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "purpose": "Quatre rushes réels de démonstration pour le candidat silencieux Expérience client; ils ne remplacent pas les quatre captations d'un commerçant.",
+  "license": {
+    "provider": "Pexels",
+    "license_url": "https://www.pexels.com/license/",
+    "verified_at_utc": "2026-11-19",
+    "summary": "Téléchargement, usage et modification autorisés gratuitement; attribution non obligatoire mais conservée; aucune redistribution des rushes bruts dans le dépôt, l'artefact ou la Release.",
+    "raw_media_committed": false,
+    "raw_media_published_as_artifact": false
+  },
+  "output_contract": {
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "duration_seconds": 30,
+    "total_frames": 900,
+    "audio_streams": 0,
+    "burned_text": false
+  },
+  "scenes": [
+    {
+      "scene": "S1",
+      "title": "Bienvenue",
+      "duration_seconds": 6,
+      "output_frames": [
+        0,
+        179
+      ],
+      "pexels_id": 8921923,
+      "creator": "Ron Lach",
+      "page_url": "https://www.pexels.com/video/people-greeting-each-other-at-a-restaurant-8921923/",
+      "download_url": "https://videos.pexels.com/video-files/8921923/8921923-uhd_2732_1440_25fps.mp4",
+      "cache_filename": "S1_welcome.mp4",
+      "expected_bytes": 12830293,
+      "sha256": "eb6ca1b7fc51bd2a4179e0f384416a2ffce70fc8812979425eb1573d40f300b9",
+      "source_width": 2732,
+      "source_height": 1440,
+      "source_fps": 25.0,
+      "source_duration_seconds": 17.28,
+      "trim_start_seconds": 0.3,
+      "crop_x_bias": 0.0,
+      "content": "Des amis se saluent chaleureusement dans un restaurant; sourire et geste d'accueil visibles.",
+      "demo_fit": "welcome_human_interaction"
+    },
+    {
+      "scene": "S2",
+      "title": "Le service",
+      "duration_seconds": 8,
+      "output_frames": [
+        180,
+        419
+      ],
+      "pexels_id": 5657164,
+      "creator": "ROMAN ODINTSOV",
+      "page_url": "https://www.pexels.com/video/a-person-serving-food-5657164/",
+      "download_url": "https://videos.pexels.com/video-files/5657164/5657164-uhd_2732_1440_30fps.mp4",
+      "cache_filename": "S2_service.mp4",
+      "expected_bytes": 22502073,
+      "sha256": "047698842d99ebc2029f55464106c49860b6e3b30a76a364a9be5b121c07e0c8",
+      "source_width": 2732,
+      "source_height": 1440,
+      "source_fps": 29.97002997,
+      "source_duration_seconds": 22.789433,
+      "trim_start_seconds": 4.5,
+      "crop_x_bias": 0.25,
+      "content": "Un serveur déplace un plateau de plats colorés vers une table.",
+      "demo_fit": "dish_travel_and_service"
+    },
+    {
+      "scene": "S3",
+      "title": "La dégustation",
+      "duration_seconds": 7,
+      "output_frames": [
+        420,
+        629
+      ],
+      "pexels_id": 10058505,
+      "creator": "cottonbro studio",
+      "page_url": "https://www.pexels.com/video/close-up-on-two-people-eating-10058505/",
+      "download_url": "https://videos.pexels.com/video-files/10058505/10058505-hd_1080_2048_25fps.mp4",
+      "cache_filename": "S3_tasting.mp4",
+      "expected_bytes": 13723098,
+      "sha256": "e55264b968b70238fbbc59ed010da2092fa393f5cdd88e78e2dd869b61a042cb",
+      "source_width": 1080,
+      "source_height": 2048,
+      "source_fps": 25.0,
+      "source_duration_seconds": 30.84,
+      "trim_start_seconds": 16.3,
+      "crop_x_bias": 0.0,
+      "content": "Une cliente prend une bouchée puis sourit naturellement dans un café.",
+      "demo_fit": "bite_and_natural_reaction",
+      "face_safe_box_normalized": [
+        0.18,
+        0.08,
+        0.84,
+        0.72
+      ]
+    },
+    {
+      "scene": "S4",
+      "title": "Venez / Commandez",
+      "duration_seconds": 9,
+      "output_frames": [
+        630,
+        899
+      ],
+      "pexels_id": 8922781,
+      "creator": "Ron Lach",
+      "page_url": "https://www.pexels.com/video/a-group-of-friends-in-a-bar-8922781/",
+      "download_url": "https://videos.pexels.com/video-files/8922781/8922781-uhd_2732_1440_25fps.mp4",
+      "cache_filename": "S4_ambience.mp4",
+      "expected_bytes": 42815941,
+      "sha256": "7b7eb11adf2874c5b0d9cd05d7dde14837d946b71f794641476dcfe3064c6f55",
+      "source_width": 2732,
+      "source_height": 1440,
+      "source_fps": 25.0,
+      "source_duration_seconds": 71.8,
+      "trim_start_seconds": 30.0,
+      "crop_x_bias": 0.0,
+      "content": "Groupe de clients et service dans une salle de restaurant à caméra fixe.",
+      "demo_fit": "restaurant_ambience_and_stable_final_composition"
+    }
+  ]
+}

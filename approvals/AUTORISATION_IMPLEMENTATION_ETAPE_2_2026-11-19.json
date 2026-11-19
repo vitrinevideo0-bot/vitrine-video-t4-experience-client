@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "status": "owner_directed_implementation",
+  "date_utc": "2026-11-19",
+  "decision_channel": "arena_chat",
+  "instruction_summary": "Passer directement à l'étape 2, créer la partie questions et les douze écrans adaptés à T4 comme pour T1, T2 et T3, les relier aux JSON sur GitHub, télécharger les rushes puis fournir la vidéo sans voix off depuis les serveurs GitHub.",
+  "authorized_scope": [
+    "six_questions_merchant_payload",
+    "four_capture_scenes_6_8_7_9_seconds",
+    "twelve_stable_capture_screens_A_B_C",
+    "json_binding_and_github_repository",
+    "licensed_demo_rush_download",
+    "github_actions_silent_render",
+    "github_artifact_and_prerelease_download"
+  ],
+  "human_review_still_required_for": [
+    "silent_visual_candidate",
+    "future_music",
+    "future_voice",
+    "future_complete_master",
+    "future_cloudflare_integration"
+  ],
+  "cloudflare_production_deployment_authorized": false
+}

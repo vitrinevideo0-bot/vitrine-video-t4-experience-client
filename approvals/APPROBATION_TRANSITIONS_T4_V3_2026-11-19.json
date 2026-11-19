@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "decision_type": "creative_transition_reference_fusion",
+  "status": "owner_approved",
+  "date_utc": "2026-11-19",
+  "timezone": "UTC",
+  "decision_channel": "arena_ask_user",
+  "question_id": "validation_t4_transitions_v3",
+  "selected_option_id": "fusion_complete",
+  "decision_label": "Valider A+B+C+D",
+  "approved_scope": [
+    "reference_A_PuzzleGlitch_as_structural_core",
+    "reference_B_Grid_Style_for_multi_plan_tiles",
+    "reference_C_Shake_Transition_for_impact_and_rectangular_breaks",
+    "reference_D_Glitch_effect_shake_for_one_to_three_frame_micro_glitches",
+    "controlled_fusion_A_plus_B_plus_C_plus_D"
+  ],
+  "not_approved_by_this_decision": [
+    "scene_content",
+    "merchant_questions",
+    "capture_copy",
+    "twelve_capture_screens",
+    "silent_rush_render",
+    "music",
+    "voice",
+    "mix",
+    "complete_master",
+    "cloudflare_integration"
+  ],
+  "references": [
+    {
+      "slot": "A",
+      "title": "PuzzleGlitch",
+      "url": "https://www.capcut.com/template-detail/PuzzleGlitch/7573632958570106117",
+      "preview_file": "glitch-candidates/7573632958570106117-1.mp4",
+      "preview_sha256": "a63b1f05a11c3e5abb288599941bbdf4f91c811081a2bfe0cb6e9942cad62dad"
+    },
+    {
+      "slot": "B",
+      "title": "Grid Style",
+      "url": "https://www.capcut.com/template-detail/Grid-Style/7270677670365629702",
+      "preview_file": "glitch-candidates/7270677670365629702-1.mp4",
+      "preview_sha256": "e6f78ba1d53396aa39794b4203670bdfdbdc33c4529e7389be2848eaec73a21d"
+    },
+    {
+      "slot": "C",
+      "title": "Shake Transition",
+      "url": "https://www.capcut.com/template-detail/fyp-foryou-caredit-capcuttopcreator-popo-hrtz/7601360400000568577",
+      "preview_file": "glitch-candidates/7601360400000568577-1.mp4",
+      "preview_sha256": "0cecb596c09cac559ca907c9bf7fe386eb5460555b23839fa13ce86422a52af0",
+      "approved_observation_window_s": [5.3, 11.2]
+    },
+    {
+      "slot": "D",
+      "title": "Glitch effect shake",
+      "url": "https://www.capcut.com/template-detail/Glitch-effect-shake/7346375274763914501",
+      "preview_file": "glitch-candidates/7346375274763914501-1.mp4",
+      "preview_sha256": "e2392212174cf233adc7f917e8669a2279b7d8b23734c1e7462748ee7254f7a9",
+      "excluded_observation_window_s": [0.0, 4.0]
+    }
+  ],
+  "source_review_document": {
+    "path": "docs/LOT_RESTAURATION_T4_GLITCH_BLOCS_SHAKE_V3_VALIDE.md",
+    "sha256_after_approval_annotation": "3bb773a179c555732dadf9bd9702443160ac25e43f481175f47bfdafb2dc9231"
+  }
+}
