@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "display_name": "Expérience client",
   "sector": "RESTAURATION",
-  "catalog_status": "IMPLEMENTED_PENDING_SERVER_COMPLETE_RENDER",
+  "catalog_status": "SERVER_VALIDATED_READY_FOR_INTEGRATOR",
   "audio_profile": "afrobeat",
   "purpose": "Valoriser un accueil réel, le service, une dégustation consentie puis l'ambiance et le contact du restaurant.",
   "format": {
@@ -99,7 +99,7 @@
     "one_music_per_video": true,
     "no_immediate_repeat": true,
     "state_commit_policy": "after_completed_qc_pass_and_verified_output_only",
-    "github_production_master_status": "pending"
+    "github_production_master_status": "PASS"
   },
   "catalogue_preparation": {
     "package_spec": "packages/t4-experience-client-v1/package_spec.json",

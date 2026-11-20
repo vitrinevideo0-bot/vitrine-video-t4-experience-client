@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "created_on": "2026-11-18",
+  "status": "PASS",
+  "scope": "Downloaded additive GitHub Release revalidation for the owner-approved Pixabay replacement music pool",
+  "implementation": {
+    "commit": "d9d34dd0de8340c7a1d33ec8680107f786486723",
+    "ci_run_id": "44702678715",
+    "ci_conclusion": "success"
+  },
+  "github_render": {
+    "run_id": "44702885815",
+    "run_url": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/actions/runs/44702885815",
+    "conclusion": "success",
+    "selected_music_id": "t4_music_162186"
+  },
+  "release": {
+    "tag": "t4-experience-client-v4.1.0-pixabay-replacement-candidate-2",
+    "url": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/releases/tag/t4-experience-client-v4.1.0-pixabay-replacement-candidate-2",
+    "target_commit": "d9d34dd0de8340c7a1d33ec8680107f786486723",
+    "asset_count": 17,
+    "sha256s_file_sha256": "975fa27a1402a787b4a5f4cd77ab35e7220100e3d7d506b7e366a5caf01c6dd4"
+  },
+  "master": {
+    "file": "VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4",
+    "sha256": "a1cf0abf8f00724468c1489ce14f5e656b3eb85730c5d1e2a4ec383117fe74bd",
+    "bytes": 12157788,
+    "video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "duration_s": 30.0,
+    "frames": 900,
+    "width": 720,
+    "height": 1280,
+    "fps": "30/1",
+    "audio_codec": "aac",
+    "audio_sample_rate": 48000,
+    "audio_channels": 2,
+    "integrated_lufs": -16.22,
+    "true_peak_dbtp": -1.98
+  },
+  "music": {
+    "id": "t4_music_162186",
+    "choice": "3",
+    "pixabay_id": 162186,
+    "title": "afro love prod by Gis on Beat",
+    "artist": "Gis_photography",
+    "file": "audio/music/t4-afrobeat-v1/t4_162186_gis-photography_30s.mp3",
+    "sha256": "f7beceb915cdb5248c00fe5de5bb5e5f1f572fc7171c69329690e1a0d2e94965",
+    "source_sha256": "9e5e0c2502a9c1bcb7ec870788569d32fcbfacf99ddf596d06ca280714e837cb",
+    "content_id_registered": false,
+    "last_successful_music_id": null,
+    "state_update_policy": "after_completed_qc_pass_only"
+  },
+  "quality": {
+    "status": "PASS",
+    "passed": 26,
+    "failed": 0,
+    "total": 26
+  },
+  "checks": [
+    {
+      "check": "github_workflow_success",
+      "status": "PASS"
+    },
+    {
+      "check": "release_is_additive_and_historical_releases_preserved",
+      "status": "PASS"
+    },
+    {
+      "check": "release_sha256s_all_pass",
+      "status": "PASS"
+    },
+    {
+      "check": "render_report_pass_26_of_26",
+      "status": "PASS"
+    },
+    {
+      "check": "render_result_completed_qc_pass",
+      "status": "PASS"
+    },
+    {
+      "check": "selected_owner_approved_replacement_choice_3",
+      "status": "PASS"
+    },
+    {
+      "check": "selected_content_id_registered_false",
+      "status": "PASS"
+    },
+    {
+      "check": "master_sha256_matches_report_and_result",
+      "status": "PASS"
+    },
+    {
+      "check": "master_size_matches_report_and_result",
+      "status": "PASS"
+    },
+    {
+      "check": "visual_bitstream_preserved",
+      "status": "PASS"
+    },
+    {
+      "check": "cloudflare_production_deployment_claimed",
+      "status": "PASS"
+    },
+    {
+      "check": "r2_manual_upload_claimed",
+      "status": "PASS"
+    }
+  ],
+  "summary": {
+    "passed": 12,
+    "failed": 0,
+    "total": 12
+  },
+  "deployment_claims": {
+    "github_actions_rendered": true,
+    "release_downloaded_and_revalidated": true,
+    "cloudflare_deployed": false,
+    "r2_production_upload": false
+  }
+}

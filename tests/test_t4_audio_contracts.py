@@ -154,7 +154,7 @@ def test_voice_history_is_preserved_and_replacement_music_is_dated_2026_11_18() 
     assert not (ROOT / "audio/music/t4-afrobeat-v1/evidence/PIXABAY_CONTENT_LICENSE_SNAPSHOT_2026-11-20.md").exists()
 
 
-def test_canonical_package_references_and_pending_replacement_status_are_honest() -> None:
+def test_canonical_package_references_and_server_validated_replacement_status_are_honest() -> None:
     canonical = json.loads((ROOT / "config/T4_EXPERIENCE_CLIENT_PACKAGE_V1_0_0.json").read_text())
     paths = [
         canonical["merchant_payload"]["contract"],
@@ -175,25 +175,26 @@ def test_canonical_package_references_and_pending_replacement_status_are_honest(
     paths = [path for path in paths if isinstance(path, str) and ("/" in path or path.startswith("."))]
     missing = [path for path in paths if not (ROOT / path).exists()]
     assert missing == []
-    assert canonical["catalog_status"] == "IMPLEMENTED_PENDING_SERVER_COMPLETE_RENDER"
-    assert canonical["complete_audio"]["github_production_master_status"] == "pending"
+    assert canonical["catalog_status"] == "SERVER_VALIDATED_READY_FOR_INTEGRATOR"
+    assert canonical["complete_audio"]["github_production_master_status"] == "PASS"
     assert canonical["known_protocol_deviations"] == []
     status = json.loads((ROOT / "STATUS.json").read_text())
     assert status["workflow"]["completion_percent_claimed"] is None
     replacement = status["server_validation"]["replacement_pool"]
-    assert replacement["complete_github_render_passed"] is False
-    assert replacement["downloaded_complete_release_revalidated"] is False
+    assert replacement["implementation_ci_passed"] is True
+    assert replacement["complete_github_render_passed"] is True
+    assert replacement["downloaded_complete_release_revalidated"] is True
     assert replacement["integrator_package_run_passed"] is False
     assert replacement["downloaded_package_release_revalidated"] is False
     assert status["server_validation"]["historical_previous_pool"]["preserved_as_historical_additive_releases"] is True
     assert status["integration_claims"]["integrator_package_ready"] is False
     assert status["integration_claims"]["cloudflare_deployed"] is False
     spec = json.loads((ROOT / "packages/t4-experience-client-v1/package_spec.json").read_text())
-    assert spec["status"] == "source_spec_waiting_for_github_complete_master"
-    assert spec["external_complete_master"]["status"] == "pending_github_render"
-    assert spec["external_complete_master"]["source_release_tag"] is None
-    assert spec["external_complete_master"]["sha256"] is None
-    assert spec["external_complete_master"]["bytes"] is None
+    assert spec["status"] == "source_spec_ready_for_deterministic_build"
+    assert spec["external_complete_master"]["status"] == "locked_from_additive_release"
+    assert spec["external_complete_master"]["source_release_tag"] == "t4-experience-client-v4.1.0-pixabay-replacement-candidate-2"
+    assert spec["external_complete_master"]["sha256"] == "a1cf0abf8f00724468c1489ce14f5e656b3eb85730c5d1e2a4ec383117fe74bd"
+    assert spec["external_complete_master"]["bytes"] == 12157788
 
 
 def test_cloudflare_generated_contracts_are_current() -> None:
