@@ -38,6 +38,7 @@
     "source": "form/questions_T4.json"
   },
   "capture": {
+    "copy_approval": "approvals/AUTORISATION_TEXTE_SIMPLE_T4_2026-11-18.json",
     "guide": "capture-guide/consignes_T4.json",
     "flow_contract": "config/T4_CAPTURE_FLOW_V1_0_0.json",
     "visual_proof_manifest": "ui-screens/manifest.json",

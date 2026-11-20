@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "decision_id": "T4_12_ECRANS_FR_SIMPLE_2026-11-18",
+  "status": "owner_directed_implemented",
+  "date_local": "2026-11-18",
+  "timezone": "Africa/Lagos",
+  "decision_channel": "arena_chat",
+  "owner_instruction": "Utiliser mot pour mot le texte simple fourni pour les douze écrans T4, régénérer les preuves et mettre à jour le dépôt GitHub public.",
+  "acceptance_criteria": {
+    "scene_count": 4,
+    "stable_screen_count": 12,
+    "states_per_scene": [
+      "A / GUIDE",
+      "B / ENREGISTREMENT",
+      "C / VÉRIFICATION"
+    ],
+    "durations_seconds": [
+      6,
+      8,
+      7,
+      9
+    ],
+    "simple_concrete_french": true,
+    "phone_position_and_movement_explained": true,
+    "review_checks_visible": true,
+    "merchant_questions_visible_and_json_bound": true
+  },
+  "canonical_sources": {
+    "screen_copy": {
+      "path": "capture-guide/consignes_T4.json",
+      "sha256": "c9296715df1a959124920991541f815bd38ed19ac83296dda71263c815e5caa3"
+    },
+    "merchant_questions": {
+      "path": "form/questions_T4.json",
+      "sha256": "909670712fe3a12acf244789ed4d360cd7c22aff7ee3550e97a0b8904648fd96"
+    },
+    "executable_flow": {
+      "path": "config/T4_CAPTURE_FLOW_V1_0_0.json",
+      "sha256": "083eef9607ba5b26149a61815062d10334c605f4610dcc769a24ebec5ab9fa80"
+    }
+  },
+  "screen_ids": [
+    "T4_CAPTURE_S1_A_GUIDE",
+    "T4_CAPTURE_S1_B_RECORDING",
+    "T4_CAPTURE_S1_C_REVIEW",
+    "T4_CAPTURE_S2_A_GUIDE",
+    "T4_CAPTURE_S2_B_RECORDING",
+    "T4_CAPTURE_S2_C_REVIEW",
+    "T4_CAPTURE_S3_A_GUIDE",
+    "T4_CAPTURE_S3_B_RECORDING",
+    "T4_CAPTURE_S3_C_REVIEW",
+    "T4_CAPTURE_S4_A_GUIDE",
+    "T4_CAPTURE_S4_B_RECORDING",
+    "T4_CAPTURE_S4_C_REVIEW"
+  ],
+  "proofs": {
+    "manifest": "ui-screens/manifest.json",
+    "board": "ui-screens/T4_PLANCHE_12_ECRANS.png",
+    "simulation": "simulation/T4_12_ECRANS_EXECUTABLE.html"
+  },
+  "publication_target": {
+    "repository": "vitrinevideo0-bot/vitrine-video-t4-experience-client",
+    "visibility": "public",
+    "branch": "main"
+  }
+}

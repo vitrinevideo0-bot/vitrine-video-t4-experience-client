@@ -27,6 +27,7 @@ class T4ContractTest(unittest.TestCase):
         cls.template = load("config/T4_EXPERIENCE_CLIENT_TEMPLATE_V3_0_0.json")
         cls.creative = load("config/T4_HYBRID_CINEMATIC_TRANSITIONS_V3_0_0.json")
         cls.choice = load("approvals/CHOIX_TRANSITIONS_HYBRIDES_V3_2026-11-18.json")
+        cls.copy_approval = load("approvals/AUTORISATION_TEXTE_SIMPLE_T4_2026-11-18.json")
         cls.transitions = load("reverse-engineering/T4_TRANSITIONS_HYBRIDES_30S_V3.json")
         cls.rushes = load("rushes/manifest.json")
         cls.ui = load("ui-screens/manifest.json")
@@ -46,13 +47,68 @@ class T4ContractTest(unittest.TestCase):
         self.assertEqual([field["id"] for field in fields if field["required"]], ["nom", "produit", "prix", "whatsapp", "quartier"])
         self.assertFalse(fields[-1]["required"])
         self.assertEqual([field["json_target"] for field in fields], [f"merchant_payload.{name}" for name in ["nom", "produit", "prix", "whatsapp", "quartier", "accroche"]])
+        self.assertEqual([field["question"] for field in fields], [
+            "Comment s'appelle ton restaurant, ton maquis ou ton activité ?",
+            "Quel plat veux-tu montrer dans la vidéo ?",
+            "Quel prix exact veux-tu afficher ?",
+            "Sur quel numéro WhatsApp les clients peuvent-ils te contacter ?",
+            "Dans quel quartier ou quelle zone peut-on te trouver ?",
+            "Veux-tu ajouter une courte phrase vraie sur ton restaurant ?",
+        ])
+        self.assertEqual(self.questions["data_binding"]["destination"], "merchant_payload")
         self.assertTrue(self.questions["compatibility_with_t1_t2_t3"]["invented_content_forbidden"])
 
     def test_exact_four_scene_names(self) -> None:
-        self.assertEqual([scene["titre"] for scene in self.guide["scenes"]], ["BIENVENUE", "LE SERVICE", "LA DÉGUSTATION", "VENEZ / COMMANDEZ"])
-        self.assertTrue(all(len(scene["recording_prompts"]) == 3 for scene in self.guide["scenes"]))
+        self.assertEqual([scene["titre"] for scene in self.guide["scenes"]], ["BIENVENUE CHEZ TOI !", "LE SERVICE", "LA DÉGUSTATION", "VENEZ / COMMANDEZ"])
+        self.assertTrue(all(len(scene["recording_prompts"]) == 1 for scene in self.guide["scenes"]))
         self.assertTrue(all(len(scene["review_checks"]) == 3 for scene in self.guide["scenes"]))
-        self.assertIn("consent", json.dumps(self.guide["scenes"][2], ensure_ascii=False).lower())
+        self.assertIn("accepte d'être filmée", self.guide["scenes"][2]["note_apres_action"])
+
+    def test_owner_supplied_simple_french_is_exactly_bound_to_the_twelve_screens(self) -> None:
+        self.assertEqual(self.guide["copy_revision"], "T4_12_ECRANS_FR_SIMPLE_2026-11-18")
+        self.assertEqual([scene["recording_prompt"] for scene in self.guide["scenes"]], [
+            "AVANCE VERS LA SALLE",
+            "POSE LE PLAT SUR LA TABLE",
+            "GOÛTE UNE BOUCHÉE",
+            "MONTRE LE PLAT ET LA SALLE",
+        ])
+        self.assertEqual([scene["review_question"] for scene in self.guide["scenes"]], [
+            "EST-CE QU'ON VOIT BIEN L'ENTRÉE ET LA SALLE ?",
+            "EST-CE QU'ON VOIT BIEN LE PLAT DU DÉBUT À LA FIN ?",
+            "EST-CE QU'ON VOIT BIEN LA DÉGUSTATION ?",
+            "EST-CE QUE LA FIN DE TA VIDÉO EST BIEN STABLE ?",
+        ])
+        expected_labels = []
+        for scene in range(4):
+            expected_labels.extend([
+                f"ÉCRAN {scene * 3 + 1:02d} — A / GUIDE",
+                f"ÉCRAN {scene * 3 + 2:02d} — B / ENREGISTREMENT",
+                f"ÉCRAN {scene * 3 + 3:02d} — C / VÉRIFICATION",
+            ])
+        self.assertEqual([screen["resolved_text"]["screen_label"] for screen in self.flow["screens"]], expected_labels)
+        recordings = self.flow["screens"][1::3]
+        self.assertEqual([item["resolved_text"]["instruction"] for item in recordings], [scene["recording_prompt"] for scene in self.guide["scenes"]])
+        self.assertEqual([item["resolved_text"]["timer_initial"] for item in recordings], [
+            "Temps restant : 00:00 / 00:06",
+            "Temps restant : 00:00 / 00:08",
+            "Temps restant : 00:00 / 00:07",
+            "Temps restant : 00:00 / 00:09",
+        ])
+        reviews = self.flow["screens"][2::3]
+        self.assertEqual([item["resolved_text"]["review_question"] for item in reviews], [scene["review_question"] for scene in self.guide["scenes"]])
+        serialized = json.dumps({"guide": self.guide, "flow": self.flow}, ensure_ascii=False).lower()
+        for forbidden in ["repère reconnaissable", "prise en charge", "geste d'accueil naturel"]:
+            self.assertNotIn(forbidden, serialized)
+
+    def test_simple_copy_approval_hash_locks_the_active_sources(self) -> None:
+        approval = self.copy_approval
+        self.assertEqual(approval["decision_id"], "T4_12_ECRANS_FR_SIMPLE_2026-11-18")
+        self.assertEqual(approval["status"], "owner_directed_implemented")
+        self.assertEqual(approval["acceptance_criteria"]["stable_screen_count"], 12)
+        for record in approval["canonical_sources"].values():
+            path = ROOT / record["path"]
+            self.assertTrue(path.exists(), path)
+            self.assertEqual(sha256(path), record["sha256"])
 
     def test_exact_twelve_screen_flow(self) -> None:
         screens = self.flow["screens"]
@@ -209,6 +265,7 @@ class T4ContractTest(unittest.TestCase):
     def test_all_active_linked_contract_files_exist(self) -> None:
         paths = [
             self.template["merchant_payload"]["source"],
+            self.template["capture"]["copy_approval"],
             self.template["capture"]["guide"],
             self.template["capture"]["flow_contract"],
             self.template["capture"]["visual_proof_manifest"],

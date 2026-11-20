@@ -1,7 +1,8 @@
 {
   "schema_version": "1.0.0",
   "template_id": "RESTAURATION-T4",
-  "status": "owner_directed_implementation_proof",
+  "status": "owner_approved_simple_french_proof",
+  "copy_revision": "T4_12_ECRANS_FR_SIMPLE_2026-11-18",
   "sources": {
     "questions": "form/questions_T4.json",
     "guide": "capture-guide/consignes_T4.json",
@@ -13,161 +14,178 @@
     "B_RECORDING",
     "C_REVIEW"
   ],
+  "display_states": [
+    "A / GUIDE",
+    "B / ENREGISTREMENT",
+    "C / VÉRIFICATION"
+  ],
   "screens": [
     {
       "screen_number": 1,
       "scene": 1,
       "state": "A_GUIDE",
+      "display_state": "A / GUIDE",
       "screen_id": "T4_CAPTURE_S1_A_GUIDE",
       "file": "T4_CAPTURE_S1_A_GUIDE.png",
       "size": [
         720,
         1280
       ],
-      "sha256": "3c7a8aec5457c8ce49dd39abe009eb524a175668f1c67d4679e983925824519d",
+      "sha256": "c6360d913d229c7d820fb6f0a82520ca17cd8ce36ec16f9563e3d260955aec30",
       "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/0"
     },
     {
       "screen_number": 2,
       "scene": 1,
       "state": "B_RECORDING",
+      "display_state": "B / ENREGISTREMENT",
       "screen_id": "T4_CAPTURE_S1_B_RECORDING",
       "file": "T4_CAPTURE_S1_B_RECORDING.png",
       "size": [
         720,
         1280
       ],
-      "sha256": "9efe97f52edc33d9d729f01aa89db60689d6aa1736c050557a9997ef5517b87e",
+      "sha256": "c8297c7ab4bcd732a914fd1a97df8fe59628628b68a4be8c8895c81f78ada257",
       "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/1"
     },
     {
       "screen_number": 3,
       "scene": 1,
       "state": "C_REVIEW",
+      "display_state": "C / VÉRIFICATION",
       "screen_id": "T4_CAPTURE_S1_C_REVIEW",
       "file": "T4_CAPTURE_S1_C_REVIEW.png",
       "size": [
         720,
         1280
       ],
-      "sha256": "6d59909fa78f1d1ab3d3817923f17556021b4db94897e3ca09df480942947495",
+      "sha256": "3ad11bd1cfa57f462a6e5fada4b631441c25f4e7ad6aa3a1d712baecdd95a833",
       "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/2"
     },
     {
       "screen_number": 4,
       "scene": 2,
       "state": "A_GUIDE",
+      "display_state": "A / GUIDE",
       "screen_id": "T4_CAPTURE_S2_A_GUIDE",
       "file": "T4_CAPTURE_S2_A_GUIDE.png",
       "size": [
         720,
         1280
       ],
-      "sha256": "0ae741bee186070d69977c34e21cee141d31f17a78624d6744844b069da34307",
+      "sha256": "e64e074a74ed72ebd1ca6369caa4a36df4d02e385a13bdbc72a53d88c145addf",
       "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/3"
     },
     {
       "screen_number": 5,
       "scene": 2,
       "state": "B_RECORDING",
+      "display_state": "B / ENREGISTREMENT",
       "screen_id": "T4_CAPTURE_S2_B_RECORDING",
       "file": "T4_CAPTURE_S2_B_RECORDING.png",
       "size": [
         720,
         1280
       ],
-      "sha256": "a12811145a6c372507dc24476b8e0b3e1832dc0923033d5e153018aa002ff135",
+      "sha256": "f1e94bc9cb4ace1a4a851ab936ef843f20ab1624521167b8916c5ef5c98fd747",
       "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/4"
     },
     {
       "screen_number": 6,
       "scene": 2,
       "state": "C_REVIEW",
+      "display_state": "C / VÉRIFICATION",
       "screen_id": "T4_CAPTURE_S2_C_REVIEW",
       "file": "T4_CAPTURE_S2_C_REVIEW.png",
       "size": [
         720,
         1280
       ],
-      "sha256": "f1463bb1c38c3922135914210d55f516b03cff28e3cd958edc87361151ecba75",
+      "sha256": "2e57818459b0729f170ced37315c350b8612971f869ac2186c2abefc889324e3",
       "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/5"
     },
     {
       "screen_number": 7,
       "scene": 3,
       "state": "A_GUIDE",
+      "display_state": "A / GUIDE",
       "screen_id": "T4_CAPTURE_S3_A_GUIDE",
       "file": "T4_CAPTURE_S3_A_GUIDE.png",
       "size": [
         720,
         1280
       ],
-      "sha256": "ca7e984c06d2f0b0ef0e92886349314d1668d29207e45f30c36a3d7719753f81",
+      "sha256": "f7bfedd689425f47d3c210b85f22c57a553583dcceae1d74d372132684455a80",
       "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/6"
     },
     {
       "screen_number": 8,
       "scene": 3,
       "state": "B_RECORDING",
+      "display_state": "B / ENREGISTREMENT",
       "screen_id": "T4_CAPTURE_S3_B_RECORDING",
       "file": "T4_CAPTURE_S3_B_RECORDING.png",
       "size": [
         720,
         1280
       ],
-      "sha256": "435cbe07275477f72cefc36f8deac94f68d5710cffb9a5f43f075f8562f4839d",
+      "sha256": "6493a1b46ad725ef6a8a04e040e091656e0c893acfd2d85dbb4b0727eed0f442",
       "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/7"
     },
     {
       "screen_number": 9,
       "scene": 3,
       "state": "C_REVIEW",
+      "display_state": "C / VÉRIFICATION",
       "screen_id": "T4_CAPTURE_S3_C_REVIEW",
       "file": "T4_CAPTURE_S3_C_REVIEW.png",
       "size": [
         720,
         1280
       ],
-      "sha256": "e338f1f21ddbd0c5f52ee57489aafbfa1a78aac66ce76788e86fece01917440a",
+      "sha256": "c84b6855262a24690e1459aa7277f854b9ffa54166f1026cbed0d56bed6f6097",
       "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/8"
     },
     {
       "screen_number": 10,
       "scene": 4,
       "state": "A_GUIDE",
+      "display_state": "A / GUIDE",
       "screen_id": "T4_CAPTURE_S4_A_GUIDE",
       "file": "T4_CAPTURE_S4_A_GUIDE.png",
       "size": [
         720,
         1280
       ],
-      "sha256": "8215c59c9558e8650c53599b45762d283f3199ad9b694fc47b3741d155021aed",
+      "sha256": "a7efb3c1af7c865034bda160d5ac3d7d2f235c8b61d9402a715293ae5730dfc3",
       "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/9"
     },
     {
       "screen_number": 11,
       "scene": 4,
       "state": "B_RECORDING",
+      "display_state": "B / ENREGISTREMENT",
       "screen_id": "T4_CAPTURE_S4_B_RECORDING",
       "file": "T4_CAPTURE_S4_B_RECORDING.png",
       "size": [
         720,
         1280
       ],
-      "sha256": "0faf1894f0548b371558ff799a42f55092413a20f5bc39f318ef3412ca9fb0a3",
+      "sha256": "d1bffeb93a5bdb31d1709eee8ccb90e63ea2632529644136f796f4b6e183a0bc",
       "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/10"
     },
     {
       "screen_number": 12,
       "scene": 4,
       "state": "C_REVIEW",
+      "display_state": "C / VÉRIFICATION",
       "screen_id": "T4_CAPTURE_S4_C_REVIEW",
       "file": "T4_CAPTURE_S4_C_REVIEW.png",
       "size": [
         720,
         1280
       ],
-      "sha256": "48900a19b257a768c86491c9b1791695960c57d220d02e08a753d0350df7bc11",
+      "sha256": "0e024edc735387230ea3f4d7f2d2f174779a371bdaa8095a03bf85cb0aff12c1",
       "json_binding": "config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/11"
     }
   ],
@@ -176,8 +194,9 @@
     898,
     2116
   ],
-  "board_sha256": "da27b16b693421f5239dbed56b6e79d4810f30f7f96fa271a2b64c55d8fdcffd",
+  "board_sha256": "edbb9e81e03bcfe31bfe9d29dac8f8a9f3b5f45cd3cca3aa0f39c20f649320ae",
   "external_media_used": false,
+  "text_truncation_used": false,
   "font_files": [
     "assets/fonts/DejaVuSans.ttf",
     "assets/fonts/DejaVuSans-Bold.ttf"

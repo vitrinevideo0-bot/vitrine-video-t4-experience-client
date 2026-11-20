@@ -29,20 +29,21 @@ Les contrats V1 et V2 restent uniquement comme historique.
 
 ## Questions et parcours de capture
 
-- `form/questions_T4.json` — six questions compatibles T1/T2/T3 ;
-- `capture-guide/consignes_T4.json` — quatre prises 6/8/7/9 s ;
+- `form/questions_T4.json` — six questions simples, compatibles T1/T2/T3 et reliées à `merchant_payload` ;
+- `approvals/AUTORISATION_TEXTE_SIMPLE_T4_2026-11-18.json` — instruction propriétaire sur la rédaction terre à terre ;
+- `capture-guide/consignes_T4.json` — texte approuvé des quatre prises 6/8/7/9 s ;
 - `config/T4_CAPTURE_FLOW_V1_0_0.json` — exactement douze écrans A/B/C ;
 - `ui-screens/manifest.json` — douze preuves PNG et leur planche ;
 - `simulation/T4_12_ECRANS_EXECUTABLE.html` — simulation autonome des six questions et des douze états, générée depuis les deux JSON.
 
 | Scène | Durée | Contenu |
 |---|---:|---|
-| S1 — BIENVENUE | 6 s | entrée, salle ou accueil |
-| S2 — LE SERVICE | 8 s | plat pris en charge, déplacé et présenté |
+| S1 — BIENVENUE CHEZ TOI ! | 6 s | entrée, nom du restaurant et salle |
+| S2 — LE SERVICE | 8 s | plat apporté puis posé sur la table |
 | S3 — LA DÉGUSTATION | 7 s | bouchée et réaction naturelle d’une personne consentante |
-| S4 — VENEZ / COMMANDEZ | 9 s | ambiance puis trois secondes finales stables |
+| S4 — VENEZ / COMMANDEZ | 9 s | plat, salle puis trois secondes finales sans bouger |
 
-Chaque scène possède trois états stables : **A Guide**, **B Enregistrement**, **C Validation**.
+Chaque scène possède trois états stables : **A Guide**, **B Enregistrement**, **C Vérification**. Les consignes disent directement quoi filmer, où poser le téléphone, comment bouger et quoi vérifier.
 
 ## Candidat silencieux V3
 

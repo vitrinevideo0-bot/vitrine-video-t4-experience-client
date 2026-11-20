@@ -157,6 +157,7 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
+        "copy_approval",
         "guide",
         "flow",
         "stable_screen_count",
@@ -166,6 +167,9 @@
         "source_speed"
       ],
       "properties": {
+        "copy_approval": {
+          "const": "approvals/AUTORISATION_TEXTE_SIMPLE_T4_2026-11-18.json"
+        },
         "guide": {
           "const": "capture-guide/consignes_T4.json"
         },

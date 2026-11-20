@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the twelve stable T4 capture screens from the executable JSON contract."""
+"""Generate the twelve T4 proof screens from the approved simple-French capture flow."""
 from __future__ import annotations
 
 import argparse
@@ -7,7 +7,6 @@ import hashlib
 import json
 import math
 from pathlib import Path
-from typing import Iterable
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -15,13 +14,14 @@ ROOT = Path(__file__).resolve().parents[1]
 W, H = 720, 1280
 FONT = ROOT / "assets/fonts/DejaVuSans.ttf"
 BOLD = ROOT / "assets/fonts/DejaVuSans-Bold.ttf"
-CREAM = (247, 240, 229)
-INK = (31, 25, 23)
-MUTED = (104, 89, 80)
-RED = (202, 67, 43)
-GOLD = (224, 153, 59)
-GREEN = (52, 116, 87)
-DARK = (22, 17, 17)
+CREAM = (248, 242, 232)
+PAPER = (255, 251, 245)
+INK = (36, 29, 25)
+MUTED = (103, 88, 78)
+RED = (196, 62, 42)
+GREEN = (47, 112, 82)
+GOLD = (218, 145, 55)
+DARK = (20, 16, 16)
 
 
 def sha256(path: Path) -> str:
@@ -56,35 +56,38 @@ def draw_wrapped(
     selected_font: ImageFont.FreeTypeFont,
     fill: tuple[int, int, int] | str,
     max_width: int,
-    line_gap: int = 5,
-    max_lines: int | None = None,
+    line_gap: int = 4,
 ) -> int:
-    lines = wrap(draw, text, selected_font, max_width)
-    if max_lines is not None and len(lines) > max_lines:
-        lines = lines[:max_lines]
-        last = lines[-1]
-        while last and draw.textlength(last + "…", font=selected_font) > max_width:
-            last = last[:-1]
-        lines[-1] = last.rstrip() + "…"
     y = xy[1]
-    step = selected_font.size + line_gap
-    for line in lines:
+    for line in wrap(draw, text, selected_font, max_width):
         draw.text((xy[0], y), line, font=selected_font, fill=fill)
-        y += step
+        y += selected_font.size + line_gap
     return y
 
 
-def center_text(draw: ImageDraw.ImageDraw, y: int, text: str, selected_font: ImageFont.FreeTypeFont, fill: tuple[int, int, int] | str = "white") -> None:
-    width = draw.textlength(text, font=selected_font)
-    draw.text(((W - width) / 2, y), text, font=selected_font, fill=fill)
+def center_wrapped(
+    draw: ImageDraw.ImageDraw,
+    y: int,
+    text: str,
+    selected_font: ImageFont.FreeTypeFont,
+    fill: tuple[int, int, int] | str,
+    max_width: int,
+    line_gap: int = 5,
+) -> int:
+    lines = wrap(draw, text, selected_font, max_width)
+    for line in lines:
+        width = draw.textlength(line, font=selected_font)
+        draw.text(((W - width) / 2, y), line, font=selected_font, fill=fill)
+        y += selected_font.size + line_gap
+    return y
 
 
 def gradient_background(scene_index: int) -> Image.Image:
     palettes = [
-        ((38, 22, 20), (124, 61, 39)),
-        ((28, 34, 31), (91, 100, 70)),
-        ((34, 24, 30), (128, 65, 67)),
-        ((24, 22, 24), (83, 58, 44)),
+        ((39, 23, 20), (131, 67, 41)),
+        ((27, 35, 31), (93, 104, 70)),
+        ((36, 24, 30), (132, 67, 69)),
+        ((24, 22, 24), (88, 62, 46)),
     ]
     top, bottom = palettes[scene_index - 1]
     image = Image.new("RGB", (W, H), top)
@@ -108,7 +111,6 @@ def draw_person(draw: ImageDraw.ImageDraw, cx: int, cy: int, scale: float, shirt
 
 def draw_scene_art(image: Image.Image, scene_index: int) -> None:
     draw = ImageDraw.Draw(image, "RGBA")
-    # Warm bokeh lights shared by all four previews.
     for i in range(14):
         x = 36 + (i * 109) % 680
         y = 95 + (i * 67) % 420
@@ -120,7 +122,6 @@ def draw_scene_art(image: Image.Image, scene_index: int) -> None:
         draw.rectangle((274, 155, 292, 755), fill=(45, 29, 24, 220))
         draw.ellipse((375, 445, 391, 461), fill=(236, 171, 88, 255))
         draw_person(draw, 545, 475, 1.25, (238, 231, 215, 255), (132, 82, 58, 255))
-        draw.arc((492, 414, 598, 510), 15, 165, fill=(255, 245, 232, 255), width=5)
     elif scene_index == 2:
         draw_person(draw, 565, 330, 1.05, (232, 226, 212, 255), (146, 91, 66, 255))
         draw.rounded_rectangle((118, 570, 605, 700), radius=35, fill=(67, 42, 35, 255), outline=(225, 178, 110, 220), width=4)
@@ -130,19 +131,17 @@ def draw_scene_art(image: Image.Image, scene_index: int) -> None:
         draw.line((470, 535, 590, 470), fill=(146, 91, 66, 255), width=27)
     elif scene_index == 3:
         draw_person(draw, 500, 295, 1.45, (235, 221, 208, 255), (160, 98, 72, 255))
-        draw.arc((430, 230, 570, 365), 20, 160, fill=(255, 244, 228, 255), width=5)
         draw.ellipse((110, 630, 515, 850), fill=(229, 219, 201, 255), outline=(255, 248, 234, 255), width=5)
         draw.ellipse((188, 674, 435, 810), fill=(141, 91, 45, 255))
         draw.line((370, 580, 490, 450), fill=(225, 225, 220, 255), width=9)
-        draw.line((490, 450, 510, 430), fill=(225, 225, 220, 255), width=8)
         draw.ellipse((500, 420, 535, 452), fill=(214, 132, 65, 255))
     else:
-        for x, y, s, shirt in [
+        for x, y, scale, shirt in [
             (170, 390, 0.85, (229, 219, 205, 255)),
             (355, 350, 0.95, (81, 104, 79, 255)),
             (540, 400, 0.82, (155, 68, 54, 255)),
         ]:
-            draw_person(draw, x, y, s, shirt)
+            draw_person(draw, x, y, scale, shirt)
         draw.ellipse((65, 590, 655, 910), fill=(76, 46, 35, 255), outline=(206, 144, 75, 220), width=5)
         for x, y in [(210, 700), (360, 665), (500, 735)]:
             draw.ellipse((x - 70, y - 40, x + 70, y + 40), fill=(231, 218, 195, 255))
@@ -153,102 +152,129 @@ def preview(scene_index: int, dim: int = 0) -> Image.Image:
     image = gradient_background(scene_index).convert("RGBA")
     draw_scene_art(image, scene_index)
     if dim:
-        shade = Image.new("RGBA", (W, H), (0, 0, 0, dim))
-        image = Image.alpha_composite(image, shade)
+        image = Image.alpha_composite(image, Image.new("RGBA", (W, H), (0, 0, 0, dim)))
     return image.convert("RGB")
 
 
 def pill(draw: ImageDraw.ImageDraw, box: tuple[int, int, int, int], text: str, fill: tuple[int, int, int, int], selected_font: ImageFont.FreeTypeFont) -> None:
     draw.rounded_rectangle(box, radius=(box[3] - box[1]) // 2, fill=fill)
-    tw = draw.textlength(text, font=selected_font)
-    th = selected_font.size
-    draw.text((box[0] + (box[2] - box[0] - tw) / 2, box[1] + (box[3] - box[1] - th) / 2 - 2), text, font=selected_font, fill="white")
+    width = draw.textlength(text, font=selected_font)
+    draw.text((box[0] + (box[2] - box[0] - width) / 2, box[1] + 10), text, font=selected_font, fill="white")
+
+
+def section_title(draw: ImageDraw.ImageDraw, y: int, text: str, color: tuple[int, int, int], text_size: int) -> int:
+    draw.text((38, y), text, font=font(text_size, True), fill=color)
+    return y + text_size + 7
+
+
+def bullet_list(draw: ImageDraw.ImageDraw, y: int, items: list[str], text_size: int, color: tuple[int, int, int], marker_color: tuple[int, int, int]) -> int:
+    selected_font = font(text_size)
+    for item in items:
+        draw.ellipse((42, y + 6, 50, y + 14), fill=marker_color)
+        y = draw_wrapped(draw, (61, y), item, selected_font, color, W - 103, line_gap=2) + 3
+    return y
+
+
+def render_guide(screen: dict, scene: dict, guide: dict, body_size: int) -> tuple[Image.Image, int]:
+    image = preview(screen["scene_index"], dim=100).convert("RGBA")
+    draw = ImageDraw.Draw(image)
+    resolved = screen["resolved_text"]
+    draw.rounded_rectangle((24, 18, 324, 54), radius=18, fill=(12, 10, 10, 210))
+    draw.text((40, 27), resolved["screen_label"], font=font(14, True), fill="white")
+    draw.text((38, 70), resolved["scene_counter"], font=font(18, True), fill=(255, 237, 210))
+    draw.text((38, 106), resolved["title"], font=font(29, True), fill="white")
+    draw.rounded_rectangle((0, 154, W, H + 35), radius=30, fill=CREAM)
+
+    y = 178
+    heading_size = max(12, body_size - 1)
+    y = section_title(draw, y, resolved["guide_section_title"], RED, heading_size)
+    y = draw_wrapped(draw, (38, y), resolved["instruction"], font(body_size), INK, W - 76, line_gap=3) + 8
+    y = section_title(draw, y, resolved["film_section_title"], GREEN, heading_size)
+    y = bullet_list(draw, y, resolved["film_list"], body_size, INK, GREEN) + 4
+    y = section_title(draw, y, resolved["avoid_section_title"], RED, heading_size)
+    y = bullet_list(draw, y, resolved["avoid_list"], body_size, MUTED, RED) + 4
+    y = section_title(draw, y, resolved["action_section_title"], (126, 76, 45), heading_size)
+    y = draw_wrapped(draw, (38, y), resolved["required_action"], font(body_size), INK, W - 76, line_gap=3) + 7
+    if resolved["after_action_note"]:
+        note_top = y
+        note_lines = wrap(draw, resolved["after_action_note"], font(body_size), W - 112)
+        note_height = len(note_lines) * (body_size + 3) + 20
+        draw.rounded_rectangle((34, note_top, W - 34, note_top + note_height), radius=14, fill=(239, 224, 191), outline=(215, 187, 132), width=2)
+        y = draw_wrapped(draw, (52, note_top + 9), resolved["after_action_note"], font(body_size), INK, W - 104, line_gap=3) + 9
+    y += 2
+    y = section_title(draw, y, resolved["speech_section_title"], GREEN, heading_size)
+    speech = f"{resolved['voice_note']} {resolved['silence_note']}"
+    y = draw_wrapped(draw, (38, y), speech, font(max(12, body_size - 1)), MUTED, W - 76, line_gap=2)
+
+    button_top = 1200
+    draw.rounded_rectangle((34, button_top, W - 34, 1260), radius=22, fill=RED)
+    label_font = font(21, True)
+    width = draw.textlength(resolved["primary_action"], font=label_font)
+    draw.text(((W - width) / 2, button_top + 17), resolved["primary_action"], font=label_font, fill="white")
+    return image.convert("RGB"), y
 
 
 def guide_screen(screen: dict, scene: dict, guide: dict) -> Image.Image:
-    image = preview(screen["scene_index"], dim=75).convert("RGBA")
-    overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    od = ImageDraw.Draw(overlay)
-    od.rounded_rectangle((0, 315, W, H + 40), radius=34, fill=(*CREAM, 255))
-    image.alpha_composite(overlay)
+    for body_size in (20, 19, 18, 17, 16, 15):
+        image, final_y = render_guide(screen, scene, guide, body_size)
+        if final_y <= 1184:
+            return image
+    raise ValueError(f"Guide copy does not fit without truncation: {screen['screen_id']} y={final_y}")
+
+
+def recording_screen(screen: dict) -> Image.Image:
+    image = preview(screen["scene_index"], dim=30).convert("RGBA")
     draw = ImageDraw.Draw(image)
-    pill(draw, (25, 24, 188, 72), f"SCÈNE {screen['scene_index']}/4", (16, 13, 13, 205), font(22, True))
-    pill(draw, (W - 165, 24, W - 25, 72), f"{scene['secondes']} S", (160, 52, 34, 235), font(22, True))
-    draw.text((38, 350), scene["titre"], font=font(38, True), fill=INK)
-    y = draw_wrapped(draw, (38, 402), scene["consigne"], font(20), INK, W - 76, line_gap=4, max_lines=4)
-    y += 12
-    draw.text((38, y), "À FILMER", font=font(17, True), fill=GREEN)
-    y += 27
-    for item in scene["a_filmer"]:
-        draw.ellipse((42, y + 7, 50, y + 15), fill=GREEN)
-        y = draw_wrapped(draw, (60, y), item, font(16), INK, W - 100, line_gap=2, max_lines=2) + 4
-    y += 4
-    draw.text((38, y), "À ÉVITER", font=font(17, True), fill=RED)
-    y += 27
-    for item in scene["a_eviter"]:
-        draw.line((42, y + 11, 51, y + 20), fill=RED, width=3)
-        draw.line((51, y + 11, 42, y + 20), fill=RED, width=3)
-        y = draw_wrapped(draw, (60, y), item, font(15), MUTED, W - 100, line_gap=2, max_lines=2) + 3
-    y += 5
-    draw.rounded_rectangle((34, y, W - 34, y + 76), radius=18, fill=(236, 222, 201), outline=(216, 194, 164), width=2)
-    draw.text((53, y + 10), "GESTE CLÉ", font=font(14, True), fill=(124, 77, 49))
-    draw_wrapped(draw, (53, y + 31), scene["ce_que_tu_dois_faire"], font(14), INK, W - 106, line_gap=2, max_lines=2)
-    footer_y = 1110
-    draw_wrapped(draw, (38, footer_y), guide["mention_langues_commune"], font(13), MUTED, W - 76, line_gap=2, max_lines=2)
-    draw.rounded_rectangle((34, 1182, W - 34, 1250), radius=24, fill=RED)
-    label = guide["bouton_principal"]
-    tw = draw.textlength(label, font=font(22, True))
-    draw.text(((W - tw) / 2, 1203), label, font=font(22, True), fill="white")
+    resolved = screen["resolved_text"]
+    draw.rounded_rectangle((24, 18, 386, 56), radius=19, fill=(9, 8, 8, 210))
+    draw.text((40, 28), resolved["screen_label"], font=font(14, True), fill="white")
+    draw.rounded_rectangle((24, 72, W - 24, 119), radius=20, fill=(9, 8, 8, 185))
+    draw.text((43, 85), resolved["scene_counter"], font=font(18, True), fill=(255, 239, 217))
+    pill(draw, (W - 144, 137, W - 28, 187), resolved["recording_status"], (174, 28, 25, 245), font(20, True))
+
+    draw.rounded_rectangle((42, 455, W - 42, 576), radius=24, fill=(8, 8, 8, 200), outline=(236, 184, 113, 150), width=2)
+    center_wrapped(draw, 490, resolved["instruction"], font(25, True), "white", W - 112, line_gap=5)
+    draw.rounded_rectangle((74, 626, W - 74, 688), radius=20, fill=(8, 8, 8, 190))
+    center_wrapped(draw, 645, resolved["timer_initial"], font(23, True), "white", W - 170)
+
+    y = 925
+    for text in [resolved["audio_status"], resolved["orientation_status"], resolved["auto_stop_status"]]:
+        draw.rounded_rectangle((54, y, W - 54, y + 58), radius=18, fill=(10, 9, 9, 180))
+        draw.ellipse((75, y + 23, 87, y + 35), fill=(90, 190, 132))
+        draw.text((104, y + 17), text, font=font(17, True), fill="white")
+        y += 72
+    draw.rounded_rectangle((54, 1163, W - 54, 1176), radius=7, fill=(255, 255, 255, 90))
+    draw.rounded_rectangle((54, 1163, 356, 1176), radius=7, fill=RED)
     return image.convert("RGB")
 
 
-def recording_screen(screen: dict, scene: dict) -> Image.Image:
-    image = preview(screen["scene_index"], dim=20).convert("RGBA")
+def review_screen(screen: dict) -> Image.Image:
+    image = preview(screen["scene_index"], dim=15).convert("RGBA")
     draw = ImageDraw.Draw(image)
-    pill(draw, (25, 24, 188, 72), f"SCÈNE {screen['scene_index']}/4", (8, 8, 8, 195), font(22, True))
-    draw.rounded_rectangle((W - 145, 24, W - 25, 72), radius=24, fill=(166, 22, 20, 240))
-    draw.ellipse((W - 129, 42, W - 115, 56), fill="white")
-    draw.text((W - 103, 36), "REC", font=font(24, True), fill="white")
-    elapsed = scene["secondes"] / 2
-    prompt = next((p["text"] for p in scene["recording_prompts"] if p["from_ms"] <= elapsed * 1000 < p["to_ms"]), scene["recording_prompts"][-1]["text"])
-    draw.rounded_rectangle((44, H - 310, W - 44, H - 220), radius=26, fill=(8, 8, 8, 186))
-    center_text(draw, H - 282, prompt, font(24, True))
-    timer = f"0:{int(elapsed):02d} / 0:{scene['secondes']:02d}"
-    center_text(draw, H - 174, timer, font(48, True))
-    x0, x1, y = 44, W - 44, H - 92
-    draw.rounded_rectangle((x0, y, x1, y + 14), radius=7, fill=(255, 255, 255, 100))
-    draw.rounded_rectangle((x0, y, x0 + (x1 - x0) // 2, y + 14), radius=7, fill=RED)
-    center_text(draw, H - 53, "VERTICAL · ARRÊT AUTOMATIQUE", font(16, True), fill=(244, 238, 229))
-    return image.convert("RGB")
+    resolved = screen["resolved_text"]
+    draw.rectangle((0, 0, W, 150), fill=(9, 8, 8, 220))
+    draw.text((34, 20), resolved["screen_label"], font=font(14, True), fill=(255, 231, 199))
+    draw.text((34, 58), resolved["take_label"], font=font(24, True), fill="white")
+    draw.ellipse((38, 110, 50, 122), fill=(92, 190, 134))
+    draw.text((66, 102), resolved["audio_status"], font=font(16, True), fill=(238, 231, 222))
 
+    draw.rounded_rectangle((0, 640, W, H + 30), radius=34, fill=(24, 19, 18, 248))
+    y = 686
+    y = draw_wrapped(draw, (38, y), resolved["review_question"], font(23, True), "white", W - 76, line_gap=5) + 22
+    for item in resolved["review_checks"]:
+        draw.ellipse((42, y + 3, 62, y + 23), outline=(93, 186, 135), width=3)
+        draw.line((47, y + 13, 52, y + 19), fill=(93, 186, 135), width=3)
+        draw.line((52, y + 19, 59, y + 7), fill=(93, 186, 135), width=3)
+        y = draw_wrapped(draw, (75, y), item, font(18), (239, 232, 223), W - 117, line_gap=3) + 13
 
-def review_screen(screen: dict, scene: dict) -> Image.Image:
-    image = preview(screen["scene_index"], dim=10).convert("RGBA")
-    overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    od = ImageDraw.Draw(overlay)
-    od.rectangle((0, 0, W, 145), fill=(9, 8, 8, 205))
-    od.rounded_rectangle((0, 690, W, H + 30), radius=36, fill=(24, 19, 18, 244))
-    image.alpha_composite(overlay)
-    draw = ImageDraw.Draw(image)
-    center_text(draw, 31, f"PRISE {screen['scene_index']} · 0:{scene['secondes']:02d}", font(27, True))
-    # Simple speaker symbol — no platform-dependent emoji.
-    draw.polygon([(286, 92), (300, 92), (318, 78), (318, 116), (300, 102), (286, 102)], fill=(235, 229, 220))
-    draw.arc((311, 82, 344, 112), -50, 50, fill=(235, 229, 220), width=3)
-    draw.text((355, 83), "SON ACTIVÉ", font=font(17, True), fill=(235, 229, 220))
-    y = 735
-    y = draw_wrapped(draw, (38, y), scene["review_question"], font(25, True), "white", W - 76, line_gap=5, max_lines=3) + 17
-    for item in scene["review_checks"]:
-        draw.ellipse((42, y + 5, 60, y + 23), outline=(93, 186, 135), width=3)
-        draw.line((47, y + 15, 52, y + 20), fill=(93, 186, 135), width=3)
-        draw.line((52, y + 20, 59, y + 9), fill=(93, 186, 135), width=3)
-        y = draw_wrapped(draw, (72, y), item, font(17), (235, 228, 219), W - 112, line_gap=3, max_lines=2) + 9
-    draw.rounded_rectangle((34, 1145, 255, 1225), radius=24, fill=(68, 60, 57), outline=(225, 214, 201), width=2)
-    draw.text((78, 1171), "REFAIRE", font=font(23, True), fill="white")
-    draw.rounded_rectangle((275, 1145, W - 34, 1225), radius=24, fill=RED)
-    positive = scene["positive_action"]
-    pf = font(21 if screen["scene_index"] < 4 else 19, True)
-    tw = draw.textlength(positive, font=pf)
-    draw.text((275 + (W - 34 - 275 - tw) / 2, 1172), positive, font=pf, fill="white")
+    draw.rounded_rectangle((34, 1145, 253, 1227), radius=24, fill=(68, 60, 57), outline=(225, 214, 201), width=2)
+    redo_font = font(22, True)
+    redo_width = draw.textlength(resolved["redo_action"], font=redo_font)
+    draw.text((34 + (219 - redo_width) / 2, 1171), resolved["redo_action"], font=redo_font, fill="white")
+    draw.rounded_rectangle((273, 1145, W - 34, 1227), radius=24, fill=RED)
+    positive_font = font(20 if screen["scene_index"] < 4 else 18, True)
+    positive_width = draw.textlength(resolved["positive_action"], font=positive_font)
+    draw.text((273 + (W - 34 - 273 - positive_width) / 2, 1173), resolved["positive_action"], font=positive_font, fill="white")
     return image.convert("RGB")
 
 
@@ -264,52 +290,56 @@ def generate(flow: dict, guide: dict, output_dir: Path) -> dict:
         if screen["state"] == "A_GUIDE":
             image = guide_screen(screen, scene, guide)
         elif screen["state"] == "B_RECORDING":
-            image = recording_screen(screen, scene)
+            image = recording_screen(screen)
         else:
-            image = review_screen(screen, scene)
+            image = review_screen(screen)
         destination = output_dir / f"{screen['screen_id']}.png"
         image.save(destination, optimize=True)
         records.append({
             "screen_number": screen["ordinal"],
             "scene": screen["scene_index"],
             "state": screen["state"],
+            "display_state": screen["display_state"],
             "screen_id": screen["screen_id"],
             "file": destination.name,
             "size": [W, H],
             "sha256": sha256(destination),
-            "json_binding": f"config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/{screen['ordinal'] - 1}"
+            "json_binding": f"config/T4_CAPTURE_FLOW_V1_0_0.json#/screens/{screen['ordinal'] - 1}",
         })
 
-    tw, th, pad, header = 270, 480, 22, 86
-    board = Image.new("RGB", (3 * tw + 4 * pad, 4 * th + 5 * pad + header), (235, 227, 216))
+    tile_width, tile_height, padding, header = 270, 480, 22, 86
+    board = Image.new("RGB", (3 * tile_width + 4 * padding, 4 * tile_height + 5 * padding + header), (235, 227, 216))
     draw = ImageDraw.Draw(board)
-    draw.text((pad, 18), "T4 — EXACTEMENT 12 ÉCRANS STABLES", font=font(28, True), fill=(42, 32, 28))
-    draw.text((pad, 56), "4 scènes × A Guide · B Enregistrement · C Validation", font=font(17), fill=(94, 76, 65))
+    draw.text((padding, 18), "T4 — 12 ÉCRANS EN FRANÇAIS SIMPLE", font=font(27, True), fill=(42, 32, 28))
+    draw.text((padding, 56), "4 scènes × A Guide · B Enregistrement · C Vérification", font=font(17), fill=(94, 76, 65))
     for index, record in enumerate(records):
-        row, col = divmod(index, 3)
-        x = pad + col * (tw + pad)
-        y = header + pad + row * (th + pad)
-        screen_image = Image.open(output_dir / record["file"]).resize((tw, th), Image.Resampling.LANCZOS)
+        row, column = divmod(index, 3)
+        x = padding + column * (tile_width + padding)
+        y = header + padding + row * (tile_height + padding)
+        screen_image = Image.open(output_dir / record["file"]).resize((tile_width, tile_height), Image.Resampling.LANCZOS)
         board.paste(screen_image, (x, y))
     board_path = output_dir / "T4_PLANCHE_12_ECRANS.png"
     board.save(board_path, optimize=True)
     manifest = {
         "schema_version": "1.0.0",
         "template_id": "RESTAURATION-T4",
-        "status": "owner_directed_implementation_proof",
+        "status": "owner_approved_simple_french_proof",
+        "copy_revision": guide["copy_revision"],
         "sources": {
             "questions": "form/questions_T4.json",
             "guide": "capture-guide/consignes_T4.json",
-            "capture_flow": "config/T4_CAPTURE_FLOW_V1_0_0.json"
+            "capture_flow": "config/T4_CAPTURE_FLOW_V1_0_0.json",
         },
         "stable_screen_count": 12,
         "states": ["A_GUIDE", "B_RECORDING", "C_REVIEW"],
+        "display_states": ["A / GUIDE", "B / ENREGISTREMENT", "C / VÉRIFICATION"],
         "screens": records,
         "board": board_path.name,
         "board_size": list(board.size),
         "board_sha256": sha256(board_path),
         "external_media_used": False,
-        "font_files": ["assets/fonts/DejaVuSans.ttf", "assets/fonts/DejaVuSans-Bold.ttf"]
+        "text_truncation_used": False,
+        "font_files": ["assets/fonts/DejaVuSans.ttf", "assets/fonts/DejaVuSans-Bold.ttf"],
     }
     (output_dir / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return manifest

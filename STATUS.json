@@ -4,8 +4,8 @@
   "template_name": "Expérience client",
   "updated_on": "2026-11-18",
   "workflow": {
-    "status_number": 22,
-    "status": "The owner-approved Pixabay replacement pool, GitHub complete master, and refreshed deterministic integrator package are validated and published additively; production deployment remains unclaimed",
+    "status_number": 23,
+    "status": "The owner-supplied simple-French copy is implemented across all 12 capture screens and six JSON-bound questions; visual/audio masters remain unchanged and production deployment remains unclaimed",
     "completion_percent_claimed": null,
     "completion_claim_blocked_until_all_external_proofs_pass": true
   },
@@ -25,7 +25,10 @@
       162186,
       321930
     ],
-    "content_id_registered_label_observed_count": 0
+    "content_id_registered_label_observed_count": 0,
+    "capture_copy": "T4_12_ECRANS_FR_SIMPLE_2026-11-18",
+    "capture_copy_approved": true,
+    "capture_copy_approval": "approvals/AUTORISATION_TEXTE_SIMPLE_T4_2026-11-18.json"
   },
   "local_validation": {
     "replacement_music_sources_verified": true,
@@ -36,12 +39,15 @@
     "silent_master_video_bitstream_sha256_verified": true,
     "complete_preflight_status": "PASS",
     "complete_preflight_is_production_delivery": false,
-    "python_tests_passed": 35,
+    "python_tests_passed": 37,
     "cloudflare_typescript_passed": true,
-    "cloudflare_dry_run_passed": false,
+    "cloudflare_dry_run_passed": true,
     "cloudflare_black_box_integration_passed": false,
     "all_four_replacement_tracks_complete_preflight": "PASS_4_OF_4_EACH_26_OF_26",
-    "all_four_preflights_are_production_delivery": false
+    "all_four_preflights_are_production_delivery": false,
+    "simple_french_screen_count": 12,
+    "merchant_question_count": 6,
+    "visual_text_truncation_used": false
   },
   "server_validation": {
     "historical_previous_pool": {

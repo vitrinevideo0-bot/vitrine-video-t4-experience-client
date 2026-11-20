@@ -36,8 +36,8 @@
     "state_commit_policy": "after_completed_qc_pass_and_verified_output_only"
   },
   "contracts": {
-    "form/questions_T4.json": "50480389d8052daa66c4cd9f4618115fe84f15ceadc458b2545214b1041de251",
-    "config/T4_CAPTURE_FLOW_V1_0_0.json": "228cda066d92efce3ad0caba9962bafa61eb538cc1c9f7060821139d556e13f8",
+    "form/questions_T4.json": "909670712fe3a12acf244789ed4d360cd7c22aff7ee3550e97a0b8904648fd96",
+    "config/T4_CAPTURE_FLOW_V1_0_0.json": "083eef9607ba5b26149a61815062d10334c605f4610dcc769a24ebec5ab9fa80",
     "config/T4_MUSIC_PACK_V1_0_0.json": "d56270011d6a10a7e4d3251bcac2dbed933dd60d2dde9b019fc44063c562a6ad",
     "config/T4_VOICE_MIX_V1_0_0.json": "16ccb6ef69effb75f033a149ddbc7cd71f2a85c0b69e66d8ad1178433de66f07",
     "schemas/T4_render_job.schema.json": "891b1f06daa03aeb46be2727d966b00f27a4ed9807a94e6ec525093c69a5af23",

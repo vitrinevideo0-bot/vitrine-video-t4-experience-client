@@ -31,6 +31,21 @@ def test_standalone_simulation_is_reproducible_and_embeds_6_plus_12(tmp_path: Pa
     assert len(questions["fields"]) == 6
     assert len(flow["screens"]) == 12
     assert flow["counts"]["stable_capture_screens"] == 12
+    assert [screen["resolved_text"]["screen_label"] for screen in flow["screens"]] == [
+        "ÉCRAN 01 — A / GUIDE", "ÉCRAN 02 — B / ENREGISTREMENT", "ÉCRAN 03 — C / VÉRIFICATION",
+        "ÉCRAN 04 — A / GUIDE", "ÉCRAN 05 — B / ENREGISTREMENT", "ÉCRAN 06 — C / VÉRIFICATION",
+        "ÉCRAN 07 — A / GUIDE", "ÉCRAN 08 — B / ENREGISTREMENT", "ÉCRAN 09 — C / VÉRIFICATION",
+        "ÉCRAN 10 — A / GUIDE", "ÉCRAN 11 — B / ENREGISTREMENT", "ÉCRAN 12 — C / VÉRIFICATION",
+    ]
+    for exact_copy in [
+        "BIENVENUE CHEZ TOI !",
+        "AVANCE VERS LA SALLE",
+        "POSE LE PLAT SUR LA TABLE",
+        "GOÛTE UNE BOUCHÉE",
+        "MONTRE LE PLAT ET LA SALLE",
+        "EST-CE QUE LA FIN DE TA VIDÉO EST BIEN STABLE ?",
+    ]:
+        assert exact_copy in text
     assert "https://" not in text and "http://" not in text
     assert "cyan" not in text.lower()
 

@@ -3,15 +3,16 @@
   "contract_id": "restauration_t4_experience_client_capture_flow_v1_0_0",
   "template_id": "RESTAURATION-T4",
   "template_version": "1.0.0",
-  "status": "owner_directed_executable_contract",
+  "status": "owner_approved_simple_french_executable_contract",
+  "copy_revision": "T4_12_ECRANS_FR_SIMPLE_2026-11-18",
   "sources": {
     "guide": {
       "path": "capture-guide/consignes_T4.json",
-      "sha256": "1b34521be8cfdc42b8dc30695a499d3d10b9082460a15973133f50ba6e8c4773"
+      "sha256": "c9296715df1a959124920991541f815bd38ed19ac83296dda71263c815e5caa3"
     },
     "questions": {
       "path": "form/questions_T4.json",
-      "sha256": "50480389d8052daa66c4cd9f4618115fe84f15ceadc458b2545214b1041de251"
+      "sha256": "909670712fe3a12acf244789ed4d360cd7c22aff7ee3550e97a0b8904648fd96"
     }
   },
   "counts": {
@@ -47,8 +48,10 @@
     "playback_audio_enabled": true,
     "silent_render_audio_enabled": false,
     "source_speed": 1.0,
+    "video_orientation": "vertical",
     "automatic_subtitles": false,
-    "retake_deletes_previous_capture": true
+    "retake_deletes_previous_capture": true,
+    "simple_french_copy_required": true
   },
   "screens": [
     {
@@ -61,56 +64,68 @@
       "screen_id": "T4_CAPTURE_S1_A_GUIDE",
       "route_key": "t4.capture.s1.guide",
       "state": "A_GUIDE",
-      "purpose": "Faire entrer immédiatement le spectateur dans le lieu et montrer un accueil réel.",
+      "display_state": "A / GUIDE",
+      "purpose": "Montrer l'entrée, le nom et l'intérieur du restaurant.",
       "bindings": {
         "title": "capture-guide/consignes_T4.json#/scenes/0/titre",
         "instruction": "capture-guide/consignes_T4.json#/scenes/0/consigne",
         "film_list": "capture-guide/consignes_T4.json#/scenes/0/a_filmer",
         "avoid_list": "capture-guide/consignes_T4.json#/scenes/0/a_eviter",
         "required_action": "capture-guide/consignes_T4.json#/scenes/0/ce_que_tu_dois_faire",
-        "example": "capture-guide/consignes_T4.json#/scenes/0/exemple_facultatif",
+        "after_action_note": "capture-guide/consignes_T4.json#/scenes/0/note_apres_action",
+        "speech_note": "capture-guide/consignes_T4.json#/mention_langues_commune",
+        "silence_note": "capture-guide/consignes_T4.json#/mention_silence_facultatif",
         "primary_action": "capture-guide/consignes_T4.json#/bouton_principal"
       },
       "resolved_text": {
-        "scene_counter": "SCÈNE 1/4",
+        "screen_label": "ÉCRAN 01 — A / GUIDE",
+        "scene_counter": "SCÈNE 1 SUR 4 — 6 SECONDES",
         "duration": "6 secondes",
-        "title": "BIENVENUE",
-        "instruction": "Commence sur l'entrée, l'enseigne ou un repère clair. Avance doucement vers la salle, puis termine sur un sourire ou un geste d'accueil naturel.",
+        "title": "BIENVENUE CHEZ TOI !",
+        "guide_section_title": "CE QUE TU VAS FILMER",
+        "instruction": "Filme l'entrée de ton restaurant. Montre le nom de ton restaurant, puis avance doucement vers la salle pour montrer l'intérieur.",
+        "film_section_title": "À FILMER",
         "film_list": [
-          "L'entrée, l'enseigne ou un repère reconnaissable.",
-          "Une avancée simple vers l'intérieur.",
-          "Une personne consentante qui accueille naturellement."
+          "L'entrée ou le nom de ton restaurant.",
+          "Le chemin qui mène à la salle.",
+          "La salle et les tables."
         ],
+        "avoid_section_title": "À ÉVITER",
         "avoid_list": [
-          "Une entrée vide ou trop sombre.",
-          "Un contre-jour qui cache le visage.",
-          "Un geste exagéré ou une personne non consentante."
+          "Filmer dans un endroit trop sombre.",
+          "Avancer trop vite avec le téléphone.",
+          "Montrer un endroit en désordre."
         ],
-        "required_action": "Dégage le passage, garde le téléphone vertical et termine par une seconde stable sur l'accueil.",
-        "voice_note": "Tu peux parler pendant que tu filmes, en français, en fon, en yoruba, en anglais ou dans une autre langue que tu maîtrises.",
+        "action_section_title": "CE QUE TU DOIS FAIRE",
+        "required_action": "Commence devant l'entrée. Avance doucement vers la salle et termine en montrant l'intérieur.",
+        "after_action_note": "",
+        "speech_section_title": "TU PEUX PARLER PENDANT QUE TU FILMES",
+        "voice_note": "Tu peux parler en fon, yoruba, français, anglais ou dans une autre langue que tu maîtrises.",
         "silence_note": "Tu peux aussi ne pas parler si tu préfères.",
-        "optional_example": "Bienvenue chez nous, nous sommes heureux de vous recevoir.",
         "primary_action": "COMMENCER À FILMER"
       },
       "visible_components": [
-        "camera_preview_dimmed",
-        "scene_progress",
-        "instruction_sheet",
+        "screen_label",
+        "scene_counter",
+        "title",
+        "what_to_film",
         "film_list",
         "avoid_list",
+        "required_action",
         "consent_note_when_applicable",
-        "voice_note",
-        "optional_example",
+        "speech_note",
         "start_recording_button"
       ],
       "forbidden_components": [
         "recording_timer",
         "review_actions",
-        "automatic_subtitles"
+        "automatic_subtitles",
+        "abstract_instruction_text"
       ],
       "actions": [
         {
           "event": "START_RECORDING",
+          "label": "COMMENCER À FILMER",
           "effects": [
             "request_camera_permission",
             "request_microphone_permission",
@@ -131,54 +146,58 @@
       "screen_id": "T4_CAPTURE_S1_B_RECORDING",
       "route_key": "t4.capture.s1.recording",
       "state": "B_RECORDING",
-      "purpose": "capturer exactement la durée T4, image et microphone à vitesse naturelle",
+      "display_state": "B / ENREGISTREMENT",
+      "purpose": "Filmer automatiquement pendant 6 secondes avec le son.",
       "bindings": {
         "elapsed_ms": "runtime.capture.elapsed_ms",
         "progress_0_to_1": "runtime.capture.progress",
+        "prompt": "capture-guide/consignes_T4.json#/scenes/0/recording_prompt",
         "prompt_timeline": "capture-guide/consignes_T4.json#/scenes/0/recording_prompts",
         "output_uri": "runtime.captures.S1.uri"
       },
       "resolved_text": {
-        "scene_counter": "SCÈNE 1/4",
-        "title": "BIENVENUE",
+        "screen_label": "ÉCRAN 02 — B / ENREGISTREMENT",
+        "scene_counter": "SCÈNE 1 SUR 4 — 6 SECONDES",
+        "recording_status": "REC",
+        "instruction": "AVANCE VERS LA SALLE",
+        "timer_initial": "Temps restant : 00:00 / 00:06",
+        "timer_prefix": "Temps restant :",
+        "timer_total": "00:06",
+        "audio_status": "Son activé.",
+        "orientation_status": "Vidéo verticale.",
+        "auto_stop_status": "Arrêt automatique à la fin des 6 secondes.",
         "duration_seconds": 6,
         "prompt_timeline": [
           {
             "from_ms": 0,
-            "to_ms": 2000,
-            "text": "MONTRE L'ENTRÉE"
-          },
-          {
-            "from_ms": 2000,
-            "to_ms": 4000,
-            "text": "AVANCE VERS L'ACCUEIL"
-          },
-          {
-            "from_ms": 4000,
             "to_ms": 6000,
-            "text": "GARDE LE SOURIRE NET"
+            "text": "AVANCE VERS LA SALLE"
           }
         ]
       },
       "visible_components": [
-        "camera_preview",
-        "microphone_active",
+        "screen_label",
+        "scene_counter",
+        "recording_status",
+        "current_recording_instruction",
         "recording_timer",
-        "recording_progress",
-        "current_recording_prompt"
+        "microphone_active",
+        "vertical_video_status",
+        "automatic_stop_status"
       ],
       "forbidden_components": [
         "instruction_sheet",
         "merchant_fields",
-        "example_text",
         "manual_stop_button",
         "review_actions",
-        "automatic_subtitles"
+        "automatic_subtitles",
+        "extra_recording_prompt"
       ],
       "capture": {
         "starts_after": "COUNTDOWN_3_2_1_COMPLETE",
         "video": true,
         "microphone_audio": true,
+        "orientation": "vertical",
         "source_speed": 1.0,
         "source_time_map": "identity",
         "audio_time_map": "identity",
@@ -211,27 +230,29 @@
       "screen_id": "T4_CAPTURE_S1_C_REVIEW",
       "route_key": "t4.capture.s1.review",
       "state": "C_REVIEW",
-      "purpose": "relire avec le son, vérifier le contenu et accepter ou refaire la prise",
+      "display_state": "C / VÉRIFICATION",
+      "purpose": "Regarder la vidéo avec le son, puis la garder ou la refaire.",
       "bindings": {
         "preview_uri": "runtime.captures.S1.uri",
         "capture_metadata": "runtime.captures.S1.metadata",
         "review_question": "capture-guide/consignes_T4.json#/scenes/0/review_question",
-        "review_checks": "capture-guide/consignes_T4.json#/scenes/0/review_checks",
-        "review_error": "capture-guide/consignes_T4.json#/scenes/0/review_error"
+        "review_checks": "capture-guide/consignes_T4.json#/scenes/0/review_checks"
       },
       "resolved_text": {
-        "take_label": "PRISE 1 · 0:06",
-        "review_question": "VOIT-ON CLAIREMENT LE LIEU ET L'ACCUEIL ?",
+        "screen_label": "ÉCRAN 03 — C / VÉRIFICATION",
+        "take_label": "PRISE 1 — 0:06",
+        "audio_status": "Son activé.",
+        "review_question": "EST-CE QU'ON VOIT BIEN L'ENTRÉE ET LA SALLE ?",
         "review_checks": [
-          "Le lieu se reconnaît dès le début.",
-          "La personne est nette et consentante.",
-          "La fin est stable."
+          "L'entrée ou le nom du restaurant est bien visible.",
+          "On voit l'intérieur du restaurant.",
+          "La vidéo ne bouge pas trop à la fin."
         ],
-        "review_error": "Refais la prise si l'entrée est sombre, coupée ou si l'accueil n'est pas lisible.",
         "redo_action": "REFAIRE",
         "positive_action": "SCÈNE SUIVANTE"
       },
       "visible_components": [
+        "screen_label",
         "captured_video_preview",
         "captured_audio_playback",
         "review_question",
@@ -243,7 +264,8 @@
         "instruction_sheet",
         "recording_timer",
         "recording_progress",
-        "automatic_subtitles"
+        "automatic_subtitles",
+        "extra_error_copy"
       ],
       "playback": {
         "audio": true,
@@ -282,56 +304,68 @@
       "screen_id": "T4_CAPTURE_S2_A_GUIDE",
       "route_key": "t4.capture.s2.guide",
       "state": "A_GUIDE",
-      "purpose": "Montrer la prise en charge, le trajet du plat et sa présentation au client.",
+      "display_state": "A / GUIDE",
+      "purpose": "Montrer le plat quand il arrive et quand il est posé sur la table.",
       "bindings": {
         "title": "capture-guide/consignes_T4.json#/scenes/1/titre",
         "instruction": "capture-guide/consignes_T4.json#/scenes/1/consigne",
         "film_list": "capture-guide/consignes_T4.json#/scenes/1/a_filmer",
         "avoid_list": "capture-guide/consignes_T4.json#/scenes/1/a_eviter",
         "required_action": "capture-guide/consignes_T4.json#/scenes/1/ce_que_tu_dois_faire",
-        "example": "capture-guide/consignes_T4.json#/scenes/1/exemple_facultatif",
+        "after_action_note": "capture-guide/consignes_T4.json#/scenes/1/note_apres_action",
+        "speech_note": "capture-guide/consignes_T4.json#/mention_langues_commune",
+        "silence_note": "capture-guide/consignes_T4.json#/mention_silence_facultatif",
         "primary_action": "capture-guide/consignes_T4.json#/bouton_principal"
       },
       "resolved_text": {
-        "scene_counter": "SCÈNE 2/4",
+        "screen_label": "ÉCRAN 04 — A / GUIDE",
+        "scene_counter": "SCÈNE 2 SUR 4 — 8 SECONDES",
         "duration": "8 secondes",
         "title": "LE SERVICE",
-        "instruction": "Commence quand le plat est pris en charge, suis-le sur un trajet court, puis garde-le dans le cadre lorsqu'il est posé ou présenté au client.",
+        "guide_section_title": "CE QUE TU VAS FILMER",
+        "instruction": "Filme ton plat quand tu le sers. On doit voir le plat arriver sur la table et rester bien visible une fois posé.",
+        "film_section_title": "À FILMER",
         "film_list": [
-          "La prise du plat ou le départ du service.",
-          "Le déplacement du plat vers la table.",
-          "La pose finale avec le plat entièrement visible."
+          "Le plat prêt à être servi.",
+          "Le plat que tu apportes à la table.",
+          "Le plat bien posé sur la table."
         ],
+        "avoid_section_title": "À ÉVITER",
         "avoid_list": [
-          "Couper les mains ou l'assiette.",
-          "Faire un trajet long ou encombré.",
-          "Laisser une personne traverser devant l'objectif."
+          "Cacher le plat avec ta main.",
+          "Couper une partie de l'assiette dans l'image.",
+          "Aller trop vite en posant le plat."
         ],
-        "required_action": "Reste près de l'action, marche doucement et termine par une pose stable du plat.",
-        "voice_note": "Tu peux parler pendant que tu filmes, en français, en fon, en yoruba, en anglais ou dans une autre langue que tu maîtrises.",
+        "action_section_title": "CE QUE TU DOIS FAIRE",
+        "required_action": "Avant de commencer, pose ton téléphone à un endroit stable, face à la table. Prends le plat, fais-le entrer dans l'image et pose-le doucement sur la table.",
+        "after_action_note": "",
+        "speech_section_title": "TU PEUX PARLER PENDANT QUE TU FILMES",
+        "voice_note": "Tu peux parler en fon, yoruba, français, anglais ou dans une autre langue que tu maîtrises.",
         "silence_note": "Tu peux aussi ne pas parler si tu préfères.",
-        "optional_example": "Votre commande arrive, préparée et servie avec soin.",
         "primary_action": "COMMENCER À FILMER"
       },
       "visible_components": [
-        "camera_preview_dimmed",
-        "scene_progress",
-        "instruction_sheet",
+        "screen_label",
+        "scene_counter",
+        "title",
+        "what_to_film",
         "film_list",
         "avoid_list",
+        "required_action",
         "consent_note_when_applicable",
-        "voice_note",
-        "optional_example",
+        "speech_note",
         "start_recording_button"
       ],
       "forbidden_components": [
         "recording_timer",
         "review_actions",
-        "automatic_subtitles"
+        "automatic_subtitles",
+        "abstract_instruction_text"
       ],
       "actions": [
         {
           "event": "START_RECORDING",
+          "label": "COMMENCER À FILMER",
           "effects": [
             "request_camera_permission",
             "request_microphone_permission",
@@ -352,54 +386,58 @@
       "screen_id": "T4_CAPTURE_S2_B_RECORDING",
       "route_key": "t4.capture.s2.recording",
       "state": "B_RECORDING",
-      "purpose": "capturer exactement la durée T4, image et microphone à vitesse naturelle",
+      "display_state": "B / ENREGISTREMENT",
+      "purpose": "Filmer automatiquement pendant 8 secondes avec le son.",
       "bindings": {
         "elapsed_ms": "runtime.capture.elapsed_ms",
         "progress_0_to_1": "runtime.capture.progress",
+        "prompt": "capture-guide/consignes_T4.json#/scenes/1/recording_prompt",
         "prompt_timeline": "capture-guide/consignes_T4.json#/scenes/1/recording_prompts",
         "output_uri": "runtime.captures.S2.uri"
       },
       "resolved_text": {
-        "scene_counter": "SCÈNE 2/4",
-        "title": "LE SERVICE",
+        "screen_label": "ÉCRAN 05 — B / ENREGISTREMENT",
+        "scene_counter": "SCÈNE 2 SUR 4 — 8 SECONDES",
+        "recording_status": "REC",
+        "instruction": "POSE LE PLAT SUR LA TABLE",
+        "timer_initial": "Temps restant : 00:00 / 00:08",
+        "timer_prefix": "Temps restant :",
+        "timer_total": "00:08",
+        "audio_status": "Son activé.",
+        "orientation_status": "Vidéo verticale.",
+        "auto_stop_status": "Arrêt automatique à la fin des 8 secondes.",
         "duration_seconds": 8,
         "prompt_timeline": [
           {
             "from_ms": 0,
-            "to_ms": 2000,
-            "text": "CADRE LA PRISE DU PLAT"
-          },
-          {
-            "from_ms": 2000,
-            "to_ms": 6000,
-            "text": "SUIS LE SERVICE"
-          },
-          {
-            "from_ms": 6000,
             "to_ms": 8000,
-            "text": "GARDE LA POSE FINALE"
+            "text": "POSE LE PLAT SUR LA TABLE"
           }
         ]
       },
       "visible_components": [
-        "camera_preview",
-        "microphone_active",
+        "screen_label",
+        "scene_counter",
+        "recording_status",
+        "current_recording_instruction",
         "recording_timer",
-        "recording_progress",
-        "current_recording_prompt"
+        "microphone_active",
+        "vertical_video_status",
+        "automatic_stop_status"
       ],
       "forbidden_components": [
         "instruction_sheet",
         "merchant_fields",
-        "example_text",
         "manual_stop_button",
         "review_actions",
-        "automatic_subtitles"
+        "automatic_subtitles",
+        "extra_recording_prompt"
       ],
       "capture": {
         "starts_after": "COUNTDOWN_3_2_1_COMPLETE",
         "video": true,
         "microphone_audio": true,
+        "orientation": "vertical",
         "source_speed": 1.0,
         "source_time_map": "identity",
         "audio_time_map": "identity",
@@ -432,27 +470,29 @@
       "screen_id": "T4_CAPTURE_S2_C_REVIEW",
       "route_key": "t4.capture.s2.review",
       "state": "C_REVIEW",
-      "purpose": "relire avec le son, vérifier le contenu et accepter ou refaire la prise",
+      "display_state": "C / VÉRIFICATION",
+      "purpose": "Regarder la vidéo avec le son, puis la garder ou la refaire.",
       "bindings": {
         "preview_uri": "runtime.captures.S2.uri",
         "capture_metadata": "runtime.captures.S2.metadata",
         "review_question": "capture-guide/consignes_T4.json#/scenes/1/review_question",
-        "review_checks": "capture-guide/consignes_T4.json#/scenes/1/review_checks",
-        "review_error": "capture-guide/consignes_T4.json#/scenes/1/review_error"
+        "review_checks": "capture-guide/consignes_T4.json#/scenes/1/review_checks"
       },
       "resolved_text": {
-        "take_label": "PRISE 2 · 0:08",
-        "review_question": "LE SERVICE SE COMPREND-IL DU DÉBUT À LA FIN ?",
+        "screen_label": "ÉCRAN 06 — C / VÉRIFICATION",
+        "take_label": "PRISE 2 — 0:08",
+        "audio_status": "Son activé.",
+        "review_question": "EST-CE QU'ON VOIT BIEN LE PLAT DU DÉBUT À LA FIN ?",
         "review_checks": [
-          "La prise du plat est visible.",
-          "Le déplacement reste net.",
-          "La pose finale montre le plat."
+          "Le plat reste bien visible.",
+          "On le voit arriver sur la table.",
+          "L'assiette est entièrement visible une fois posée."
         ],
-        "review_error": "Refais la prise si le plat sort du cadre ou si quelqu'un masque l'action.",
         "redo_action": "REFAIRE",
         "positive_action": "SCÈNE SUIVANTE"
       },
       "visible_components": [
+        "screen_label",
         "captured_video_preview",
         "captured_audio_playback",
         "review_question",
@@ -464,7 +504,8 @@
         "instruction_sheet",
         "recording_timer",
         "recording_progress",
-        "automatic_subtitles"
+        "automatic_subtitles",
+        "extra_error_copy"
       ],
       "playback": {
         "audio": true,
@@ -503,56 +544,68 @@
       "screen_id": "T4_CAPTURE_S3_A_GUIDE",
       "route_key": "t4.capture.s3.guide",
       "state": "A_GUIDE",
-      "purpose": "Apporter une preuve humaine avec une vraie bouchée et une réaction naturelle.",
+      "display_state": "A / GUIDE",
+      "purpose": "Montrer une personne qui goûte le plat et réagit naturellement.",
       "bindings": {
         "title": "capture-guide/consignes_T4.json#/scenes/2/titre",
         "instruction": "capture-guide/consignes_T4.json#/scenes/2/consigne",
         "film_list": "capture-guide/consignes_T4.json#/scenes/2/a_filmer",
         "avoid_list": "capture-guide/consignes_T4.json#/scenes/2/a_eviter",
         "required_action": "capture-guide/consignes_T4.json#/scenes/2/ce_que_tu_dois_faire",
-        "example": "capture-guide/consignes_T4.json#/scenes/2/exemple_facultatif",
+        "after_action_note": "capture-guide/consignes_T4.json#/scenes/2/note_apres_action",
+        "speech_note": "capture-guide/consignes_T4.json#/mention_langues_commune",
+        "silence_note": "capture-guide/consignes_T4.json#/mention_silence_facultatif",
         "primary_action": "capture-guide/consignes_T4.json#/bouton_principal"
       },
       "resolved_text": {
-        "scene_counter": "SCÈNE 3/4",
+        "screen_label": "ÉCRAN 07 — A / GUIDE",
+        "scene_counter": "SCÈNE 3 SUR 4 — 7 SECONDES",
         "duration": "7 secondes",
         "title": "LA DÉGUSTATION",
-        "instruction": "Cadre ensemble la personne consentante et le plat. Filme une bouchée complète, puis laisse la réaction se produire naturellement sans la faire jouer.",
+        "guide_section_title": "CE QUE TU VAS FILMER",
+        "instruction": "Montre une personne qui goûte ton plat. Tu peux te filmer toi-même : place ton téléphone devant toi, mets-toi dans l'image avec le plat et prends une bouchée.",
+        "film_section_title": "À FILMER",
         "film_list": [
-          "Le visage et le plat dans le même cadre.",
-          "Une bouchée complète et simple.",
-          "Une réaction naturelle avec les yeux et la bouche visibles."
+          "Ton visage et le plat dans la même image.",
+          "Une bouchée du plat.",
+          "Ta réaction naturelle après avoir goûté."
         ],
+        "avoid_section_title": "À ÉVITER",
         "avoid_list": [
-          "Demander une fausse réaction ou un faux avis.",
-          "Masquer le visage avec une main ou un objet.",
-          "Zoomer pendant la bouchée."
+          "Faire semblant d'aimer le plat.",
+          "Cacher ton visage ou le plat.",
+          "Bouger le téléphone pendant que tu manges."
         ],
-        "required_action": "Obtiens l'accord de la personne, garde le téléphone stable et laisse la réaction respirer à la fin.",
-        "voice_note": "Tu peux parler pendant que tu filmes, en français, en fon, en yoruba, en anglais ou dans une autre langue que tu maîtrises.",
+        "action_section_title": "CE QUE TU DOIS FAIRE",
+        "required_action": "Pose ton téléphone sur une table ou appuie-le contre un objet stable. Vérifie que ton visage et le plat sont bien visibles. Goûte une bouchée et laisse voir ta réaction. Tu n'as pas besoin de jouer un rôle.",
+        "after_action_note": "Tu peux aussi filmer une autre personne, mais demande-lui d'abord si elle accepte d'être filmée.",
+        "speech_section_title": "TU PEUX PARLER PENDANT QUE TU FILMES",
+        "voice_note": "Tu peux parler en fon, yoruba, français, anglais ou dans une autre langue que tu maîtrises.",
         "silence_note": "Tu peux aussi ne pas parler si tu préfères.",
-        "optional_example": "Goûte simplement le plat et réagis comme tu le ressens.",
         "primary_action": "COMMENCER À FILMER"
       },
       "visible_components": [
-        "camera_preview_dimmed",
-        "scene_progress",
-        "instruction_sheet",
+        "screen_label",
+        "scene_counter",
+        "title",
+        "what_to_film",
         "film_list",
         "avoid_list",
+        "required_action",
         "consent_note_when_applicable",
-        "voice_note",
-        "optional_example",
+        "speech_note",
         "start_recording_button"
       ],
       "forbidden_components": [
         "recording_timer",
         "review_actions",
-        "automatic_subtitles"
+        "automatic_subtitles",
+        "abstract_instruction_text"
       ],
       "actions": [
         {
           "event": "START_RECORDING",
+          "label": "COMMENCER À FILMER",
           "effects": [
             "request_camera_permission",
             "request_microphone_permission",
@@ -573,54 +626,58 @@
       "screen_id": "T4_CAPTURE_S3_B_RECORDING",
       "route_key": "t4.capture.s3.recording",
       "state": "B_RECORDING",
-      "purpose": "capturer exactement la durée T4, image et microphone à vitesse naturelle",
+      "display_state": "B / ENREGISTREMENT",
+      "purpose": "Filmer automatiquement pendant 7 secondes avec le son.",
       "bindings": {
         "elapsed_ms": "runtime.capture.elapsed_ms",
         "progress_0_to_1": "runtime.capture.progress",
+        "prompt": "capture-guide/consignes_T4.json#/scenes/2/recording_prompt",
         "prompt_timeline": "capture-guide/consignes_T4.json#/scenes/2/recording_prompts",
         "output_uri": "runtime.captures.S3.uri"
       },
       "resolved_text": {
-        "scene_counter": "SCÈNE 3/4",
-        "title": "LA DÉGUSTATION",
+        "screen_label": "ÉCRAN 08 — B / ENREGISTREMENT",
+        "scene_counter": "SCÈNE 3 SUR 4 — 7 SECONDES",
+        "recording_status": "REC",
+        "instruction": "GOÛTE UNE BOUCHÉE",
+        "timer_initial": "Temps restant : 00:00 / 00:07",
+        "timer_prefix": "Temps restant :",
+        "timer_total": "00:07",
+        "audio_status": "Son activé.",
+        "orientation_status": "Vidéo verticale.",
+        "auto_stop_status": "Arrêt automatique à la fin des 7 secondes.",
         "duration_seconds": 7,
         "prompt_timeline": [
           {
             "from_ms": 0,
-            "to_ms": 2000,
-            "text": "CADRE LE PLAT ET LE VISAGE"
-          },
-          {
-            "from_ms": 2000,
-            "to_ms": 4500,
-            "text": "FILME LA BOUCHÉE"
-          },
-          {
-            "from_ms": 4500,
             "to_ms": 7000,
-            "text": "LAISSE VENIR LA RÉACTION"
+            "text": "GOÛTE UNE BOUCHÉE"
           }
         ]
       },
       "visible_components": [
-        "camera_preview",
-        "microphone_active",
+        "screen_label",
+        "scene_counter",
+        "recording_status",
+        "current_recording_instruction",
         "recording_timer",
-        "recording_progress",
-        "current_recording_prompt"
+        "microphone_active",
+        "vertical_video_status",
+        "automatic_stop_status"
       ],
       "forbidden_components": [
         "instruction_sheet",
         "merchant_fields",
-        "example_text",
         "manual_stop_button",
         "review_actions",
-        "automatic_subtitles"
+        "automatic_subtitles",
+        "extra_recording_prompt"
       ],
       "capture": {
         "starts_after": "COUNTDOWN_3_2_1_COMPLETE",
         "video": true,
         "microphone_audio": true,
+        "orientation": "vertical",
         "source_speed": 1.0,
         "source_time_map": "identity",
         "audio_time_map": "identity",
@@ -653,27 +710,29 @@
       "screen_id": "T4_CAPTURE_S3_C_REVIEW",
       "route_key": "t4.capture.s3.review",
       "state": "C_REVIEW",
-      "purpose": "relire avec le son, vérifier le contenu et accepter ou refaire la prise",
+      "display_state": "C / VÉRIFICATION",
+      "purpose": "Regarder la vidéo avec le son, puis la garder ou la refaire.",
       "bindings": {
         "preview_uri": "runtime.captures.S3.uri",
         "capture_metadata": "runtime.captures.S3.metadata",
         "review_question": "capture-guide/consignes_T4.json#/scenes/2/review_question",
-        "review_checks": "capture-guide/consignes_T4.json#/scenes/2/review_checks",
-        "review_error": "capture-guide/consignes_T4.json#/scenes/2/review_error"
+        "review_checks": "capture-guide/consignes_T4.json#/scenes/2/review_checks"
       },
       "resolved_text": {
-        "take_label": "PRISE 3 · 0:07",
-        "review_question": "LA BOUCHÉE ET LA RÉACTION SONT-ELLES NATURELLES ?",
+        "screen_label": "ÉCRAN 09 — C / VÉRIFICATION",
+        "take_label": "PRISE 3 — 0:07",
+        "audio_status": "Son activé.",
+        "review_question": "EST-CE QU'ON VOIT BIEN LA DÉGUSTATION ?",
         "review_checks": [
-          "Le visage est net et éclairé.",
-          "La bouchée est complète.",
-          "La réaction n'est ni masquée ni forcée."
+          "Le visage et le plat sont bien visibles.",
+          "On voit la personne prendre une bouchée.",
+          "La réaction est naturelle, sans être forcée."
         ],
-        "review_error": "Refais la prise si le visage, la bouche ou l'assiette sont coupés.",
         "redo_action": "REFAIRE",
         "positive_action": "SCÈNE SUIVANTE"
       },
       "visible_components": [
+        "screen_label",
         "captured_video_preview",
         "captured_audio_playback",
         "review_question",
@@ -685,7 +744,8 @@
         "instruction_sheet",
         "recording_timer",
         "recording_progress",
-        "automatic_subtitles"
+        "automatic_subtitles",
+        "extra_error_copy"
       ],
       "playback": {
         "audio": true,
@@ -724,56 +784,68 @@
       "screen_id": "T4_CAPTURE_S4_A_GUIDE",
       "route_key": "t4.capture.s4.guide",
       "state": "A_GUIDE",
-      "purpose": "Conclure avec l'ambiance réelle et un cadre stable pour le futur contact.",
+      "display_state": "A / GUIDE",
+      "purpose": "Montrer le plat, la table et la salle avant de finir sans bouger.",
       "bindings": {
         "title": "capture-guide/consignes_T4.json#/scenes/3/titre",
         "instruction": "capture-guide/consignes_T4.json#/scenes/3/consigne",
         "film_list": "capture-guide/consignes_T4.json#/scenes/3/a_filmer",
         "avoid_list": "capture-guide/consignes_T4.json#/scenes/3/a_eviter",
         "required_action": "capture-guide/consignes_T4.json#/scenes/3/ce_que_tu_dois_faire",
-        "example": "capture-guide/consignes_T4.json#/scenes/3/exemple_facultatif",
+        "after_action_note": "capture-guide/consignes_T4.json#/scenes/3/note_apres_action",
+        "speech_note": "capture-guide/consignes_T4.json#/mention_langues_commune",
+        "silence_note": "capture-guide/consignes_T4.json#/mention_silence_facultatif",
         "primary_action": "capture-guide/consignes_T4.json#/bouton_principal"
       },
       "resolved_text": {
-        "scene_counter": "SCÈNE 4/4",
+        "screen_label": "ÉCRAN 10 — A / GUIDE",
+        "scene_counter": "SCÈNE 4 SUR 4 — 9 SECONDES",
         "duration": "9 secondes",
         "title": "VENEZ / COMMANDEZ",
-        "instruction": "Pars d'un plat ou d'une table, révèle l'ambiance générale, puis ne bouge plus pendant les trois dernières secondes.",
+        "guide_section_title": "CE QUE TU VAS FILMER",
+        "instruction": "Montre ton plat ou une table déjà servie. Puis montre un peu la salle pour donner envie aux clients de venir manger chez toi.",
+        "film_section_title": "À FILMER",
         "film_list": [
-          "Un détail appétissant ou une table servie.",
-          "La salle, l'équipe ou une ambiance réelle.",
-          "Un cadre propre et stable pendant les trois dernières secondes."
+          "Un plat bien présenté ou une table servie.",
+          "La salle ou le comptoir du restaurant.",
+          "Un endroit propre et bien rangé."
         ],
+        "avoid_section_title": "À ÉVITER",
         "avoid_list": [
-          "Une caisse ou un espace désordonné.",
-          "Une personne reconnaissable sans son accord.",
-          "Bouger le téléphone pendant la fin stable."
+          "Filmer une table en désordre.",
+          "Filmer une personne de près sans son accord.",
+          "Bouger le téléphone pendant les trois dernières secondes."
         ],
-        "required_action": "À six secondes, verrouille tes mains et garde exactement le même cadre jusqu'à la fin.",
-        "voice_note": "Tu peux parler pendant que tu filmes, en français, en fon, en yoruba, en anglais ou dans une autre langue que tu maîtrises.",
+        "action_section_title": "CE QUE TU DOIS FAIRE",
+        "required_action": "Commence par filmer le plat ou la table. Éloigne doucement ton téléphone pour montrer la salle. Pendant les trois dernières secondes, arrête-toi et garde le téléphone sans bouger.",
+        "after_action_note": "",
+        "speech_section_title": "TU PEUX PARLER PENDANT QUE TU FILMES",
+        "voice_note": "Tu peux parler en fon, yoruba, français, anglais ou dans une autre langue que tu maîtrises.",
         "silence_note": "Tu peux aussi ne pas parler si tu préfères.",
-        "optional_example": "Venez nous retrouver ou commandez directement sur WhatsApp.",
         "primary_action": "COMMENCER À FILMER"
       },
       "visible_components": [
-        "camera_preview_dimmed",
-        "scene_progress",
-        "instruction_sheet",
+        "screen_label",
+        "scene_counter",
+        "title",
+        "what_to_film",
         "film_list",
         "avoid_list",
+        "required_action",
         "consent_note_when_applicable",
-        "voice_note",
-        "optional_example",
+        "speech_note",
         "start_recording_button"
       ],
       "forbidden_components": [
         "recording_timer",
         "review_actions",
-        "automatic_subtitles"
+        "automatic_subtitles",
+        "abstract_instruction_text"
       ],
       "actions": [
         {
           "event": "START_RECORDING",
+          "label": "COMMENCER À FILMER",
           "effects": [
             "request_camera_permission",
             "request_microphone_permission",
@@ -794,54 +866,58 @@
       "screen_id": "T4_CAPTURE_S4_B_RECORDING",
       "route_key": "t4.capture.s4.recording",
       "state": "B_RECORDING",
-      "purpose": "capturer exactement la durée T4, image et microphone à vitesse naturelle",
+      "display_state": "B / ENREGISTREMENT",
+      "purpose": "Filmer automatiquement pendant 9 secondes avec le son.",
       "bindings": {
         "elapsed_ms": "runtime.capture.elapsed_ms",
         "progress_0_to_1": "runtime.capture.progress",
+        "prompt": "capture-guide/consignes_T4.json#/scenes/3/recording_prompt",
         "prompt_timeline": "capture-guide/consignes_T4.json#/scenes/3/recording_prompts",
         "output_uri": "runtime.captures.S4.uri"
       },
       "resolved_text": {
-        "scene_counter": "SCÈNE 4/4",
-        "title": "VENEZ / COMMANDEZ",
+        "screen_label": "ÉCRAN 11 — B / ENREGISTREMENT",
+        "scene_counter": "SCÈNE 4 SUR 4 — 9 SECONDES",
+        "recording_status": "REC",
+        "instruction": "MONTRE LE PLAT ET LA SALLE",
+        "timer_initial": "Temps restant : 00:00 / 00:09",
+        "timer_prefix": "Temps restant :",
+        "timer_total": "00:09",
+        "audio_status": "Son activé.",
+        "orientation_status": "Vidéo verticale.",
+        "auto_stop_status": "Arrêt automatique à la fin des 9 secondes.",
         "duration_seconds": 9,
         "prompt_timeline": [
           {
             "from_ms": 0,
-            "to_ms": 3000,
-            "text": "MONTRE LE PLAT OU LA TABLE"
-          },
-          {
-            "from_ms": 3000,
-            "to_ms": 6000,
-            "text": "RÉVÈLE L'AMBIANCE"
-          },
-          {
-            "from_ms": 6000,
             "to_ms": 9000,
-            "text": "NE BOUGE PLUS"
+            "text": "MONTRE LE PLAT ET LA SALLE"
           }
         ]
       },
       "visible_components": [
-        "camera_preview",
-        "microphone_active",
+        "screen_label",
+        "scene_counter",
+        "recording_status",
+        "current_recording_instruction",
         "recording_timer",
-        "recording_progress",
-        "current_recording_prompt"
+        "microphone_active",
+        "vertical_video_status",
+        "automatic_stop_status"
       ],
       "forbidden_components": [
         "instruction_sheet",
         "merchant_fields",
-        "example_text",
         "manual_stop_button",
         "review_actions",
-        "automatic_subtitles"
+        "automatic_subtitles",
+        "extra_recording_prompt"
       ],
       "capture": {
         "starts_after": "COUNTDOWN_3_2_1_COMPLETE",
         "video": true,
         "microphone_audio": true,
+        "orientation": "vertical",
         "source_speed": 1.0,
         "source_time_map": "identity",
         "audio_time_map": "identity",
@@ -874,27 +950,29 @@
       "screen_id": "T4_CAPTURE_S4_C_REVIEW",
       "route_key": "t4.capture.s4.review",
       "state": "C_REVIEW",
-      "purpose": "relire avec le son, vérifier le contenu et accepter ou refaire la prise",
+      "display_state": "C / VÉRIFICATION",
+      "purpose": "Regarder la vidéo avec le son, puis la garder ou la refaire.",
       "bindings": {
         "preview_uri": "runtime.captures.S4.uri",
         "capture_metadata": "runtime.captures.S4.metadata",
         "review_question": "capture-guide/consignes_T4.json#/scenes/3/review_question",
-        "review_checks": "capture-guide/consignes_T4.json#/scenes/3/review_checks",
-        "review_error": "capture-guide/consignes_T4.json#/scenes/3/review_error"
+        "review_checks": "capture-guide/consignes_T4.json#/scenes/3/review_checks"
       },
       "resolved_text": {
-        "take_label": "PRISE 4 · 0:09",
-        "review_question": "LA FIN RESTE-T-ELLE STABLE PENDANT TROIS SECONDES ?",
+        "screen_label": "ÉCRAN 12 — C / VÉRIFICATION",
+        "take_label": "PRISE 4 — 0:09",
+        "audio_status": "Son activé.",
+        "review_question": "EST-CE QUE LA FIN DE TA VIDÉO EST BIEN STABLE ?",
         "review_checks": [
-          "Le plat ou l'ambiance donne envie.",
-          "Toutes les personnes visibles sont consentantes.",
-          "Les trois dernières secondes sont stables."
+          "Le plat ou la table est bien visible.",
+          "On voit la salle du restaurant.",
+          "Le téléphone ne bouge plus pendant les trois dernières secondes."
         ],
-        "review_error": "Refais la prise si le téléphone bouge pendant les trois dernières secondes.",
         "redo_action": "REFAIRE",
         "positive_action": "VOIR MON MONTAGE"
       },
       "visible_components": [
+        "screen_label",
         "captured_video_preview",
         "captured_audio_playback",
         "review_question",
@@ -906,7 +984,8 @@
         "instruction_sheet",
         "recording_timer",
         "recording_progress",
-        "automatic_subtitles"
+        "automatic_subtitles",
+        "extra_error_copy"
       ],
       "playback": {
         "audio": true,
@@ -957,6 +1036,14 @@
       "captures.S4": "runtime.captures.S4.uri"
     },
     "merchant_payload_source": "form/questions_T4.json",
+    "merchant_payload_targets": [
+      "merchant_payload.nom",
+      "merchant_payload.produit",
+      "merchant_payload.prix",
+      "merchant_payload.whatsapp",
+      "merchant_payload.quartier",
+      "merchant_payload.accroche"
+    ],
     "production_render_plane": "github_actions",
     "cloudflare_rendering_forbidden": true
   }
