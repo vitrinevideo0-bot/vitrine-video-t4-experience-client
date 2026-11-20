@@ -1,6 +1,8 @@
-# T4 V2 — Transitions naturelles et rapides
+# T4 V2 — Transitions naturelles et rapides — historique
 
-Le propriétaire a rejeté le candidat V1 parce que les transitions étaient trop exagérées. La V2 remplace toute la grammaire mosaïque/grille/shake/glitch par une règle simple : **un raccord seulement quand le rush change**.
+> **Statut : remplacé par la V3 hybride cinématique.** Le propriétaire a jugé les raccords V2 trop basiques. Voir `docs/TRANSITIONS_HYBRIDES_V3.md`.
+
+Le propriétaire avait rejeté le candidat V1 parce que les transitions étaient trop exagérées. La V2 remplace toute la grammaire mosaïque/grille/shake/glitch par une règle simple : **un raccord seulement quand le rush change**.
 
 ## Trois raccords seulement
 

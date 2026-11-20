@@ -3,8 +3,9 @@
   "contract_id": "restauration_t4_natural_transitions_v2_0_0",
   "template_id": "RESTAURATION-T4",
   "version": "2.0.0",
-  "title": "Expérience client — raccords naturels rapides",
-  "status": "owner_corrected_implementation_pending_v2_review",
+  "title": "HISTORIQUE V2 — raccords naturels rapides",
+  "status": "superseded_after_owner_rejected_as_too_basic",
+  "superseded_by": "config/T4_HYBRID_CINEMATIC_TRANSITIONS_V3_0_0.json",
   "owner_correction": "approvals/CORRECTION_TRANSITIONS_NATURELLES_V2_2026-11-18.json",
   "previous_candidate": {
     "version": "1.0.0",

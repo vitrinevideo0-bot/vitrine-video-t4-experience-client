@@ -2,24 +2,30 @@
 
 Quatrième gabarit restauration : accueil, service, dégustation réelle et ambiance finale.
 
-## Correction créative V2
+## Direction créative active — V3 hybride cinématique
 
-Le candidat V1 a été rejeté parce que ses transitions étaient trop exagérées. La règle active V2 est désormais : **laisser les rushes naturels en plein écran et placer une transition rapide seulement lorsqu’un rush change**.
+Deux candidats ont permis de fixer le bon équilibre :
 
-- trois raccords seulement, aux secondes **6, 14 et 21** ;
-- quatre images par raccord, soit environ **133 ms** ;
-- fondu de mouvement plein écran très léger ;
-- **aucune** mosaïque, grille, secousse, cassure rectangulaire ou glitch ;
-- 888 images naturelles sans transition, soit **98,67 %** du montage.
+- V1 rejetée : effets trop exagérés et trop présents à l’intérieur des rushes ;
+- V2 rejetée : fondus naturels trop basiques au moment des changements ;
+- **V3 active : trois transitions cinématiques distinctes, impressionnantes mais limitées aux trois coupes.**
+
+| Coupe | Instant | Signature |
+|---|---:|---|
+| Bienvenue → Service | 6 s | whip-pan horizontal rapide |
+| Service → Dégustation | 14 s | zoom traversant le plat |
+| Dégustation → Ambiance | 21 s | whip-zoom d’ouverture |
+
+Chaque raccord dure huit images, commence quatre images avant la coupe et finit quatre images après. La dernière image retombe exactement sur le rush entrant. Les 876 autres images restent naturelles et plein écran, soit **97,33 %** du montage.
 
 Contrats actifs :
 
-- `approvals/CORRECTION_TRANSITIONS_NATURELLES_V2_2026-11-18.json` ;
-- `config/T4_NATURAL_TRANSITIONS_CONTRACT_V2_0_0.json` ;
-- `reverse-engineering/T4_TRANSITIONS_NATURELLES_30S_V2.json` ;
-- `config/T4_EXPERIENCE_CLIENT_TEMPLATE_V2_0_0.json`.
+- `approvals/CHOIX_TRANSITIONS_HYBRIDES_V3_2026-11-18.json` ;
+- `config/T4_HYBRID_CINEMATIC_TRANSITIONS_V3_0_0.json` ;
+- `reverse-engineering/T4_TRANSITIONS_HYBRIDES_30S_V3.json` ;
+- `config/T4_EXPERIENCE_CLIENT_TEMPLATE_V3_0_0.json`.
 
-Le contrat A+B+C+D V1 est conservé uniquement comme historique et n’est plus utilisé par le moteur actif.
+Les contrats V1 et V2 restent uniquement comme historique.
 
 ## Questions et parcours de capture
 
@@ -37,17 +43,18 @@ Le contrat A+B+C+D V1 est conservé uniquement comme historique et n’est plus 
 
 Chaque scène possède trois états stables : **A Guide**, **B Enregistrement**, **C Validation**.
 
-## Candidat silencieux V2
+## Candidat silencieux V3
 
 Le workflow `.github/workflows/render-silent.yml` :
 
 1. compile et teste les contrats ;
-2. reconstruit les douze écrans et la timeline V2 ;
+2. reconstruit les douze écrans et la timeline V3 ;
 3. télécharge quatre rushes Pexels verrouillés par taille et SHA-256 ;
-4. produit les trois raccords naturels sur un runner GitHub ;
+4. produit les trois signatures hybrides sur un runner GitHub ;
 5. valide 30 s, 720×1280, 30 i/s, 900 images, H.264/yuv420p ;
-6. vérifie l’absence d’audio, de texte et des cinq familles exagérées V1 ;
-7. publie un artefact et une pré-Release immuable.
+6. contrôle les fenêtres, l’impact visible et les points d’entrée/sortie propres ;
+7. vérifie l’absence d’audio, de texte, de mosaïque, grille et glitch ;
+8. publie un artefact et une pré-Release immuable.
 
 Les rushes bruts ne sont jamais suivis par Git ni publiés séparément.
 

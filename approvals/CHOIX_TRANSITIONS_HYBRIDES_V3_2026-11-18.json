@@ -1,0 +1,67 @@
+{
+  "schema_version": "3.0.0",
+  "template_id": "RESTAURATION-T4",
+  "decision_type": "owner_transition_signature_choice",
+  "status": "active_instruction",
+  "date_local": "2026-11-18",
+  "decision_channel": "arena_chat",
+  "reviewed_candidate": {
+    "version": "v2",
+    "github_run_id": 44641449652,
+    "release_tag": "t4-experience-client-v2.0.0-natural-candidate-2",
+    "verdict": "rejected_as_too_basic"
+  },
+  "owner_feedback_normalized": [
+    "Les transitions V2 sont trop basiques.",
+    "Le passage d'un rush au suivant doit produire un vrai changement visuel.",
+    "Les transitions doivent être impressionnantes sans réintroduire des effets permanents dans les rushes."
+  ],
+  "selected_option": {
+    "id": "hybride_cinematique",
+    "label": "Hybride cinématique — recommandé",
+    "selection_method": "explicit_owner_choice",
+    "description": "S1 vers S2 whip-pan rapide; S2 vers S3 zoom traversant le plat; S3 vers S4 whip-zoom d'ouverture."
+  },
+  "active_decisions": {
+    "transition_count": 3,
+    "transition_cut_seconds": [6, 14, 21],
+    "transition_duration_frames_each": 8,
+    "transition_window_position": "four_frames_before_and_four_frames_from_cut",
+    "full_frame_only": true,
+    "effects_inside_stable_rush_windows_forbidden": true,
+    "panels_mosaic_grid_glitch_forbidden": true,
+    "clean_landing_on_incoming_rush_required": true,
+    "audio_forbidden_in_silent_candidate": true,
+    "burned_text_forbidden_in_silent_candidate": true
+  },
+  "transition_signatures": [
+    {
+      "cut": "S1_TO_S2",
+      "family": "T4_CINEMATIC_WHIP_PAN",
+      "intent": "Balayage horizontal très rapide avec flou de mouvement et arrivée nette sur le service."
+    },
+    {
+      "cut": "S2_TO_S3",
+      "family": "T4_CINEMATIC_ZOOM_MATCH",
+      "intent": "Zoom dans le plat puis sortie sur la dégustation, sans panneau ni flash."
+    },
+    {
+      "cut": "S3_TO_S4",
+      "family": "T4_CINEMATIC_WHIP_ZOOM",
+      "intent": "Whip-zoom d'ouverture depuis le portrait vers l'ambiance générale."
+    }
+  ],
+  "supersedes": [
+    "config/T4_NATURAL_TRANSITIONS_CONTRACT_V2_0_0.json#active_transition_style",
+    "reverse-engineering/T4_TRANSITIONS_NATURELLES_30S_V2.json@active"
+  ],
+  "preserves": [
+    "six_merchant_questions",
+    "twelve_capture_screens",
+    "four_scenes_6_8_7_9_seconds",
+    "transitions_only_at_real_rush_changes",
+    "silent_github_actions_delivery",
+    "three_second_stable_final_tail"
+  ],
+  "cloudflare_production_deployment_authorized": false
+}

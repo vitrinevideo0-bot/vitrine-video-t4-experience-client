@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Independent validation for the T4 V2 natural-transition candidate."""
+"""Independent validation for the T4 V3 hybrid cinematic candidate."""
 from __future__ import annotations
 
 import argparse
@@ -14,7 +14,12 @@ import cv2
 import numpy as np
 
 EXPECTED_CUTS = [180, 420, 630]
-EXPECTED_WINDOWS = [[180, 183], [420, 423], [630, 633]]
+EXPECTED_WINDOWS = [[176, 183], [416, 423], [626, 633]]
+EXPECTED_FAMILIES = [
+    "T4_CINEMATIC_WHIP_PAN",
+    "T4_CINEMATIC_ZOOM_MATCH",
+    "T4_CINEMATIC_WHIP_ZOOM",
+]
 
 
 def sha256(path: Path) -> str:
@@ -31,7 +36,7 @@ def check(name: str, condition: bool, detail: Any = "") -> dict[str, Any]:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output-dir", type=Path, default=Path("output/t4-natural-v2.0.0"))
+    parser.add_argument("--output-dir", type=Path, default=Path("output/t4-hybrid-v3.0.0"))
     parser.add_argument("--proof", type=Path)
     args = parser.parse_args()
 
@@ -67,8 +72,8 @@ def main() -> int:
     decoded = 0
     sampled_nonblack = 0
     cyan_line_max_fraction = 0.0
-    sample_set = {1, 180, 181, 184, 420, 421, 424, 630, 631, 634, 810, 900}
-    nonblack_set = {1, 180, 420, 630, 810, 900}
+    sample_set = {1, 176, 180, 184, 416, 420, 424, 626, 630, 634, 810, 900}
+    nonblack_set = {1, 176, 184, 416, 424, 626, 634, 810, 900}
     while True:
         ok, frame = capture.read()
         if not ok:
@@ -86,24 +91,22 @@ def main() -> int:
 
     events = report.get("events", [])
     style = report.get("transition_style", {})
-    retired = report.get("retired_v1_effects", {})
+    retired = report.get("retired_effects", {})
     stable = report.get("stable_full_frame_audit", {})
     event_frames_in_final_tail = [
         event["event_id"]
         for event in events
         if event["frames"][0] <= 899 and event["frames"][1] >= 810
     ]
-    old_families = {
-        "T4_TILE_REVEAL",
-        "T4_DYNAMIC_GRID_RECONFIG",
-        "T4_SHAKE_IMPACT",
-        "T4_RECTANGULAR_BLOCK_STUTTER",
-        "T4_MICRO_GLITCH",
-    }
-    event_families = {event.get("family") for event in events}
+    families = [event.get("family") for event in events]
+    endpoint_values = [
+        float(value)
+        for event in events
+        for value in event.get("endpoint_mean_absolute_delta", {}).values()
+    ]
     checks = [
         check("video_exists", video.exists(), str(video)),
-        check("report_schema_v2", report.get("schema_version") == "2.0.0", report.get("schema_version")),
+        check("report_schema_v3", report.get("schema_version") == "3.0.0", report.get("schema_version")),
         check("one_video_stream", len(video_streams) == 1, len(video_streams)),
         check("zero_audio_stream", len(audio_streams) == 0, len(audio_streams)),
         check("h264_codec", stream.get("codec_name") == "h264", stream.get("codec_name")),
@@ -113,29 +116,36 @@ def main() -> int:
         check("duration_30_seconds", abs(float(probe["format"]["duration"]) - 30.0) <= 0.001, probe["format"]["duration"]),
         check("900_frames_probe", int(stream.get("nb_read_frames") or stream.get("nb_frames") or 0) == 900, [stream.get("nb_frames"), stream.get("nb_read_frames")]),
         check("900_frames_decoded", decoded == 900, decoded),
-        check("scene_boundaries_and_tail_nonblack", sampled_nonblack == 6, sampled_nonblack),
+        check("stable_and_transition_samples_nonblack", sampled_nonblack == len(nonblack_set), sampled_nonblack),
         check("sha256_matches_render_report", sha256(video) == report["output"]["sha256"], sha256(video)),
         check("exactly_three_transitions", len(events) == 3, len(events)),
-        check("transitions_only_at_cut_frames", [event.get("cut_frame") for event in events] == EXPECTED_CUTS, [event.get("cut_frame") for event in events]),
-        check("exact_transition_windows", [event.get("frames") for event in events] == EXPECTED_WINDOWS, [event.get("frames") for event in events]),
-        check("maximum_four_frames_each", all(int(event.get("expected_frame_count", 99)) <= 4 for event in events), [event.get("expected_frame_count") for event in events]),
-        check("natural_speed_cut_family_only", event_families == {"T4_NATURAL_SPEED_CUT"}, sorted(str(item) for item in event_families)),
-        check("no_legacy_effect_family", not (event_families & old_families), sorted(event_families & old_families)),
-        check("all_three_transitions_applied", report.get("all_3_boundary_transitions_applied") is True, report.get("all_3_boundary_transitions_applied")),
+        check("transitions_centered_on_cut_frames", [event.get("cut_frame") for event in events] == EXPECTED_CUTS, [event.get("cut_frame") for event in events]),
+        check("exact_hybrid_transition_windows", [event.get("frames") for event in events] == EXPECTED_WINDOWS, [event.get("frames") for event in events]),
+        check("exactly_eight_frames_each", all(int(event.get("expected_frame_count", 0)) == 8 for event in events), [event.get("expected_frame_count") for event in events]),
+        check("three_owner_selected_signatures_in_order", families == EXPECTED_FAMILIES, families),
+        check("three_distinct_transition_families", len(set(families)) == 3, families),
+        check("all_three_hybrid_transitions_applied", report.get("all_3_hybrid_transitions_applied") is True, report.get("all_3_hybrid_transitions_applied")),
         check("each_transition_frame_count", all(event["expected_frame_count"] == event["applied_frame_count"] for event in events)),
-        check("each_transition_visibly_nonzero", report.get("all_events_visibly_nonzero") is True and all(float(event["max_mean_absolute_delta_from_incoming_base"]) > 0.15 for event in events), min((float(event["max_mean_absolute_delta_from_incoming_base"]) for event in events), default=0.0)),
-        check("transition_style_boundary_only", style.get("transitions_only_at_rush_changes") is True and style.get("cut_frames") == EXPECTED_CUTS),
-        check("transition_style_full_frame_only", style.get("full_frame_only") is True),
-        check("stable_full_frame_share_at_least_98_percent", float(stable.get("stable_full_frame_share", 0)) >= 0.98, stable.get("stable_full_frame_share")),
-        check("exactly_888_stable_frames", stable.get("stable_full_frame_frames") == 888 and stable.get("transition_frames") == 12, stable),
-        check("zero_events_outside_rush_changes", stable.get("events_outside_rush_changes") == 0, stable.get("events_outside_rush_changes")),
-        check("all_exaggerated_v1_effects_disabled", retired and all(value is False for value in retired.values()), retired),
+        check("each_transition_has_visible_impact", report.get("all_events_visibly_nonzero") is True and all(float(event["max_mean_absolute_delta_from_timeline_base"]) > 1.0 for event in events), [event["max_mean_absolute_delta_from_timeline_base"] for event in events]),
+        check("clean_transition_endpoint_report", report.get("all_transition_endpoints_clean") is True),
+        check("clean_first_and_last_frames", len(endpoint_values) == 6 and all(value <= 0.01 for value in endpoint_values), endpoint_values),
+        check("style_is_owner_selected_hybrid", style.get("name") == "owner_selected_hybrid_cinematic"),
+        check("style_cut_frames", style.get("cut_frames") == EXPECTED_CUTS, style.get("cut_frames")),
+        check("style_windows", style.get("windows") == EXPECTED_WINDOWS, style.get("windows")),
+        check("style_full_frame_only", style.get("full_frame_only") is True),
+        check("style_only_around_rush_changes", style.get("transitions_only_around_rush_changes") is True),
+        check("stable_full_frame_share_at_least_97_percent", float(stable.get("stable_full_frame_share", 0)) >= 0.97, stable.get("stable_full_frame_share")),
+        check("exactly_876_stable_frames", stable.get("stable_full_frame_frames") == 876 and stable.get("transition_frames") == 24, stable),
+        check("zero_events_outside_cut_windows", stable.get("events_outside_rush_change_windows") == 0, stable.get("events_outside_rush_change_windows")),
+        check("all_forbidden_decorative_effects_disabled", retired and all(value is False for value in retired.values()), retired),
         check("s4_final_tail_exactly_90_frames", report.get("s4_final_stable_tail", {}).get("frames") == [810, 899] and report.get("s4_final_stable_tail", {}).get("duration_frames") == 90),
         check("s4_final_tail_has_no_transition", not event_frames_in_final_tail, event_frames_in_final_tail),
         check("no_text_rendered", report.get("visual_policy", {}).get("text_rendered") is False and report.get("output", {}).get("burned_text_expected") is False),
         check("no_watermark_rendered", report.get("visual_policy", {}).get("watermark_rendered") is False),
         check("no_mosaic_or_grid_rendered", report.get("visual_policy", {}).get("mosaic_or_grid_rendered") is False),
-        check("no_shake_or_glitch_rendered", report.get("visual_policy", {}).get("shake_or_glitch_rendered") is False),
+        check("no_glitch_or_rgb_split_rendered", report.get("visual_policy", {}).get("glitch_or_rgb_split_rendered") is False),
+        check("no_persistent_shake_rendered", report.get("visual_policy", {}).get("persistent_shake_rendered") is False),
+        check("no_rotation_rendered", report.get("visual_policy", {}).get("rotation_rendered") is False),
         check("no_solid_color_transition_bars", report.get("visual_policy", {}).get("solid_color_transition_bars_rendered") is False),
         check("no_blue_cyan_separator_lines_declared", report.get("visual_policy", {}).get("blue_cyan_separator_lines_rendered") is False),
         check("no_long_cyan_separator_detected", cyan_line_max_fraction < 0.80, round(cyan_line_max_fraction, 6)),
@@ -143,14 +153,14 @@ def main() -> int:
         check("no_music", report.get("audio_policy", {}).get("music") is False),
         check("raw_rushes_not_published", report.get("raw_rushes_embedded_as_standalone_assets") is False),
         check("four_verified_sources", len(report.get("sources", [])) == 4 and all(len(item.get("sha256", "")) == 64 and item.get("raw_published") is False for item in report.get("sources", []))),
-        check("natural_transition_contact_sheet", contact.exists() and contact.stat().st_size > 10000, contact.stat().st_size if contact.exists() else 0),
+        check("hybrid_transition_contact_sheet", contact.exists() and contact.stat().st_size > 10000, contact.stat().st_size if contact.exists() else 0),
     ]
     overall = "PASS" if all(item["status"] == "PASS" for item in checks) else "FAIL"
     validation = {
-        "schema_version": "2.0.0",
+        "schema_version": "3.0.0",
         "template_id": "RESTAURATION-T4",
         "status": overall,
-        "scope": "GitHub Actions V2 natural-transition candidate" if report.get("rendered_on") == "github_actions" else "Local V2 preflight",
+        "scope": "GitHub Actions V3 hybrid cinematic candidate" if report.get("rendered_on") == "github_actions" else "Local V3 preflight",
         "video": {
             "file": video.name,
             "sha256": sha256(video),
@@ -160,12 +170,13 @@ def main() -> int:
             "audio_streams": len(audio_streams),
             "decoded_frames": decoded,
         },
-        "natural_transition_audit": {
+        "hybrid_transition_audit": {
             "count": len(events),
             "cut_frames": [event.get("cut_frame") for event in events],
             "windows": [event.get("frames") for event in events],
+            "families": families,
             "stable_full_frame_share": stable.get("stable_full_frame_share"),
-            "legacy_effects_active": sorted(event_families & old_families),
+            "endpoint_deltas": endpoint_values,
         },
         "checks": checks,
         "summary": {
@@ -180,26 +191,27 @@ def main() -> int:
         "owner_approval_required": True,
         "ffprobe": probe,
     }
-    proof = args.proof or args.output_dir / "T4_NATURAL_VALIDATION_V2.json"
+    proof = args.proof or args.output_dir / "T4_HYBRID_VALIDATION_V3.json"
     proof.parent.mkdir(parents=True, exist_ok=True)
     proof.write_text(json.dumps(validation, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    summary = args.output_dir / "RAPPORT_TRANSITIONS_NATURELLES_V2.md"
+    summary = args.output_dir / "RAPPORT_TRANSITIONS_HYBRIDES_V3.md"
     summary.write_text(
-        "# T4 V2 — Validation des transitions naturelles\n\n"
+        "# T4 V3 — Validation des transitions hybrides cinématiques\n\n"
         f"**Résultat objectif : {overall}** — {validation['summary']['passed']} contrôles PASS, {validation['summary']['failed']} échec.\n\n"
         f"- fichier : `{video.name}` ;\n"
         f"- SHA-256 : `{validation['video']['sha256']}` ;\n"
         "- 30,000 s · 720 × 1280 · 30 i/s · 900 images ;\n"
         "- H.264 / yuv420p ; zéro piste audio ; aucun texte incrusté ;\n"
-        "- exactement trois raccords rapides de quatre images aux secondes 6, 14 et 21 ;\n"
-        "- aucun raccord au milieu d'un rush ;\n"
-        "- aucune mosaïque, grille, secousse, glitch ou cassure rectangulaire ;\n"
-        "- 888 images plein écran sans transition, soit 98,67 % du montage ;\n"
+        "- trois transitions distinctes de huit images autour des secondes 6, 14 et 21 ;\n"
+        "- whip-pan, zoom traversant le plat, puis whip-zoom d'ouverture ;\n"
+        "- première et dernière image de chaque fenêtre propres ;\n"
+        "- 876 images plein écran stables, soit 97,33 % du montage ;\n"
+        "- aucune mosaïque, grille, cassure rectangulaire ou glitch ;\n"
         "- fin de S4 stable pendant 90 images ;\n"
         "- validation humaine encore requise.\n",
         encoding="utf-8",
     )
-    print(f"T4_NATURAL_VALIDATION_{overall} {proof}")
+    print(f"T4_HYBRID_VALIDATION_{overall} {proof}")
     if overall != "PASS":
         for item in checks:
             if item["status"] == "FAIL":

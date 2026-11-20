@@ -4,7 +4,8 @@
   "version": "2.0.0",
   "display_name": "Expérience client — transitions naturelles",
   "sector": "RESTAURATION",
-  "catalog_status": "owner_corrected_v2_pending_natural_candidate_review",
+  "catalog_status": "superseded_after_owner_rejected_as_too_basic",
+  "superseded_by": "config/T4_EXPERIENCE_CLIENT_TEMPLATE_V3_0_0.json",
   "previous_version": {
     "contract": "config/T4_EXPERIENCE_CLIENT_TEMPLATE_V1_0_0.json",
     "creative_verdict": "transitions_too_exaggerated"

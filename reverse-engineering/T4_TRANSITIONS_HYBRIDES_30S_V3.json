@@ -1,0 +1,233 @@
+{
+  "schema_version": "3.0.0",
+  "template_id": "RESTAURATION-T4",
+  "title": "Transitions hybrides cinématiques — trois changements de rush",
+  "status": "owner_selected_hybrid_candidate_pending_review",
+  "owner_choice": "approvals/CHOIX_TRANSITIONS_HYBRIDES_V3_2026-11-18.json",
+  "superseded_candidates": [
+    {
+      "version": "v1",
+      "verdict": "too_exaggerated",
+      "reason": "Effets trop nombreux à l'intérieur des rushes."
+    },
+    {
+      "version": "v2",
+      "verdict": "too_basic",
+      "reason": "Fondus rapides trop discrets pour marquer le changement de rush."
+    }
+  ],
+  "truth_model": {
+    "OWNER_SELECTED": "Option Hybride cinématique explicitement choisie par le propriétaire.",
+    "ENGINE_DECISION": "Chaque signature dure huit images centrées sur la coupe, utilise uniquement des transformations plein écran et se termine exactement sur le rush entrant.",
+    "rule": "Impressionnant au changement de rush, totalement stable en dehors des trois fenêtres."
+  },
+  "format_contract": {
+    "orientation": "portrait",
+    "aspect_ratio": "9:16",
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "total_frames": 900,
+    "duration_seconds": 30,
+    "scene_boundaries_frames": [
+      0,
+      180,
+      420,
+      630,
+      900
+    ],
+    "rush_change_frames": [
+      180,
+      420,
+      630
+    ],
+    "scene_durations_seconds": [
+      6,
+      8,
+      7,
+      9
+    ],
+    "scene_frame_ranges_inclusive": {
+      "S1": [
+        0,
+        179
+      ],
+      "S2": [
+        180,
+        419
+      ],
+      "S3": [
+        420,
+        629
+      ],
+      "S4": [
+        630,
+        899
+      ]
+    }
+  },
+  "owner_constraints": {
+    "transitions_only_around_rush_changes_required": true,
+    "full_frame_between_transition_windows_required": true,
+    "three_distinct_cinematic_signatures_required": true,
+    "transition_duration_frames": 8,
+    "clean_landing_on_incoming_rush_required": true,
+    "mosaic_forbidden": true,
+    "dynamic_grid_forbidden": true,
+    "multi_panel_forbidden": true,
+    "glitch_forbidden": true,
+    "rgb_split_forbidden": true,
+    "rectangular_block_stutter_forbidden": true,
+    "solid_color_transition_bars_forbidden": true,
+    "blue_or_cyan_separator_lines_forbidden": true,
+    "silent_render_text_forbidden": true,
+    "silent_render_audio_forbidden": true,
+    "s4_final_stable_tail_frames": 90
+  },
+  "transition_parameter_profiles": {
+    "T4_CINEMATIC_WHIP_PAN": {
+      "truth": "ENGINE_DECISION",
+      "duration_frames": 8,
+      "full_frame_only": true,
+      "maximum_horizontal_translation_px": 110,
+      "maximum_horizontal_blur_kernel_px": 41,
+      "maximum_scale": 1.035,
+      "rotation_degrees": 0,
+      "blend_curve": "concentrated_smoothstep",
+      "endpoint_frames_clean": true
+    },
+    "T4_CINEMATIC_ZOOM_MATCH": {
+      "truth": "ENGINE_DECISION",
+      "duration_frames": 8,
+      "full_frame_only": true,
+      "outgoing_zoom_center_normalized": [
+        0.52,
+        0.57
+      ],
+      "incoming_zoom_center_normalized": [
+        0.52,
+        0.34
+      ],
+      "maximum_outgoing_scale": 1.34,
+      "maximum_incoming_entry_scale": 1.22,
+      "radial_zoom_blur_samples": 4,
+      "flash": false,
+      "endpoint_frames_clean": true
+    },
+    "T4_CINEMATIC_WHIP_ZOOM": {
+      "truth": "ENGINE_DECISION",
+      "duration_frames": 8,
+      "full_frame_only": true,
+      "maximum_horizontal_translation_px": 72,
+      "maximum_horizontal_blur_kernel_px": 31,
+      "maximum_outgoing_scale": 1.16,
+      "incoming_entry_scale": 1.24,
+      "incoming_landing_scale": 1.0,
+      "rotation_degrees": 0,
+      "endpoint_frames_clean": true
+    }
+  },
+  "stable_windows": [
+    {
+      "frames": [
+        0,
+        175
+      ],
+      "reason": "S1 naturel avant le whip-pan."
+    },
+    {
+      "frames": [
+        184,
+        415
+      ],
+      "reason": "S2 naturel entre les raccords."
+    },
+    {
+      "frames": [
+        424,
+        625
+      ],
+      "reason": "S3 naturel entre les raccords."
+    },
+    {
+      "frames": [
+        634,
+        899
+      ],
+      "reason": "S4 naturel après le whip-zoom, avec fin stable de trois secondes."
+    }
+  ],
+  "cadence_audit": {
+    "total_events": 3,
+    "rush_change_count": 3,
+    "events_outside_rush_change_windows": 0,
+    "covered_transition_frames": 24,
+    "stable_full_frame_frames": 876,
+    "stable_full_frame_share": 0.973333,
+    "transition_share": 0.026667,
+    "event_duration_frames": 8,
+    "distinct_transition_family_count": 3
+  },
+  "timeline_events": [
+    {
+      "event_id": "T4-V3-CUT-01",
+      "family": "T4_CINEMATIC_WHIP_PAN",
+      "variant": "fast_horizontal_whip_to_service",
+      "outgoing_scene_id": "S1",
+      "incoming_scene_id": "S2",
+      "cut_frame": 180,
+      "direction": "left",
+      "frames": [
+        176,
+        183
+      ],
+      "cut_seconds_exact": 6.0,
+      "start_seconds_exact": 5.866667,
+      "end_seconds_exclusive_exact": 6.133333,
+      "duration_frames": 8,
+      "duration_seconds": 0.266667,
+      "full_frame_only": true,
+      "clean_endpoint_frames_required": true
+    },
+    {
+      "event_id": "T4-V3-CUT-02",
+      "family": "T4_CINEMATIC_ZOOM_MATCH",
+      "variant": "plate_to_tasting_zoom_through",
+      "outgoing_scene_id": "S2",
+      "incoming_scene_id": "S3",
+      "cut_frame": 420,
+      "direction": "inward",
+      "frames": [
+        416,
+        423
+      ],
+      "cut_seconds_exact": 14.0,
+      "start_seconds_exact": 13.866667,
+      "end_seconds_exclusive_exact": 14.133333,
+      "duration_frames": 8,
+      "duration_seconds": 0.266667,
+      "full_frame_only": true,
+      "clean_endpoint_frames_required": true
+    },
+    {
+      "event_id": "T4-V3-CUT-03",
+      "family": "T4_CINEMATIC_WHIP_ZOOM",
+      "variant": "portrait_to_ambience_opening",
+      "outgoing_scene_id": "S3",
+      "incoming_scene_id": "S4",
+      "cut_frame": 630,
+      "direction": "left_and_out",
+      "frames": [
+        626,
+        633
+      ],
+      "cut_seconds_exact": 21.0,
+      "start_seconds_exact": 20.866667,
+      "end_seconds_exclusive_exact": 21.133333,
+      "duration_frames": 8,
+      "duration_seconds": 0.266667,
+      "full_frame_only": true,
+      "clean_endpoint_frames_required": true
+    }
+  ]
+}

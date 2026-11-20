@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""Build the owner-corrected T4 natural transition timeline.
-
-V2 deliberately contains only three short transitions: one at each real rush
-change. No decorative effect is allowed inside a shot.
-"""
+"""Build the owner-selected T4 V3 hybrid cinematic transition timeline."""
 from __future__ import annotations
 
 import argparse
@@ -13,60 +9,82 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 FPS = 30
 TOTAL = 900
-CUTS = (
-    ("T4-NAT-CUT-01", "S1", "S2", 180, "horizontal"),
-    ("T4-NAT-CUT-02", "S2", "S3", 420, "vertical"),
-    ("T4-NAT-CUT-03", "S3", "S4", 630, "horizontal"),
+TRANSITION_FRAMES = 8
+
+SIGNATURES = (
+    {
+        "event_id": "T4-V3-CUT-01",
+        "family": "T4_CINEMATIC_WHIP_PAN",
+        "variant": "fast_horizontal_whip_to_service",
+        "outgoing_scene_id": "S1",
+        "incoming_scene_id": "S2",
+        "cut_frame": 180,
+        "direction": "left",
+    },
+    {
+        "event_id": "T4-V3-CUT-02",
+        "family": "T4_CINEMATIC_ZOOM_MATCH",
+        "variant": "plate_to_tasting_zoom_through",
+        "outgoing_scene_id": "S2",
+        "incoming_scene_id": "S3",
+        "cut_frame": 420,
+        "direction": "inward",
+    },
+    {
+        "event_id": "T4-V3-CUT-03",
+        "family": "T4_CINEMATIC_WHIP_ZOOM",
+        "variant": "portrait_to_ambience_opening",
+        "outgoing_scene_id": "S3",
+        "incoming_scene_id": "S4",
+        "cut_frame": 630,
+        "direction": "left_and_out",
+    },
 )
-TRANSITION_FRAMES = 4
 
 
 def build() -> dict:
     events = []
-    for event_id, outgoing, incoming, cut_frame, blur_axis in CUTS:
-        start = cut_frame
-        end = cut_frame + TRANSITION_FRAMES - 1
-        events.append({
-            "event_id": event_id,
-            "family": "T4_NATURAL_SPEED_CUT",
-            "variant": "fast_soft_motion_dissolve",
-            "outgoing_scene_id": outgoing,
-            "incoming_scene_id": incoming,
-            "cut_frame": cut_frame,
-            "cut_seconds_exact": round(cut_frame / FPS, 6),
+    for signature in SIGNATURES:
+        cut = signature["cut_frame"]
+        start = cut - 4
+        end = cut + 3
+        event = dict(signature)
+        event.update({
             "frames": [start, end],
+            "cut_seconds_exact": round(cut / FPS, 6),
             "start_seconds_exact": round(start / FPS, 6),
             "end_seconds_exclusive_exact": round((end + 1) / FPS, 6),
             "duration_frames": TRANSITION_FRAMES,
             "duration_seconds": round(TRANSITION_FRAMES / FPS, 6),
-            "blur_axis": blur_axis,
             "full_frame_only": True,
+            "clean_endpoint_frames_required": True,
         })
+        events.append(event)
 
     covered = sum(event["duration_frames"] for event in events)
     stable = TOTAL - covered
     return {
-        "schema_version": "2.0.0",
+        "schema_version": "3.0.0",
         "template_id": "RESTAURATION-T4",
-        "title": "Transitions naturelles rapides — uniquement aux changements de rush",
-        "status": "owner_corrected_candidate_pending_review",
-        "owner_correction": "approvals/CORRECTION_TRANSITIONS_NATURELLES_V2_2026-11-18.json",
-        "superseded_candidate": {
-            "version": "v1",
-            "reason": "Transitions jugées trop exagérées par le propriétaire.",
-            "retired_event_count": 48,
-            "retired_families": [
-                "T4_TILE_REVEAL",
-                "T4_DYNAMIC_GRID_RECONFIG",
-                "T4_SHAKE_IMPACT",
-                "T4_RECTANGULAR_BLOCK_STUTTER",
-                "T4_MICRO_GLITCH"
-            ]
-        },
+        "title": "Transitions hybrides cinématiques — trois changements de rush",
+        "status": "owner_selected_hybrid_candidate_pending_review",
+        "owner_choice": "approvals/CHOIX_TRANSITIONS_HYBRIDES_V3_2026-11-18.json",
+        "superseded_candidates": [
+            {
+                "version": "v1",
+                "verdict": "too_exaggerated",
+                "reason": "Effets trop nombreux à l'intérieur des rushes."
+            },
+            {
+                "version": "v2",
+                "verdict": "too_basic",
+                "reason": "Fondus rapides trop discrets pour marquer le changement de rush."
+            }
+        ],
         "truth_model": {
-            "OWNER_DIRECTED": "Les transitions doivent être naturelles, rapides et réservées aux changements de rush.",
-            "ENGINE_DECISION": "Un raccord plein écran de quatre images utilise un fondu de mouvement très léger, sans translation, zoom, rotation ni élément graphique.",
-            "rule": "Le rush demeure intact et plein écran en dehors des trois fenêtres de raccord."
+            "OWNER_SELECTED": "Option Hybride cinématique explicitement choisie par le propriétaire.",
+            "ENGINE_DECISION": "Chaque signature dure huit images centrées sur la coupe, utilise uniquement des transformations plein écran et se termine exactement sur le rush entrant.",
+            "rule": "Impressionnant au changement de rush, totalement stable en dehors des trois fenêtres."
         },
         "format_contract": {
             "orientation": "portrait",
@@ -87,13 +105,16 @@ def build() -> dict:
             }
         },
         "owner_constraints": {
-            "transitions_only_at_rush_changes_required": True,
-            "full_frame_between_cuts_required": True,
-            "maximum_transition_duration_frames": TRANSITION_FRAMES,
+            "transitions_only_around_rush_changes_required": True,
+            "full_frame_between_transition_windows_required": True,
+            "three_distinct_cinematic_signatures_required": True,
+            "transition_duration_frames": TRANSITION_FRAMES,
+            "clean_landing_on_incoming_rush_required": True,
             "mosaic_forbidden": True,
             "dynamic_grid_forbidden": True,
-            "shake_forbidden": True,
+            "multi_panel_forbidden": True,
             "glitch_forbidden": True,
+            "rgb_split_forbidden": True,
             "rectangular_block_stutter_forbidden": True,
             "solid_color_transition_bars_forbidden": True,
             "blue_or_cyan_separator_lines_forbidden": True,
@@ -102,49 +123,58 @@ def build() -> dict:
             "s4_final_stable_tail_frames": 90
         },
         "transition_parameter_profiles": {
-            "T4_NATURAL_SPEED_CUT": {
+            "T4_CINEMATIC_WHIP_PAN": {
                 "truth": "ENGINE_DECISION",
-                "duration_frames": TRANSITION_FRAMES,
-                "duration_milliseconds": round(1000 * TRANSITION_FRAMES / FPS, 3),
-                "blend_curve": "smoothstep",
-                "maximum_motion_blur_kernel_px": 5,
-                "translation_px": 0,
-                "rotation_degrees": 0,
-                "scale": 1.0,
-                "crop_change": False,
-                "panels": 1,
+                "duration_frames": 8,
                 "full_frame_only": True,
+                "maximum_horizontal_translation_px": 110,
+                "maximum_horizontal_blur_kernel_px": 41,
+                "maximum_scale": 1.035,
+                "rotation_degrees": 0,
+                "blend_curve": "concentrated_smoothstep",
+                "endpoint_frames_clean": True
+            },
+            "T4_CINEMATIC_ZOOM_MATCH": {
+                "truth": "ENGINE_DECISION",
+                "duration_frames": 8,
+                "full_frame_only": True,
+                "outgoing_zoom_center_normalized": [0.52, 0.57],
+                "incoming_zoom_center_normalized": [0.52, 0.34],
+                "maximum_outgoing_scale": 1.34,
+                "maximum_incoming_entry_scale": 1.22,
+                "radial_zoom_blur_samples": 4,
                 "flash": False,
-                "color_overlay": False
+                "endpoint_frames_clean": True
+            },
+            "T4_CINEMATIC_WHIP_ZOOM": {
+                "truth": "ENGINE_DECISION",
+                "duration_frames": 8,
+                "full_frame_only": True,
+                "maximum_horizontal_translation_px": 72,
+                "maximum_horizontal_blur_kernel_px": 31,
+                "maximum_outgoing_scale": 1.16,
+                "incoming_entry_scale": 1.24,
+                "incoming_landing_scale": 1.0,
+                "rotation_degrees": 0,
+                "endpoint_frames_clean": True
             }
         },
-        "protected_stable_windows": [
-            {
-                "frames": [0, 179],
-                "reason": "S1 reste intact jusqu'au changement de rush."
-            },
-            {
-                "frames": [184, 419],
-                "reason": "S2 reste intact après son raccord d'entrée."
-            },
-            {
-                "frames": [424, 629],
-                "reason": "S3 reste intact après son raccord d'entrée."
-            },
-            {
-                "frames": [634, 899],
-                "reason": "S4 reste intact après son raccord d'entrée, dont les trois dernières secondes."
-            }
+        "stable_windows": [
+            {"frames": [0, 175], "reason": "S1 naturel avant le whip-pan."},
+            {"frames": [184, 415], "reason": "S2 naturel entre les raccords."},
+            {"frames": [424, 625], "reason": "S3 naturel entre les raccords."},
+            {"frames": [634, 899], "reason": "S4 naturel après le whip-zoom, avec fin stable de trois secondes."}
         ],
         "cadence_audit": {
             "total_events": len(events),
             "rush_change_count": 3,
-            "events_outside_rush_changes": 0,
+            "events_outside_rush_change_windows": 0,
             "covered_transition_frames": covered,
             "stable_full_frame_frames": stable,
             "stable_full_frame_share": round(stable / TOTAL, 6),
             "transition_share": round(covered / TOTAL, 6),
-            "maximum_event_duration_frames": TRANSITION_FRAMES
+            "event_duration_frames": TRANSITION_FRAMES,
+            "distinct_transition_family_count": len({event["family"] for event in events})
         },
         "timeline_events": events
     }
@@ -152,12 +182,12 @@ def build() -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=Path, default=ROOT / "reverse-engineering/T4_TRANSITIONS_NATURELLES_30S_V2.json")
+    parser.add_argument("--output", type=Path, default=ROOT / "reverse-engineering/T4_TRANSITIONS_HYBRIDES_30S_V3.json")
     args = parser.parse_args()
     contract = build()
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(contract, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"T4_NATURAL_TRANSITION_CONTRACT_BUILT {len(contract['timeline_events'])} {args.output}")
+    print(f"T4_HYBRID_TRANSITION_CONTRACT_BUILT {len(contract['timeline_events'])} {args.output}")
     return 0
 
 

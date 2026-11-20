@@ -1,0 +1,93 @@
+{
+  "schema_version": "3.0.0",
+  "contract_id": "restauration_t4_hybrid_cinematic_transitions_v3_0_0",
+  "template_id": "RESTAURATION-T4",
+  "version": "3.0.0",
+  "title": "Expérience client — transitions hybrides cinématiques",
+  "status": "owner_selected_implementation_pending_v3_review",
+  "owner_choice": "approvals/CHOIX_TRANSITIONS_HYBRIDES_V3_2026-11-18.json",
+  "candidate_history": [
+    {
+      "version": "1.0.0",
+      "status": "rejected",
+      "reason": "too_exaggerated_inside_rushes",
+      "contract": "config/T4_CREATIVE_CONTRACT_V1_0_0.json"
+    },
+    {
+      "version": "2.0.0",
+      "status": "rejected",
+      "reason": "too_basic_at_rush_changes",
+      "contract": "config/T4_NATURAL_TRANSITIONS_CONTRACT_V2_0_0.json"
+    }
+  ],
+  "active_creative_rule": {
+    "summary": "Créer un moment cinématique impressionnant uniquement autour de chacun des trois changements de rush, puis revenir immédiatement au plein écran stable.",
+    "transition_count": 3,
+    "cut_seconds": [6, 14, 21],
+    "duration_frames_each": 8,
+    "duration_milliseconds_each": 266.667,
+    "stable_full_frame_share": 0.973333,
+    "signatures": [
+      "T4_CINEMATIC_WHIP_PAN",
+      "T4_CINEMATIC_ZOOM_MATCH",
+      "T4_CINEMATIC_WHIP_ZOOM"
+    ]
+  },
+  "transition_design": [
+    {
+      "cut": "S1_TO_S2",
+      "name": "Whip-pan vers le service",
+      "mechanics": "translation horizontale, flou directionnel rapide, chevauchement plein écran concentré, arrivée nette"
+    },
+    {
+      "cut": "S2_TO_S3",
+      "name": "Zoom traversant le plat",
+      "mechanics": "zoom centré sur le plat, blur radial bref, sortie sur le visage de dégustation, sans flash"
+    },
+    {
+      "cut": "S3_TO_S4",
+      "name": "Whip-zoom d'ouverture",
+      "mechanics": "impulsion latérale et zoom, ouverture rapide vers le plan d'ambiance, arrivée nette"
+    }
+  ],
+  "allowed": [
+    "single_full_frame_outgoing_rush",
+    "single_full_frame_incoming_rush",
+    "directional_motion_blur",
+    "full_frame_translation",
+    "full_frame_zoom",
+    "radial_zoom_blur",
+    "short_overlap_blend"
+  ],
+  "forbidden": [
+    "transition_inside_stable_rush_window",
+    "mosaic",
+    "multi_panel_grid",
+    "rectangular_block_stutter",
+    "glitch",
+    "rgb_split",
+    "solid_color_bar",
+    "blue_or_cyan_separator",
+    "white_flash",
+    "persistent_shake",
+    "rotation",
+    "effect_after_clean_landing"
+  ],
+  "format_contract": {
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "total_frames": 900,
+    "duration_seconds": 30,
+    "scene_durations_seconds": [6, 8, 7, 9],
+    "rush_change_frames": [180, 420, 630],
+    "silent": true,
+    "burned_text": false
+  },
+  "active_timeline": "reverse-engineering/T4_TRANSITIONS_HYBRIDES_30S_V3.json",
+  "capture_contract": "config/T4_CAPTURE_FLOW_V1_0_0.json",
+  "questions_contract": "form/questions_T4.json",
+  "render_job": "demo/render_job_hybrid_v3.json",
+  "render_plane": "github_actions_only",
+  "owner_approval_required": true
+}

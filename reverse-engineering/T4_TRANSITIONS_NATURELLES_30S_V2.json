@@ -1,8 +1,9 @@
 {
   "schema_version": "2.0.0",
   "template_id": "RESTAURATION-T4",
-  "title": "Transitions naturelles rapides — uniquement aux changements de rush",
-  "status": "owner_corrected_candidate_pending_review",
+  "title": "HISTORIQUE V2 — transitions naturelles rapides",
+  "status": "superseded_after_owner_rejected_as_too_basic",
+  "superseded_by": "reverse-engineering/T4_TRANSITIONS_HYBRIDES_30S_V3.json",
   "owner_correction": "approvals/CORRECTION_TRANSITIONS_NATURELLES_V2_2026-11-18.json",
   "superseded_candidate": {
     "version": "v1",

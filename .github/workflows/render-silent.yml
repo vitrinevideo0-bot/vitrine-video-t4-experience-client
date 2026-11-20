@@ -1,10 +1,10 @@
-name: Rendu naturel T4 V2 sur GitHub
+name: Rendu hybride cinématique T4 V3 sur GitHub
 
 on:
   workflow_dispatch:
     inputs:
       publish_prerelease:
-        description: Publier le candidat naturel V2 dans une pré-Release immuable
+        description: Publier le candidat hybride V3 dans une pré-Release immuable
         required: true
         type: boolean
         default: true
@@ -13,7 +13,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: t4-natural-v2-${{ github.ref }}
+  group: t4-hybrid-v3-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -38,14 +38,14 @@ jobs:
           ffmpeg -version | head -n 1
           ffprobe -version | head -n 1
 
-      - name: Compiler, tester et reconstruire les contrats V2
+      - name: Compiler, tester et reconstruire les contrats V3
         run: |
           python -m compileall -q engine tools tests
           python -m unittest discover -s tests -v
           python tools/build_t4_capture_flow.py --output /tmp/T4_CAPTURE_FLOW_V1_0_0.json
           cmp config/T4_CAPTURE_FLOW_V1_0_0.json /tmp/T4_CAPTURE_FLOW_V1_0_0.json
-          python tools/build_t4_transition_contract.py --output /tmp/T4_TRANSITIONS_NATURELLES_30S_V2.json
-          cmp reverse-engineering/T4_TRANSITIONS_NATURELLES_30S_V2.json /tmp/T4_TRANSITIONS_NATURELLES_30S_V2.json
+          python tools/build_t4_transition_contract.py --output /tmp/T4_TRANSITIONS_HYBRIDES_30S_V3.json
+          cmp reverse-engineering/T4_TRANSITIONS_HYBRIDES_30S_V3.json /tmp/T4_TRANSITIONS_HYBRIDES_30S_V3.json
           rm -rf /tmp/t4-ui-screens
           python tools/generate_t4_ui_screens.py --output-dir /tmp/t4-ui-screens
           diff -qr ui-screens /tmp/t4-ui-screens
@@ -56,46 +56,46 @@ jobs:
             --manifest rushes/manifest.json \
             --cache rushes/cache
 
-      - name: Produire le candidat naturel V2 sur le runner GitHub
+      - name: Produire le candidat hybride V3 sur le runner GitHub
         run: |
           python engine/render_silent.py \
             --manifest rushes/manifest.json \
-            --contract reverse-engineering/T4_TRANSITIONS_NATURELLES_30S_V2.json \
-            --render-job demo/render_job_natural_v2.json \
+            --contract reverse-engineering/T4_TRANSITIONS_HYBRIDES_30S_V3.json \
+            --render-job demo/render_job_hybrid_v3.json \
             --cache rushes/cache \
-            --work .tmp/t4-natural-v2 \
-            --output-dir output/t4-natural-v2.0.0
+            --work .tmp/t4-hybrid-v3 \
+            --output-dir output/t4-hybrid-v3.0.0
 
-      - name: Valider format et trois raccords aux changements de rush uniquement
+      - name: Valider les trois signatures, leur impact et leurs atterrissages propres
         run: |
           python tools/validate_silent.py \
-            --output-dir output/t4-natural-v2.0.0 \
-            --proof output/t4-natural-v2.0.0/T4_GITHUB_SERVER_VALIDATION_V2.json
+            --output-dir output/t4-hybrid-v3.0.0 \
+            --proof output/t4-hybrid-v3.0.0/T4_GITHUB_SERVER_VALIDATION_V3.json
 
-      - name: Assembler la livraison V2 sans rush brut
+      - name: Assembler la livraison V3 sans rush brut
         run: |
           set -euo pipefail
           rm -rf release
           mkdir release
-          cp output/t4-natural-v2.0.0/VIDEO_T4_EXPERIENCE_CLIENT_TRANSITIONS_NATURELLES_V2_A_VALIDER.mp4 release/
-          cp output/t4-natural-v2.0.0/T4_SILENT_RENDER_REPORT.json release/T4_NATURAL_RENDER_REPORT_V2.json
-          cp output/t4-natural-v2.0.0/T4_GITHUB_SERVER_VALIDATION_V2.json release/
-          cp output/t4-natural-v2.0.0/RAPPORT_TRANSITIONS_NATURELLES_V2.md release/
-          cp output/t4-natural-v2.0.0/T4_TRANSITIONS_NATURELLES_PROOF_V2.jpg release/
-          cp approvals/CORRECTION_TRANSITIONS_NATURELLES_V2_2026-11-18.json release/
-          cp reverse-engineering/T4_TRANSITIONS_NATURELLES_30S_V2.json release/
-          cp config/T4_NATURAL_TRANSITIONS_CONTRACT_V2_0_0.json release/
+          cp output/t4-hybrid-v3.0.0/VIDEO_T4_EXPERIENCE_CLIENT_TRANSITIONS_HYBRIDES_V3_A_VALIDER.mp4 release/
+          cp output/t4-hybrid-v3.0.0/T4_SILENT_RENDER_REPORT.json release/T4_HYBRID_RENDER_REPORT_V3.json
+          cp output/t4-hybrid-v3.0.0/T4_GITHUB_SERVER_VALIDATION_V3.json release/
+          cp output/t4-hybrid-v3.0.0/RAPPORT_TRANSITIONS_HYBRIDES_V3.md release/
+          cp output/t4-hybrid-v3.0.0/T4_TRANSITIONS_HYBRIDES_PROOF_V3.jpg release/
+          cp approvals/CHOIX_TRANSITIONS_HYBRIDES_V3_2026-11-18.json release/
+          cp reverse-engineering/T4_TRANSITIONS_HYBRIDES_30S_V3.json release/
+          cp config/T4_HYBRID_CINEMATIC_TRANSITIONS_V3_0_0.json release/
           cp config/T4_CAPTURE_FLOW_V1_0_0.json release/
-          cp config/T4_EXPERIENCE_CLIENT_TEMPLATE_V2_0_0.json release/
+          cp config/T4_EXPERIENCE_CLIENT_TEMPLATE_V3_0_0.json release/
           cp form/questions_T4.json release/
           cp capture-guide/consignes_T4.json release/
-          cp demo/render_job_natural_v2.json release/T4_RENDER_JOB_NATURAL_V2.json
+          cp demo/render_job_hybrid_v3.json release/T4_RENDER_JOB_HYBRID_V3.json
           cp rushes/manifest.json release/T4_RUSHES_MANIFEST.json
           cp ui-screens/manifest.json release/T4_UI_12_SCREENS_MANIFEST.json
           cp ui-screens/T4_PLANCHE_12_ECRANS.png release/
           cp docs/LICENCES_RUSHS.md release/
           cp docs/CONTRAT_12_ECRANS.md release/
-          cp docs/TRANSITIONS_NATURELLES_V2.md release/
+          cp docs/TRANSITIONS_HYBRIDES_V3.md release/
           if find release -maxdepth 1 -type f \( -name 'S1_*.mp4' -o -name 'S2_*.mp4' -o -name 'S3_*.mp4' -o -name 'S4_*.mp4' \) | grep -q .; then
             echo 'Rush brut interdit dans la livraison' >&2
             exit 1
@@ -103,47 +103,49 @@ jobs:
           (cd release && find . -maxdepth 1 -type f ! -name SHA256SUMS.txt -printf '%f\n' | sort | xargs sha256sum > SHA256SUMS.txt)
           cat release/SHA256SUMS.txt
 
-      - name: Publier l’artefact GitHub Actions V2
+      - name: Publier l’artefact GitHub Actions V3
         uses: actions/upload-artifact@v4
         with:
-          name: T4-natural-v2-candidate-${{ github.run_id }}
+          name: T4-hybrid-v3-candidate-${{ github.run_id }}
           path: release/
           if-no-files-found: error
           retention-days: 30
 
-      - name: Préparer les notes de pré-Release V2
+      - name: Préparer les notes de pré-Release V3
         if: inputs.publish_prerelease
         run: |
           cat > /tmp/t4-release-notes.md <<'EOF'
-          # RESTAURATION-T4 — candidat V2 avec transitions naturelles
+          # RESTAURATION-T4 — candidat V3 hybride cinématique
 
-          Correction du candidat V1 après retour propriétaire : les transitions précédentes étaient trop exagérées.
+          Direction explicitement choisie par le propriétaire après deux corrections : V1 trop exagérée dans les rushes, V2 trop basique aux coupes.
 
-          - seulement trois raccords, aux changements de rush à 6, 14 et 21 secondes ;
-          - chaque raccord dure quatre images, soit environ 133 ms ;
-          - rushes plein écran et naturels entre les raccords ;
-          - aucune mosaïque, grille, secousse, cassure rectangulaire ou glitch ;
-          - 888 images sans transition, soit 98,67 % du montage ;
+          - trois transitions distinctes autour des seuls changements de rush ;
+          - 6 s : whip-pan horizontal rapide vers le service ;
+          - 14 s : zoom traversant le plat vers la dégustation ;
+          - 21 s : whip-zoom d'ouverture vers l'ambiance ;
+          - huit images par transition, avec première et dernière images propres ;
+          - 876 images stables plein écran, soit 97,33 % du montage ;
+          - aucune mosaïque, grille, cassure rectangulaire, glitch ou décalage RVB ;
           - 30,000 secondes, 720 × 1280, 30 i/s, 900 images ;
           - H.264 / yuv420p, zéro piste audio et aucun texte incrusté ;
           - trois dernières secondes de S4 stables ;
           - quatre rushes Pexels vérifiés par SHA-256, jamais redistribués bruts.
 
-          **Statut humain : à valider.** Cette pré-Release ne signifie pas encore que le propriétaire a approuvé les trois nouveaux raccords.
+          **Statut humain : à valider.** Cette pré-Release ne signifie pas encore que le propriétaire a approuvé l’intensité finale des trois signatures.
           EOF
 
-      - name: Publier une pré-Release V2 additive et immuable
+      - name: Publier une pré-Release V3 additive et immuable
         if: inputs.publish_prerelease
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          TAG="t4-experience-client-v2.0.0-natural-candidate-${GITHUB_RUN_NUMBER}"
+          TAG="t4-experience-client-v3.0.0-hybrid-candidate-${GITHUB_RUN_NUMBER}"
           if gh release view "$TAG" >/dev/null 2>&1; then
             echo "La Release $TAG existe déjà : refus de l’écraser." >&2
             exit 1
           fi
           gh release create "$TAG" release/* \
             --target "$GITHUB_SHA" \
-            --title "T4 Expérience client — transitions naturelles V2 #${GITHUB_RUN_NUMBER}" \
+            --title "T4 Expérience client — hybride cinématique V3 #${GITHUB_RUN_NUMBER}" \
             --notes-file /tmp/t4-release-notes.md \
             --prerelease
