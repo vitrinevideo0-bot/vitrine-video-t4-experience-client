@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
-  "job_id": "t4-complete-demo-2026-11-20-0001",
-  "idempotency_key": "t4-complete-demo-2026-11-20-0001",
+  "job_id": "t4-complete-demo-2026-11-18-0002",
+  "idempotency_key": "t4-complete-demo-2026-11-18-0002",
   "template_id": "RESTAURATION-T4",
   "template_version": "4.0.0-complete-audio",
   "merchant_payload": {
@@ -27,15 +27,15 @@
     }
   },
   "music": {
-    "selection_mode": "deterministic_excluding_last_successful",
-    "selected_music_id": "t4_music_153058",
-    "selected_choice": "2",
-    "pixabay_id": 153058,
-    "file": "audio/music/t4-afrobeat-v1/t4_153058_fassounds_30s.mp3",
-    "sha256": "23345911198a1a53cc6f74926fce817cf6abe41d403c7d38a16a8ef1f8b1d7fb",
-    "source_sha256": "61d28ee2429bcfec1678a4abb0d78da89ad836b8e51ae946816eb05bf71ff8e8",
-    "content_id_registered": true,
-    "claim_management_required": true,
+    "selection_mode": "explicit",
+    "selected_music_id": "t4_music_162186",
+    "selected_choice": "3",
+    "pixabay_id": 162186,
+    "file": "audio/music/t4-afrobeat-v1/t4_162186_gis-photography_30s.mp3",
+    "sha256": "f7beceb915cdb5248c00fe5de5bb5e5f1f572fc7171c69329690e1a0d2e94965",
+    "source_sha256": "9e5e0c2502a9c1bcb7ec870788569d32fcbfacf99ddf596d06ca280714e837cb",
+    "content_id_registered": false,
+    "claim_management_required": false,
     "last_successful_music_id": null,
     "state_update_policy": "after_completed_qc_pass_only"
   },

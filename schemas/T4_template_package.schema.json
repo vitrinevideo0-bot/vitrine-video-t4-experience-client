@@ -4,121 +4,408 @@
   "title": "RESTAURATION-T4 canonical template package",
   "type": "object",
   "additionalProperties": false,
-  "required": ["$schema", "schema_version", "template_id", "version", "display_name", "sector", "catalog_status", "audio_profile", "purpose", "format", "merchant_payload", "capture", "creative_contracts", "runtime_contracts", "approved_visual_reference", "complete_audio", "catalogue_preparation", "known_protocol_deviations"],
+  "required": [
+    "$schema",
+    "schema_version",
+    "template_id",
+    "version",
+    "display_name",
+    "sector",
+    "catalog_status",
+    "audio_profile",
+    "purpose",
+    "format",
+    "merchant_payload",
+    "capture",
+    "creative_contracts",
+    "runtime_contracts",
+    "approved_visual_reference",
+    "complete_audio",
+    "catalogue_preparation",
+    "known_protocol_deviations"
+  ],
   "properties": {
-    "$schema": { "const": "../schemas/T4_template_package.schema.json" },
-    "schema_version": { "const": "1.0.0" },
-    "template_id": { "const": "RESTAURATION-T4" },
-    "version": { "const": "1.0.0" },
-    "display_name": { "const": "Expérience client" },
-    "sector": { "const": "RESTAURATION" },
-    "catalog_status": { "enum": ["IMPLEMENTED_PENDING_SERVER_COMPLETE_RENDER", "SERVER_VALIDATED_READY_FOR_INTEGRATOR", "INTEGRATOR_PACKAGE_VALIDATED"] },
-    "audio_profile": { "const": "afrobeat" },
-    "purpose": { "type": "string", "minLength": 1 },
+    "$schema": {
+      "const": "../schemas/T4_template_package.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "template_id": {
+      "const": "RESTAURATION-T4"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "display_name": {
+      "const": "Expérience client"
+    },
+    "sector": {
+      "const": "RESTAURATION"
+    },
+    "catalog_status": {
+      "enum": [
+        "IMPLEMENTED_PENDING_SERVER_COMPLETE_RENDER",
+        "SERVER_VALIDATED_READY_FOR_INTEGRATOR",
+        "INTEGRATOR_PACKAGE_VALIDATED"
+      ]
+    },
+    "audio_profile": {
+      "const": "afrobeat"
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
     "format": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["width", "height", "orientation", "fps", "frames", "duration_s", "scene_durations_s", "video_codec", "pixel_format", "delivery_audio"],
+      "required": [
+        "width",
+        "height",
+        "orientation",
+        "fps",
+        "frames",
+        "duration_s",
+        "scene_durations_s",
+        "video_codec",
+        "pixel_format",
+        "delivery_audio"
+      ],
       "properties": {
-        "width": { "const": 720 }, "height": { "const": 1280 }, "orientation": { "const": "portrait" },
-        "fps": { "const": 30 }, "frames": { "const": 900 }, "duration_s": { "const": 30.0 },
-        "scene_durations_s": { "const": [6, 8, 7, 9] }, "video_codec": { "const": "h264" },
-        "pixel_format": { "const": "yuv420p" }, "delivery_audio": { "const": "aac_stereo_48000_hz_192_kbps" }
+        "width": {
+          "const": 720
+        },
+        "height": {
+          "const": 1280
+        },
+        "orientation": {
+          "const": "portrait"
+        },
+        "fps": {
+          "const": 30
+        },
+        "frames": {
+          "const": 900
+        },
+        "duration_s": {
+          "const": 30.0
+        },
+        "scene_durations_s": {
+          "const": [
+            6,
+            8,
+            7,
+            9
+          ]
+        },
+        "video_codec": {
+          "const": "h264"
+        },
+        "pixel_format": {
+          "const": "yuv420p"
+        },
+        "delivery_audio": {
+          "const": "aac_stereo_48000_hz_192_kbps"
+        }
       }
     },
     "merchant_payload": {
-      "type": "object", "additionalProperties": false,
-      "required": ["contract", "keys", "required_keys", "optional_keys", "invented_content_forbidden"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract",
+        "keys",
+        "required_keys",
+        "optional_keys",
+        "invented_content_forbidden"
+      ],
       "properties": {
-        "contract": { "const": "form/questions_T4.json" },
-        "keys": { "const": ["nom", "produit", "prix", "whatsapp", "quartier", "accroche"] },
-        "required_keys": { "const": ["nom", "produit", "prix", "whatsapp", "quartier"] },
-        "optional_keys": { "const": ["accroche"] },
-        "invented_content_forbidden": { "const": true }
+        "contract": {
+          "const": "form/questions_T4.json"
+        },
+        "keys": {
+          "const": [
+            "nom",
+            "produit",
+            "prix",
+            "whatsapp",
+            "quartier",
+            "accroche"
+          ]
+        },
+        "required_keys": {
+          "const": [
+            "nom",
+            "produit",
+            "prix",
+            "whatsapp",
+            "quartier"
+          ]
+        },
+        "optional_keys": {
+          "const": [
+            "accroche"
+          ]
+        },
+        "invented_content_forbidden": {
+          "const": true
+        }
       }
     },
     "capture": {
-      "type": "object", "additionalProperties": false,
-      "required": ["guide", "flow", "stable_screen_count", "simulation", "durations_s", "captured_voice_optional", "source_speed"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "guide",
+        "flow",
+        "stable_screen_count",
+        "simulation",
+        "durations_s",
+        "captured_voice_optional",
+        "source_speed"
+      ],
       "properties": {
-        "guide": { "const": "capture-guide/consignes_T4.json" },
-        "flow": { "const": "config/T4_CAPTURE_FLOW_V1_0_0.json" },
-        "stable_screen_count": { "const": 12 },
-        "simulation": { "const": "simulation/T4_12_ECRANS_EXECUTABLE.html" },
-        "durations_s": { "const": [6, 8, 7, 9] },
-        "captured_voice_optional": { "const": true },
-        "source_speed": { "const": 1.0 }
+        "guide": {
+          "const": "capture-guide/consignes_T4.json"
+        },
+        "flow": {
+          "const": "config/T4_CAPTURE_FLOW_V1_0_0.json"
+        },
+        "stable_screen_count": {
+          "const": 12
+        },
+        "simulation": {
+          "const": "simulation/T4_12_ECRANS_EXECUTABLE.html"
+        },
+        "durations_s": {
+          "const": [
+            6,
+            8,
+            7,
+            9
+          ]
+        },
+        "captured_voice_optional": {
+          "const": true
+        },
+        "source_speed": {
+          "const": 1.0
+        }
       }
     },
     "creative_contracts": {
-      "type": "object", "additionalProperties": false,
-      "required": ["visual_template", "transitions", "transition_policy", "final_s4_stable_tail_s", "music_pack", "voice_candidates", "voice_candidate_approval", "voice_mix"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "visual_template",
+        "transitions",
+        "transition_policy",
+        "final_s4_stable_tail_s",
+        "music_pack",
+        "music_approval",
+        "voice_candidates",
+        "voice_candidate_approval",
+        "voice_mix"
+      ],
       "properties": {
-        "visual_template": { "const": "config/T4_EXPERIENCE_CLIENT_TEMPLATE_V3_0_0.json" },
-        "transitions": { "const": "reverse-engineering/T4_TRANSITIONS_HYBRIDES_30S_V3.json" },
-        "transition_policy": { "const": "effects_only_around_three_rush_changes" },
-        "final_s4_stable_tail_s": { "const": 3.0 },
-        "music_pack": { "const": "config/T4_MUSIC_PACK_V1_0_0.json" },
-        "voice_candidates": { "const": "audio/voice/t4-voice-candidates-v1/manifest.json" },
-        "voice_candidate_approval": { "const": "approvals/APPROBATION_VOIX_B_T4_2026-11-20.json" },
-        "voice_mix": { "const": "config/T4_VOICE_MIX_V1_0_0.json" }
+        "visual_template": {
+          "const": "config/T4_EXPERIENCE_CLIENT_TEMPLATE_V3_0_0.json"
+        },
+        "transitions": {
+          "const": "reverse-engineering/T4_TRANSITIONS_HYBRIDES_30S_V3.json"
+        },
+        "transition_policy": {
+          "const": "effects_only_around_three_rush_changes"
+        },
+        "final_s4_stable_tail_s": {
+          "const": 3.0
+        },
+        "music_pack": {
+          "const": "config/T4_MUSIC_PACK_V1_0_0.json"
+        },
+        "voice_candidates": {
+          "const": "audio/voice/t4-voice-candidates-v1/manifest.json"
+        },
+        "voice_candidate_approval": {
+          "const": "approvals/APPROBATION_VOIX_B_T4_2026-11-20.json"
+        },
+        "voice_mix": {
+          "const": "config/T4_VOICE_MIX_V1_0_0.json"
+        },
+        "music_approval": {
+          "const": "approvals/APPROBATION_MUSIQUES_PIXABAY_T4_2026-11-18.json"
+        }
       }
     },
     "runtime_contracts": {
-      "type": "object", "additionalProperties": false,
-      "required": ["adapter", "render_job_schema", "render_result_schema", "render_error_schema", "music_selection_state_schema", "cloudflare_worker", "cloudflare_rendering_forbidden", "production_render_plane", "workflow"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adapter",
+        "render_job_schema",
+        "render_result_schema",
+        "render_error_schema",
+        "music_selection_state_schema",
+        "cloudflare_worker",
+        "cloudflare_rendering_forbidden",
+        "production_render_plane",
+        "workflow"
+      ],
       "properties": {
-        "adapter": { "const": "adapter/t4_adapter.py" },
-        "render_job_schema": { "const": "schemas/T4_render_job.schema.json" },
-        "render_result_schema": { "const": "schemas/T4_render_result.schema.json" },
-        "render_error_schema": { "const": "schemas/T4_render_error.schema.json" },
-        "music_selection_state_schema": { "const": "schemas/T4_music_selection_state.schema.json" },
-        "cloudflare_worker": { "const": "cloudflare/src/index.ts" },
-        "cloudflare_rendering_forbidden": { "const": true },
-        "production_render_plane": { "const": "github_actions" },
-        "workflow": { "const": ".github/workflows/render-complete.yml" }
+        "adapter": {
+          "const": "adapter/t4_adapter.py"
+        },
+        "render_job_schema": {
+          "const": "schemas/T4_render_job.schema.json"
+        },
+        "render_result_schema": {
+          "const": "schemas/T4_render_result.schema.json"
+        },
+        "render_error_schema": {
+          "const": "schemas/T4_render_error.schema.json"
+        },
+        "music_selection_state_schema": {
+          "const": "schemas/T4_music_selection_state.schema.json"
+        },
+        "cloudflare_worker": {
+          "const": "cloudflare/src/index.ts"
+        },
+        "cloudflare_rendering_forbidden": {
+          "const": true
+        },
+        "production_render_plane": {
+          "const": "github_actions"
+        },
+        "workflow": {
+          "const": ".github/workflows/render-complete.yml"
+        }
       }
     },
     "approved_visual_reference": {
-      "type": "object", "additionalProperties": false,
-      "required": ["commit", "github_run_id", "release_tag", "file_sha256", "video_bitstream_sha256", "owner_approved"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "commit",
+        "github_run_id",
+        "release_tag",
+        "file_sha256",
+        "video_bitstream_sha256",
+        "owner_approved"
+      ],
       "properties": {
-        "commit": { "const": "3e03a709154ef4f9bf941c29e0e7f202c1cc8757" },
-        "github_run_id": { "const": "44686336980" },
-        "release_tag": { "const": "t4-experience-client-v3.0.0-hybrid-candidate-3" },
-        "file_sha256": { "$ref": "#/$defs/sha256" },
-        "video_bitstream_sha256": { "$ref": "#/$defs/sha256" },
-        "owner_approved": { "const": true }
+        "commit": {
+          "const": "3e03a709154ef4f9bf941c29e0e7f202c1cc8757"
+        },
+        "github_run_id": {
+          "const": "44686336980"
+        },
+        "release_tag": {
+          "const": "t4-experience-client-v3.0.0-hybrid-candidate-3"
+        },
+        "file_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "video_bitstream_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "owner_approved": {
+          "const": true
+        }
       }
     },
     "complete_audio": {
-      "type": "object", "additionalProperties": false,
-      "required": ["voice_candidate", "voice_id", "voice_stem_sha256", "music_variant_count", "one_music_per_video", "no_immediate_repeat", "state_commit_policy", "github_production_master_status"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "voice_candidate",
+        "voice_id",
+        "voice_stem_sha256",
+        "music_variant_count",
+        "one_music_per_video",
+        "no_immediate_repeat",
+        "state_commit_policy",
+        "github_production_master_status"
+      ],
       "properties": {
-        "voice_candidate": { "const": "VOIX-B" },
-        "voice_id": { "const": "voice-07" },
-        "voice_stem_sha256": { "$ref": "#/$defs/sha256" },
-        "music_variant_count": { "const": 4 },
-        "one_music_per_video": { "const": true },
-        "no_immediate_repeat": { "const": true },
-        "state_commit_policy": { "const": "after_completed_qc_pass_and_verified_output_only" },
-        "github_production_master_status": { "enum": ["pending", "PASS"] }
+        "voice_candidate": {
+          "const": "VOIX-B"
+        },
+        "voice_id": {
+          "const": "voice-07"
+        },
+        "voice_stem_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "music_variant_count": {
+          "const": 4
+        },
+        "one_music_per_video": {
+          "const": true
+        },
+        "no_immediate_repeat": {
+          "const": true
+        },
+        "state_commit_policy": {
+          "const": "after_completed_qc_pass_and_verified_output_only"
+        },
+        "github_production_master_status": {
+          "enum": [
+            "pending",
+            "PASS"
+          ]
+        }
       }
     },
     "catalogue_preparation": {
-      "type": "object", "additionalProperties": false,
-      "required": ["package_spec", "deterministic_integrator_zip_required", "offline_reconstruction_required", "cloudflare_code_added", "cloudflare_deployed", "ota_implemented", "android_integration_implemented"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "package_spec",
+        "deterministic_integrator_zip_required",
+        "offline_reconstruction_required",
+        "cloudflare_code_added",
+        "cloudflare_deployed",
+        "ota_implemented",
+        "android_integration_implemented"
+      ],
       "properties": {
-        "package_spec": { "const": "packages/t4-experience-client-v1/package_spec.json" },
-        "deterministic_integrator_zip_required": { "const": true },
-        "offline_reconstruction_required": { "const": true },
-        "cloudflare_code_added": { "const": true },
-        "cloudflare_deployed": { "const": false },
-        "ota_implemented": { "const": false },
-        "android_integration_implemented": { "const": false }
+        "package_spec": {
+          "const": "packages/t4-experience-client-v1/package_spec.json"
+        },
+        "deterministic_integrator_zip_required": {
+          "const": true
+        },
+        "offline_reconstruction_required": {
+          "const": true
+        },
+        "cloudflare_code_added": {
+          "const": true
+        },
+        "cloudflare_deployed": {
+          "const": false
+        },
+        "ota_implemented": {
+          "const": false
+        },
+        "android_integration_implemented": {
+          "const": false
+        }
       }
     },
-    "known_protocol_deviations": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
+    "known_protocol_deviations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
   },
-  "$defs": { "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" } }
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
 }

@@ -4,74 +4,223 @@
   "title": "RESTAURATION-T4 complete RenderJob",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "job_id", "idempotency_key", "template_id", "template_version", "merchant_payload", "captures", "music", "voice", "render", "mix_contract", "control_plane", "cloudflare_rendering_forbidden"],
+  "required": [
+    "schema_version",
+    "job_id",
+    "idempotency_key",
+    "template_id",
+    "template_version",
+    "merchant_payload",
+    "captures",
+    "music",
+    "voice",
+    "render",
+    "mix_contract",
+    "control_plane",
+    "cloudflare_rendering_forbidden"
+  ],
   "properties": {
-    "schema_version": { "const": "1.0.0" },
-    "job_id": { "$ref": "#/$defs/id" },
-    "idempotency_key": { "$ref": "#/$defs/id" },
-    "template_id": { "const": "RESTAURATION-T4" },
-    "template_version": { "const": "4.0.0-complete-audio" },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "job_id": {
+      "$ref": "#/$defs/id"
+    },
+    "idempotency_key": {
+      "$ref": "#/$defs/id"
+    },
+    "template_id": {
+      "const": "RESTAURATION-T4"
+    },
+    "template_version": {
+      "const": "4.0.0-complete-audio"
+    },
     "merchant_payload": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["nom", "produit", "prix", "whatsapp", "quartier", "accroche"],
+      "required": [
+        "nom",
+        "produit",
+        "prix",
+        "whatsapp",
+        "quartier",
+        "accroche"
+      ],
       "properties": {
-        "nom": { "type": "string", "minLength": 1, "maxLength": 40 },
-        "produit": { "type": "string", "minLength": 1, "maxLength": 32 },
-        "prix": { "type": "string", "minLength": 1, "maxLength": 7, "pattern": "^[0-9 .]+$" },
-        "whatsapp": { "type": "string", "minLength": 4, "maxLength": 20 },
-        "quartier": { "type": "string", "minLength": 1, "maxLength": 40 },
-        "accroche": { "type": "string", "minLength": 0, "maxLength": 48 }
+        "nom": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "produit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32
+        },
+        "prix": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 7,
+          "pattern": "^[0-9 .]+$"
+        },
+        "whatsapp": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 20
+        },
+        "quartier": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "accroche": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 48
+        }
       }
     },
     "captures": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["S1", "S2", "S3", "S4"],
+      "required": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ],
       "properties": {
-        "S1": { "$ref": "#/$defs/capture" },
-        "S2": { "$ref": "#/$defs/capture" },
-        "S3": { "$ref": "#/$defs/capture" },
-        "S4": { "$ref": "#/$defs/capture" }
+        "S1": {
+          "$ref": "#/$defs/capture"
+        },
+        "S2": {
+          "$ref": "#/$defs/capture"
+        },
+        "S3": {
+          "$ref": "#/$defs/capture"
+        },
+        "S4": {
+          "$ref": "#/$defs/capture"
+        }
       }
     },
     "music": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["selection_mode", "selected_music_id", "selected_choice", "pixabay_id", "file", "sha256", "source_sha256", "content_id_registered", "claim_management_required", "last_successful_music_id", "state_update_policy"],
+      "required": [
+        "selection_mode",
+        "selected_music_id",
+        "selected_choice",
+        "pixabay_id",
+        "file",
+        "sha256",
+        "source_sha256",
+        "content_id_registered",
+        "claim_management_required",
+        "last_successful_music_id",
+        "state_update_policy"
+      ],
       "properties": {
-        "selection_mode": { "enum": ["explicit", "deterministic_excluding_last_successful"] },
-        "selected_music_id": { "$ref": "#/$defs/musicId" },
-        "selected_choice": { "enum": ["1", "2", "3", "4"] },
-        "pixabay_id": { "enum": [569473, 153058, 573648, 439622] },
-        "file": { "type": "string", "pattern": "^audio/music/t4-afrobeat-v1/.*_30s\\.mp3$" },
-        "sha256": { "$ref": "#/$defs/sha256" },
-        "source_sha256": { "$ref": "#/$defs/sha256" },
-        "content_id_registered": { "const": true },
-        "claim_management_required": { "const": true },
-        "last_successful_music_id": { "oneOf": [{ "$ref": "#/$defs/musicId" }, { "type": "null" }] },
-        "state_update_policy": { "const": "after_completed_qc_pass_only" }
+        "selection_mode": {
+          "enum": [
+            "explicit",
+            "deterministic_excluding_last_successful"
+          ]
+        },
+        "selected_music_id": {
+          "$ref": "#/$defs/musicId"
+        },
+        "selected_choice": {
+          "enum": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        },
+        "pixabay_id": {
+          "enum": [
+            260354,
+            154868,
+            162186,
+            321930
+          ]
+        },
+        "file": {
+          "type": "string",
+          "pattern": "^audio/music/t4-afrobeat-v1/.*_30s\\.mp3$"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "content_id_registered": {
+          "const": false
+        },
+        "claim_management_required": {
+          "const": false
+        },
+        "last_successful_music_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/musicId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "state_update_policy": {
+          "const": "after_completed_qc_pass_only"
+        }
       }
     },
     "voice": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["candidate", "voice_id", "language", "stem_file", "stem_sha256", "placements"],
+      "required": [
+        "candidate",
+        "voice_id",
+        "language",
+        "stem_file",
+        "stem_sha256",
+        "placements"
+      ],
       "properties": {
-        "candidate": { "const": "VOIX-B" },
-        "voice_id": { "const": "voice-07" },
-        "language": { "const": "fr" },
-        "stem_file": { "const": "audio/voice/t4-voice-v1/t4_voice_stem_30s.wav" },
-        "stem_sha256": { "$ref": "#/$defs/sha256" },
+        "candidate": {
+          "const": "VOIX-B"
+        },
+        "voice_id": {
+          "const": "voice-07"
+        },
+        "language": {
+          "const": "fr"
+        },
+        "stem_file": {
+          "const": "audio/voice/t4-voice-v1/t4_voice_stem_30s.wav"
+        },
+        "stem_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
         "placements": {
           "type": "array",
           "minItems": 4,
           "maxItems": 4,
           "prefixItems": [
-            { "$ref": "#/$defs/placement1" },
-            { "$ref": "#/$defs/placement2" },
-            { "$ref": "#/$defs/placement3" },
-            { "$ref": "#/$defs/placement4" }
+            {
+              "$ref": "#/$defs/placement1"
+            },
+            {
+              "$ref": "#/$defs/placement2"
+            },
+            {
+              "$ref": "#/$defs/placement3"
+            },
+            {
+              "$ref": "#/$defs/placement4"
+            }
           ],
           "items": false
         }
@@ -80,41 +229,121 @@
     "render": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["visual_mode", "visual_source_role", "visual_source_url", "visual_source_sha256", "visual_video_bitstream_sha256", "visual_reencode_forbidden", "audio_mux_video_reencode_forbidden", "runtime_capture_manifest_required", "width", "height", "fps", "frames", "duration_s", "output_count", "output_filename", "production_render_plane"],
+      "required": [
+        "visual_mode",
+        "visual_source_role",
+        "visual_source_url",
+        "visual_source_sha256",
+        "visual_video_bitstream_sha256",
+        "visual_reencode_forbidden",
+        "audio_mux_video_reencode_forbidden",
+        "runtime_capture_manifest_required",
+        "width",
+        "height",
+        "fps",
+        "frames",
+        "duration_s",
+        "output_count",
+        "output_filename",
+        "production_render_plane"
+      ],
       "properties": {
-        "visual_mode": { "enum": ["approved_master_stream_copy", "runtime_hybrid_render"] },
-        "visual_source_role": { "enum": ["approved_render_source", "approved_design_reference"] },
-        "visual_source_url": { "type": "string", "format": "uri", "pattern": "^https://" },
-        "visual_source_sha256": { "$ref": "#/$defs/sha256" },
-        "visual_video_bitstream_sha256": { "$ref": "#/$defs/sha256" },
-        "visual_reencode_forbidden": { "type": "boolean" },
-        "audio_mux_video_reencode_forbidden": { "const": true },
-        "runtime_capture_manifest_required": { "type": "boolean" },
-        "width": { "const": 720 },
-        "height": { "const": 1280 },
-        "fps": { "const": 30 },
-        "frames": { "const": 900 },
-        "duration_s": { "const": 30.0 },
-        "output_count": { "const": 1 },
-        "output_filename": { "const": "VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4" },
-        "production_render_plane": { "const": "github_actions" }
+        "visual_mode": {
+          "enum": [
+            "approved_master_stream_copy",
+            "runtime_hybrid_render"
+          ]
+        },
+        "visual_source_role": {
+          "enum": [
+            "approved_render_source",
+            "approved_design_reference"
+          ]
+        },
+        "visual_source_url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "visual_source_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "visual_video_bitstream_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "visual_reencode_forbidden": {
+          "type": "boolean"
+        },
+        "audio_mux_video_reencode_forbidden": {
+          "const": true
+        },
+        "runtime_capture_manifest_required": {
+          "type": "boolean"
+        },
+        "width": {
+          "const": 720
+        },
+        "height": {
+          "const": 1280
+        },
+        "fps": {
+          "const": 30
+        },
+        "frames": {
+          "const": 900
+        },
+        "duration_s": {
+          "const": 30.0
+        },
+        "output_count": {
+          "const": 1
+        },
+        "output_filename": {
+          "const": "VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4"
+        },
+        "production_render_plane": {
+          "const": "github_actions"
+        }
       }
     },
-    "mix_contract": { "$ref": "#/$defs/mix" },
-    "control_plane": { "enum": ["github_actions_manual", "cloudflare_worker"] },
-    "cloudflare_rendering_forbidden": { "const": true }
+    "mix_contract": {
+      "$ref": "#/$defs/mix"
+    },
+    "control_plane": {
+      "enum": [
+        "github_actions_manual",
+        "cloudflare_worker"
+      ]
+    },
+    "cloudflare_rendering_forbidden": {
+      "const": true
+    }
   },
   "allOf": [
     {
-      "if": { "properties": { "control_plane": { "const": "cloudflare_worker" } } },
+      "if": {
+        "properties": {
+          "control_plane": {
+            "const": "cloudflare_worker"
+          }
+        }
+      },
       "then": {
         "properties": {
           "render": {
             "properties": {
-              "visual_mode": { "const": "runtime_hybrid_render" },
-              "visual_source_role": { "const": "approved_design_reference" },
-              "visual_reencode_forbidden": { "const": false },
-              "runtime_capture_manifest_required": { "const": true }
+              "visual_mode": {
+                "const": "runtime_hybrid_render"
+              },
+              "visual_source_role": {
+                "const": "approved_design_reference"
+              },
+              "visual_reencode_forbidden": {
+                "const": false
+              },
+              "runtime_capture_manifest_required": {
+                "const": true
+              }
             }
           }
         }
@@ -123,10 +352,18 @@
         "properties": {
           "render": {
             "properties": {
-              "visual_mode": { "const": "approved_master_stream_copy" },
-              "visual_source_role": { "const": "approved_render_source" },
-              "visual_reencode_forbidden": { "const": true },
-              "runtime_capture_manifest_required": { "const": false }
+              "visual_mode": {
+                "const": "approved_master_stream_copy"
+              },
+              "visual_source_role": {
+                "const": "approved_render_source"
+              },
+              "visual_reencode_forbidden": {
+                "const": true
+              },
+              "runtime_capture_manifest_required": {
+                "const": false
+              }
             }
           }
         }
@@ -134,60 +371,263 @@
     }
   ],
   "$defs": {
-    "id": { "type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]{7,127}$" },
-    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-    "musicId": { "enum": ["t4_music_569473", "t4_music_153058", "t4_music_573648", "t4_music_439622"] },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]{7,127}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "musicId": {
+      "enum": [
+        "t4_music_260354",
+        "t4_music_154868",
+        "t4_music_162186",
+        "t4_music_321930"
+      ]
+    },
     "capture": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "source": { "type": "string", "minLength": 1 },
-        "uri": { "type": "string", "minLength": 1 },
-        "sha256": { "$ref": "#/$defs/sha256" },
-        "mime_type": { "enum": ["video/mp4", "video/webm", "video/quicktime"] },
-        "width": { "type": "integer", "minimum": 320 },
-        "height": { "type": "integer", "minimum": 320 },
-        "fps": { "type": "number", "minimum": 12, "maximum": 120 },
-        "frame_count": { "type": "integer", "minimum": 1 },
-        "duration_ms": { "type": "integer", "minimum": 1 },
-        "video_codec": { "type": "string", "minLength": 1 },
-        "audio_codec": { "type": ["string", "null"] },
-        "has_audio": { "type": "boolean" }
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "uri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "mime_type": {
+          "enum": [
+            "video/mp4",
+            "video/webm",
+            "video/quicktime"
+          ]
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 320
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 320
+        },
+        "fps": {
+          "type": "number",
+          "minimum": 12,
+          "maximum": 120
+        },
+        "frame_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "video_codec": {
+          "type": "string",
+          "minLength": 1
+        },
+        "audio_codec": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "has_audio": {
+          "type": "boolean"
+        }
       },
-      "anyOf": [{ "required": ["source"] }, { "required": ["uri", "sha256", "mime_type", "width", "height", "fps", "frame_count", "duration_ms", "video_codec", "audio_codec", "has_audio"] }]
+      "anyOf": [
+        {
+          "required": [
+            "source"
+          ]
+        },
+        {
+          "required": [
+            "uri",
+            "sha256",
+            "mime_type",
+            "width",
+            "height",
+            "fps",
+            "frame_count",
+            "duration_ms",
+            "video_codec",
+            "audio_codec",
+            "has_audio"
+          ]
+        }
+      ]
     },
     "placement": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["scene", "start_s", "end_s", "text"],
+      "required": [
+        "scene",
+        "start_s",
+        "end_s",
+        "text"
+      ],
       "properties": {
-        "scene": { "type": "integer", "minimum": 1, "maximum": 4 },
-        "start_s": { "type": "number" },
-        "end_s": { "type": "number" },
-        "text": { "type": "string", "minLength": 1 }
+        "scene": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4
+        },
+        "start_s": {
+          "type": "number"
+        },
+        "end_s": {
+          "type": "number"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
-    "placement1": { "allOf": [{ "$ref": "#/$defs/placement" }, { "properties": { "scene": { "const": 1 }, "start_s": { "const": 1.2 }, "end_s": { "maximum": 6.0 } } }] },
-    "placement2": { "allOf": [{ "$ref": "#/$defs/placement" }, { "properties": { "scene": { "const": 2 }, "start_s": { "const": 6.8 }, "end_s": { "maximum": 14.0 } } }] },
-    "placement3": { "allOf": [{ "$ref": "#/$defs/placement" }, { "properties": { "scene": { "const": 3 }, "start_s": { "const": 14.7 }, "end_s": { "maximum": 21.0 } } }] },
-    "placement4": { "allOf": [{ "$ref": "#/$defs/placement" }, { "properties": { "scene": { "const": 4 }, "start_s": { "const": 21.8 }, "end_s": { "maximum": 27.0 } } }] },
+    "placement1": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/placement"
+        },
+        {
+          "properties": {
+            "scene": {
+              "const": 1
+            },
+            "start_s": {
+              "const": 1.2
+            },
+            "end_s": {
+              "maximum": 6.0
+            }
+          }
+        }
+      ]
+    },
+    "placement2": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/placement"
+        },
+        {
+          "properties": {
+            "scene": {
+              "const": 2
+            },
+            "start_s": {
+              "const": 6.8
+            },
+            "end_s": {
+              "maximum": 14.0
+            }
+          }
+        }
+      ]
+    },
+    "placement3": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/placement"
+        },
+        {
+          "properties": {
+            "scene": {
+              "const": 3
+            },
+            "start_s": {
+              "const": 14.7
+            },
+            "end_s": {
+              "maximum": 21.0
+            }
+          }
+        }
+      ]
+    },
+    "placement4": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/placement"
+        },
+        {
+          "properties": {
+            "scene": {
+              "const": 4
+            },
+            "start_s": {
+              "const": 21.8
+            },
+            "end_s": {
+              "maximum": 27.0
+            }
+          }
+        }
+      ]
+    },
     "mix": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["music_open_gain_db", "music_under_voice_gain_db", "duck_depth_db", "duck_attack_ms", "duck_release_ms", "duck_attack_curve", "duck_release_curve", "voice_gain_db", "sfx", "master_target_lufs", "master_true_peak_dbtp_max", "delivery_audio"],
+      "required": [
+        "music_open_gain_db",
+        "music_under_voice_gain_db",
+        "duck_depth_db",
+        "duck_attack_ms",
+        "duck_release_ms",
+        "duck_attack_curve",
+        "duck_release_curve",
+        "voice_gain_db",
+        "sfx",
+        "master_target_lufs",
+        "master_true_peak_dbtp_max",
+        "delivery_audio"
+      ],
       "properties": {
-        "music_open_gain_db": { "const": -3.0 },
-        "music_under_voice_gain_db": { "const": -10.0 },
-        "duck_depth_db": { "const": -7.0 },
-        "duck_attack_ms": { "const": 120 },
-        "duck_release_ms": { "const": 450 },
-        "duck_attack_curve": { "const": "linear_db" },
-        "duck_release_curve": { "const": "linear_db" },
-        "voice_gain_db": { "const": 0.0 },
-        "sfx": { "const": "none" },
-        "master_target_lufs": { "const": -16.0 },
-        "master_true_peak_dbtp_max": { "const": -2.0 },
-        "delivery_audio": { "const": "AAC stereo 48 kHz" }
+        "music_open_gain_db": {
+          "const": -3.0
+        },
+        "music_under_voice_gain_db": {
+          "const": -10.0
+        },
+        "duck_depth_db": {
+          "const": -7.0
+        },
+        "duck_attack_ms": {
+          "const": 120
+        },
+        "duck_release_ms": {
+          "const": 450
+        },
+        "duck_attack_curve": {
+          "const": "linear_db"
+        },
+        "duck_release_curve": {
+          "const": "linear_db"
+        },
+        "voice_gain_db": {
+          "const": 0.0
+        },
+        "sfx": {
+          "const": "none"
+        },
+        "master_target_lufs": {
+          "const": -16.0
+        },
+        "master_true_peak_dbtp_max": {
+          "const": -2.0
+        },
+        "delivery_audio": {
+          "const": "AAC stereo 48 kHz"
+        }
       }
     }
   }

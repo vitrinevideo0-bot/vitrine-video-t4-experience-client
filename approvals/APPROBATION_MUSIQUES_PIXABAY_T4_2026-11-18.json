@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "approval_id": "T4-PIXABAY-AFROBEAT-POOL-2026-11-18",
+  "template_id": "RESTAURATION-T4",
+  "decided_on": "2026-11-18",
+  "decision_events": [
+    {
+      "sequence": 1,
+      "decision_text": "Je valide 1, 2 et 4 ; remplace 3",
+      "approved_choices": ["1", "2", "4"],
+      "rejected_choice": "3",
+      "rejected_pixabay_id": 192363
+    },
+    {
+      "sequence": 2,
+      "decision_text": "Je valide la nouvelle 3",
+      "approved_choices": ["3"],
+      "approved_pixabay_id": 162186
+    }
+  ],
+  "final_approved_order": [
+    {
+      "choice": "1",
+      "id": "t4_music_260354",
+      "pixabay_id": 260354,
+      "title": "Afrobeat Waves of Lagos",
+      "artist": "Ovrsoull",
+      "audition_sha256": "5df5f9feba5f794629aa7c8883eb5348f37e80f7aa36f4380cb29bfda339d516"
+    },
+    {
+      "choice": "2",
+      "id": "t4_music_154868",
+      "pixabay_id": 154868,
+      "title": "Afrobeat reggaeton afro type beat",
+      "artist": "37660440",
+      "audition_sha256": "0a9798de2176a5cbff55ef40f0b19aa72dff2a0d864bfcf4fb145d64f5e2f183"
+    },
+    {
+      "choice": "3",
+      "id": "t4_music_162186",
+      "pixabay_id": 162186,
+      "title": "afro love prod by Gis on Beat",
+      "artist": "Gis_photography",
+      "audition_sha256": "9969d9633dbb0d00ea8fcfb27f9fd3826fe0f5b6d97cea2c79459baa065ced20"
+    },
+    {
+      "choice": "4",
+      "id": "t4_music_321930",
+      "pixabay_id": 321930,
+      "title": "Afrobeat x Guitar & Big Brass | Chill Music (Champagne flute)",
+      "artist": "47643651",
+      "audition_sha256": "aa1fc9fd40bc9eedf08b08a6b8c981b357af7d0726ccd57bcdc2413cd5884cf1"
+    }
+  ],
+  "integration_authorized": true,
+  "replace_previous_content_id_pool_atomically": true,
+  "preserve_historical_releases": true,
+  "production_pool_mutation_before_complete_approval": false,
+  "notes": "All four replacement tracks were listened to and explicitly approved. The previous Content ID-registered pool is superseded in the active contracts but remains preserved in Git history and historical additive Releases."
+}

@@ -202,9 +202,10 @@ def main() -> int:
     require(job["template_version"] == "4.0.0-complete-audio", "Complete T4 RenderJob version required")
     tracks = music_config["tracks"]
     require(len(tracks) == 4, "The T4 music pack must contain exactly four tracks")
-    require([track["pixabay_id"] for track in tracks] == [569473, 153058, 573648, 439622], "Unexpected T4 music pool")
+    require([track["pixabay_id"] for track in tracks] == [260354, 154868, 162186, 321930], "Unexpected T4 music pool")
     require(all(track["audition_approved_by_owner"] and track["production_eligible"] for track in tracks), "Every T4 music track must be approved")
-    require(all(track["content_id_registered"] for track in tracks), "Content ID disclosure missing")
+    require(all(track["content_id_registered"] is False for track in tracks), "Unexpected Content ID registration in replacement pool")
+    require(all(track["claim_management_required"] is False for track in tracks), "Unexpected Content ID claim-management requirement")
     selected = next((track for track in tracks if track["id"] == job["music"]["selected_music_id"]), None)
     require(selected is not None, "Selected T4 music is outside the approved pool")
     require(job["music"]["state_update_policy"] == "after_completed_qc_pass_only", "Invalid music state policy")
@@ -315,7 +316,7 @@ def main() -> int:
         "four_owner_approved_tracks_verified": len(verified_tracks) == 4,
         "one_rotated_music_selected": selected["id"] == job["music"]["selected_music_id"],
         "no_immediate_music_repeat": job["music"]["last_successful_music_id"] is None or selected["id"] != job["music"]["last_successful_music_id"],
-        "content_id_disclosed": selected["content_id_registered"] is True and job["music"]["content_id_registered"] is True,
+        "content_id_status_clear_and_disclosed": selected["content_id_registered"] is False and job["music"]["content_id_registered"] is False,
         "voice_is_owner_selected_B": voice_config["candidate"] == "VOIX-B" and voice_config["voice_id"] == "voice-07",
         "four_voice_placements": [clip["start_s"] for clip in voice_config["clips"]] == [1.2, 6.8, 14.7, 21.8],
         "ducking_minus_3_minus_10_db": duck["music_open_gain_db"] == -3.0 and duck["music_under_voice_gain_db"] == -10.0,

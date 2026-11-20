@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "created_on": "2026-11-18",
+  "status": "PASS",
+  "scope": "Local preflight of the owner-approved Pixabay replacement pool using choice 3 and the official approved silent visual master",
+  "production_delivery": false,
+  "github_server_validation": false,
+  "music_pool": {
+    "pixabay_ids": [
+      260354,
+      154868,
+      162186,
+      321930
+    ],
+    "approval": "approvals/APPROBATION_MUSIQUES_PIXABAY_T4_2026-11-18.json",
+    "selected_music_id": "t4_music_162186",
+    "selected_pixabay_id": 162186,
+    "selected_derivative_sha256": "f7beceb915cdb5248c00fe5de5bb5e5f1f572fc7171c69329690e1a0d2e94965",
+    "selected_source_sha256": "9e5e0c2502a9c1bcb7ec870788569d32fcbfacf99ddf596d06ca280714e837cb",
+    "content_id_registered": false
+  },
+  "visual": {
+    "mode": "approved_master_stream_copy",
+    "source_role": "approved_render_source",
+    "input_file": "VIDEO_T4_EXPERIENCE_CLIENT_TRANSITIONS_HYBRIDES_V3_A_VALIDER.mp4",
+    "input_file_sha256": "5acd4eb958c1ec00a663066d57b39bbb43e61f39dbd9c1403db458b5e34bed9a",
+    "input_video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "output_video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "approved_reference_file_sha256": "5acd4eb958c1ec00a663066d57b39bbb43e61f39dbd9c1403db458b5e34bed9a",
+    "approved_reference_video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "approved_reference_exact": true,
+    "audio_mux_bitstream_copy": true
+  },
+  "final_video": {
+    "file": "VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4",
+    "sha256": "36377e421a0c3bf7f4c9cca86f62fb954623ed6d9ffb62fcc6551cce542359ee",
+    "bytes": 12157788,
+    "duration_s": 30.0,
+    "frames": 900,
+    "width": 720,
+    "height": 1280,
+    "fps": "30/1",
+    "video_codec": "h264",
+    "pixel_format": "yuv420p",
+    "audio_codec": "aac",
+    "audio_sample_rate": 48000,
+    "audio_channels": 2,
+    "integrated_lufs": -16.22,
+    "true_peak_dbtp": -1.98,
+    "sample_peak_dbfs": -1.988,
+    "clipped_sample_count": 0,
+    "nan_count": 0,
+    "inf_count": 0,
+    "dc_offset_max_abs": 0.0030081
+  },
+  "intelligibility": {
+    "method": "20 ms frames; active voice above -38 dBFS; pre-master stems",
+    "active_speech_s": 11.3,
+    "aggregate_speech_to_music_db": 10.18,
+    "median_speech_to_music_db": 10.12,
+    "p10_speech_to_music_db": -1.48,
+    "scenes": [
+      {
+        "scene": 1,
+        "active_speech_s": 2.36,
+        "median_speech_to_music_db": 8.01,
+        "p10_speech_to_music_db": -2.61
+      },
+      {
+        "scene": 2,
+        "active_speech_s": 3.2,
+        "median_speech_to_music_db": 10.48,
+        "p10_speech_to_music_db": -2.27
+      },
+      {
+        "scene": 3,
+        "active_speech_s": 3.22,
+        "median_speech_to_music_db": 10.86,
+        "p10_speech_to_music_db": 0.27
+      },
+      {
+        "scene": 4,
+        "active_speech_s": 2.52,
+        "median_speech_to_music_db": 11.4,
+        "p10_speech_to_music_db": 1.2
+      }
+    ]
+  },
+  "quality": {
+    "status": "PASS",
+    "passed": 26,
+    "failed": 0,
+    "total": 26
+  },
+  "render_result": {
+    "status": "COMPLETED",
+    "quality_status": "PASS",
+    "music_state_commit_allowed": true
+  },
+  "attestation": "This PASS proves local reproducibility and QC only. It is not presented as a GitHub Actions render, Cloudflare deployment, production upload or universal completion."
+}

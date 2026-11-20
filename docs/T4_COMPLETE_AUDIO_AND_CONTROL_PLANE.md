@@ -52,10 +52,10 @@ Le hash du master V3 reste une référence de design, pas une fausse promesse d�
 
 Identifiants autorisés, dans l’ordre propriétaire :
 
-1. `t4_music_569473` — ARPMedia ;
-2. `t4_music_153058` — FASSounds ;
-3. `t4_music_573648` — alex-morgan ;
-4. `t4_music_439622` — SigmaMusicArt.
+1. `t4_music_260354` — Ovrsoull ;
+2. `t4_music_154868` — 37660440 ;
+3. `t4_music_162186` — Gis_photography ;
+4. `t4_music_321930` — 47643651.
 
 Règles :
 
@@ -100,12 +100,13 @@ Cloudflare est uniquement le plan de contrôle et le stockage. Le rendu visuel, 
 
 ## Licence et Content ID
 
-Les quatre pages publiques déclaraient la Pixabay Content License et **Content ID Registered**. Le dépôt conserve les pages HTML compressées, captures PNG, URL officielles et SHA-256. Il ne prétend pas posséder un certificat de téléchargement Pixabay lié à un compte authentifié.
+Les quatre pages publiques déclaraient la Pixabay Content License et, au moment des captures datées, aucune n’affichait l’étiquette **Content ID Registered**. Cette absence observée n’est pas une garantie absolue contre toute revendication future. Le dépôt conserve les pages HTML compressées, journaux de capture, captures PNG, URL officielles et SHA-256. Il ne prétend pas posséder un certificat de téléchargement Pixabay lié à un compte authentifié.
 
+- approbation propriétaire : `approvals/APPROBATION_MUSIQUES_PIXABAY_T4_2026-11-18.json` ;
 - certificat interne : `audio/music/t4-afrobeat-v1/evidence/T4_MUSIC_PROVENANCE_CERTIFICATE.json` ;
-- instantané : `audio/music/t4-afrobeat-v1/evidence/PIXABAY_CONTENT_LICENSE_SNAPSHOT_2026-11-20.md`.
+- instantané : `audio/music/t4-afrobeat-v1/evidence/PIXABAY_CONTENT_LICENSE_SNAPSHOT_2026-11-18.md`.
 
-Les originaux complets ne sont pas commités. Les MP3 dérivés ne doivent jamais être publiés comme ressources autonomes de Release. Une réclamation Content ID reste possible.
+Les originaux complets ne sont pas commités. Les MP3 dérivés ne doivent jamais être publiés comme ressources autonomes de Release et le projet ne doit jamais inscrire ces pistes dans Content ID.
 
 ## Validation et déploiement
 

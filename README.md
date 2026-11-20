@@ -63,7 +63,7 @@ Les rushes bruts ne sont jamais suivis par Git ni publiés séparément.
 
 La voix propriétaire est **VOIX-B / `voice-07`**, approuvée dans `approvals/APPROBATION_VOIX_B_T4_2026-11-20.json`. Son stem mono 48 kHz de 30 secondes est verrouillé par le SHA-256 `74ec6378ba0b724631793c02c2d3f0308913c1790f6606784e587ccd2e34a759`.
 
-Le paquet `config/T4_MUSIC_PACK_V1_0_0.json` contient exactement quatre pistes approuvées : ARPMedia, FASSounds, alex-morgan et SigmaMusicArt. Une vidéo n’en utilise qu’une. L’algorithme retire toujours la dernière réussite ; un choix explicite identique est rejeté et un échec ne modifie pas l’état.
+Le paquet `config/T4_MUSIC_PACK_V1_0_0.json` contient exactement quatre pistes Pixabay approuvées : Ovrsoull (`260354`), 37660440 (`154868`), Gis_photography (`162186`) et 47643651 (`321930`). Une vidéo n’en utilise qu’une. L’algorithme retire toujours la dernière réussite ; un choix explicite identique est rejeté et un échec ne modifie pas l’état.
 
 Le mix suit le modèle P1/T1 :
 
@@ -75,7 +75,7 @@ Le mix suit le modèle P1/T1 :
 
 Le workflow `.github/workflows/render-complete.yml` produit un seul MP4 complet. Pour l’exemplaire approuvé, il retélécharge le master officiel et conserve son flux H.264 bit pour bit avec `-c:v copy`. Les lancements issus du Worker reconstruisent les quatre captures client avec le moteur V3, puis conservent ce nouveau flux pendant le mux audio.
 
-Les quatre pages Pixabay indiquent **Content ID Registered**. Les preuves et le certificat interne de provenance sont archivés, sans prétendre disposer d’un certificat Pixabay authentifié. Les MP3 dérivés ne sont jamais joints séparément aux Releases.
+Au moment des captures datées, aucune des quatre pages Pixabay n’affichait **Content ID Registered**. Cette observation n’est pas une garantie absolue future. Les preuves, l’approbation propriétaire et le certificat interne de provenance sont archivés, sans prétendre disposer d’un certificat Pixabay authentifié. Les MP3 dérivés ne sont jamais joints séparément aux Releases et le projet ne les inscrit jamais dans Content ID.
 
 ## Plan de contrôle Cloudflare
 

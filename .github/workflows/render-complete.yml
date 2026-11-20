@@ -10,10 +10,10 @@ on:
         default: auto
         options:
           - auto
-          - t4_music_569473
-          - t4_music_153058
-          - t4_music_573648
-          - t4_music_439622
+          - t4_music_260354
+          - t4_music_154868
+          - t4_music_162186
+          - t4_music_321930
       last_successful_music_id:
         description: Dernière réussite connue pour un lancement manuel
         required: true
@@ -21,10 +21,10 @@ on:
         default: none
         options:
           - none
-          - t4_music_569473
-          - t4_music_153058
-          - t4_music_573648
-          - t4_music_439622
+          - t4_music_260354
+          - t4_music_154868
+          - t4_music_162186
+          - t4_music_321930
       publish_prerelease:
         description: Publier une pré-Release additive du rendu manuel
         required: true
@@ -231,7 +231,8 @@ jobs:
           cp audio/voice/t4-voice-candidates-v1/manifest.json release/T4_VOICE_CANDIDATES_MANIFEST.json
           cp approvals/APPROBATION_VOIX_B_T4_2026-11-20.json release/
           cp audio/music/t4-afrobeat-v1/evidence/T4_MUSIC_PROVENANCE_CERTIFICATE.json release/
-          cp audio/music/t4-afrobeat-v1/evidence/PIXABAY_CONTENT_LICENSE_SNAPSHOT_2026-11-20.md release/
+          cp audio/music/t4-afrobeat-v1/evidence/PIXABAY_CONTENT_LICENSE_SNAPSHOT_2026-11-18.md release/
+          cp approvals/APPROBATION_MUSIQUES_PIXABAY_T4_2026-11-18.json release/
           if [ -f output/t4-runtime-hybrid-v3/T4_SILENT_RENDER_REPORT.json ]; then
             cp output/t4-runtime-hybrid-v3/T4_SILENT_RENDER_REPORT.json release/T4_RUNTIME_VISUAL_RENDER_REPORT.json
           fi
@@ -254,7 +255,7 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && inputs.publish_prerelease
         run: |
           cat > /tmp/t4-complete-release-notes.md <<'EOF'
-          # RESTAURATION-T4 — rendu complet VOIX-B + Afrobeat
+          # RESTAURATION-T4 — rendu complet VOIX-B + nouveau pool Afrobeat Pixabay
 
           - direction visuelle : **Hybride cinématique**, déjà approuvée ;
           - flux H.264 du master silencieux officiel conservé bit pour bit pendant le mux ;
@@ -265,7 +266,7 @@ jobs:
           - 30,000 s, 720 × 1280, 30 i/s, 900 images, H.264 + AAC stéréo 48 kHz ;
           - contrôles d’intégrité, intelligibilité et absence d’écrêtage inclus.
 
-          Les quatre pages Pixabay indiquent **Content ID Registered**. Une réclamation automatisée reste possible ; le certificat interne de provenance et les preuves publiques sont archivés. Aucun certificat de téléchargement Pixabay lié à un compte authentifié n’est revendiqué.
+          Au moment des captures archivées, aucune des quatre pages Pixabay n’affichait **Content ID Registered**. Ce constat daté n’est pas une garantie absolue contre toute revendication future ; le certificat interne de provenance et les preuves publiques sont archivés. Aucun certificat de téléchargement Pixabay lié à un compte authentifié n’est revendiqué.
           EOF
 
       - name: Publier une pré-Release immuable sans écraser l’historique
@@ -274,14 +275,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          TAG="t4-experience-client-v4.0.0-complete-candidate-${GITHUB_RUN_NUMBER}"
+          TAG="t4-experience-client-v4.1.0-pixabay-replacement-candidate-${GITHUB_RUN_NUMBER}"
           if gh release view "$TAG" >/dev/null 2>&1; then
             echo "La Release $TAG existe déjà : refus de l’écraser." >&2
             exit 1
           fi
           gh release create "$TAG" release/* \
             --target "$GITHUB_SHA" \
-            --title "T4 Expérience client — rendu complet VOIX-B #${GITHUB_RUN_NUMBER}" \
+            --title "T4 Expérience client — nouveau pool Pixabay + VOIX-B #${GITHUB_RUN_NUMBER}" \
             --notes-file /tmp/t4-complete-release-notes.md \
             --prerelease
 

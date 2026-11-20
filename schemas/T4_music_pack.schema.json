@@ -1,78 +1,242 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/raw/main/schemas/T4_music_pack.schema.json",
-  "title": "RESTAURATION-T4 owner-approved Afrobeat music pack",
+  "title": "RESTAURATION-T4 owner-approved Pixabay Afrobeat replacement music pack",
   "type": "object",
   "additionalProperties": false,
-  "required": ["$schema", "schema_version", "id", "template_id", "audio_profile", "display_name", "status", "approved_on", "owner_approved_order", "selection_contract", "timeline", "mix_contract", "license_contract", "tracks", "quality_gate"],
+  "required": [
+    "$schema",
+    "schema_version",
+    "id",
+    "template_id",
+    "audio_profile",
+    "display_name",
+    "status",
+    "approved_on",
+    "approval",
+    "owner_approved_order",
+    "selection_contract",
+    "timeline",
+    "mix_contract",
+    "license_contract",
+    "tracks",
+    "quality_gate"
+  ],
   "properties": {
-    "$schema": { "const": "../schemas/T4_music_pack.schema.json" },
-    "schema_version": { "const": "1.0.0" },
-    "id": { "const": "restauration_T4_afrobeat_music_v1_0_0" },
-    "template_id": { "const": "RESTAURATION-T4" },
-    "audio_profile": { "const": "afrobeat" },
-    "display_name": { "type": "string", "minLength": 1 },
-    "status": { "const": "release_ready_all_four_tracks" },
-    "approved_on": { "$ref": "#/$defs/date" },
+    "$schema": {
+      "const": "../schemas/T4_music_pack.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "id": {
+      "const": "restauration_T4_afrobeat_music_v1_0_0"
+    },
+    "template_id": {
+      "const": "RESTAURATION-T4"
+    },
+    "audio_profile": {
+      "const": "afrobeat"
+    },
+    "display_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "const": "release_ready_all_four_tracks"
+    },
+    "approved_on": {
+      "$ref": "#/$defs/date"
+    },
     "owner_approved_order": {
       "const": [
-        { "choice": "1", "artist": "ARPMedia", "pixabay_id": 569473 },
-        { "choice": "2", "artist": "FASSounds", "pixabay_id": 153058 },
-        { "choice": "3", "artist": "alex-morgan", "pixabay_id": 573648 },
-        { "choice": "4", "artist": "SigmaMusicArt", "pixabay_id": 439622 }
+        {
+          "choice": "1",
+          "artist": "Ovrsoull",
+          "pixabay_id": 260354
+        },
+        {
+          "choice": "2",
+          "artist": "37660440",
+          "pixabay_id": 154868
+        },
+        {
+          "choice": "3",
+          "artist": "Gis_photography",
+          "pixabay_id": 162186
+        },
+        {
+          "choice": "4",
+          "artist": "47643651",
+          "pixabay_id": 321930
+        }
       ]
     },
     "selection_contract": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["variant_count", "owner_approved_variant_ids", "default_request", "automatic_algorithm", "no_immediate_repeat", "explicit_repeat_policy", "first_render_pool_size", "subsequent_pool_size", "state_key", "state_update_policy", "failed_render_state_policy", "idempotent_success_callback", "persistent_state_schema", "cloudflare_state_object", "network_required_for_render"],
+      "required": [
+        "variant_count",
+        "owner_approved_variant_ids",
+        "default_request",
+        "automatic_algorithm",
+        "no_immediate_repeat",
+        "explicit_repeat_policy",
+        "first_render_pool_size",
+        "subsequent_pool_size",
+        "state_key",
+        "state_update_policy",
+        "failed_render_state_policy",
+        "idempotent_success_callback",
+        "persistent_state_schema",
+        "cloudflare_state_object",
+        "network_required_for_render"
+      ],
       "properties": {
-        "variant_count": { "const": 4 },
-        "owner_approved_variant_ids": { "const": ["t4_music_569473", "t4_music_153058", "t4_music_573648", "t4_music_439622"] },
-        "default_request": { "const": "auto" },
-        "automatic_algorithm": { "const": "sha256(render_job_id) modulo eligible variants excluding last_successful_music_id" },
-        "no_immediate_repeat": { "const": true },
-        "explicit_repeat_policy": { "const": "reject" },
-        "first_render_pool_size": { "const": 4 },
-        "subsequent_pool_size": { "const": 3 },
-        "state_key": { "const": "last_successful_music_id" },
-        "state_update_policy": { "const": "after_completed_qc_pass_only" },
-        "failed_render_state_policy": { "const": "unchanged" },
-        "idempotent_success_callback": { "const": true },
-        "persistent_state_schema": { "const": "schemas/T4_music_selection_state.schema.json" },
-        "cloudflare_state_object": { "const": "music/t4-last-success.json" },
-        "network_required_for_render": { "const": false }
+        "variant_count": {
+          "const": 4
+        },
+        "owner_approved_variant_ids": {
+          "const": [
+            "t4_music_260354",
+            "t4_music_154868",
+            "t4_music_162186",
+            "t4_music_321930"
+          ]
+        },
+        "default_request": {
+          "const": "auto"
+        },
+        "automatic_algorithm": {
+          "const": "sha256(render_job_id) modulo eligible variants excluding last_successful_music_id"
+        },
+        "no_immediate_repeat": {
+          "const": true
+        },
+        "explicit_repeat_policy": {
+          "const": "reject"
+        },
+        "first_render_pool_size": {
+          "const": 4
+        },
+        "subsequent_pool_size": {
+          "const": 3
+        },
+        "state_key": {
+          "const": "last_successful_music_id"
+        },
+        "state_update_policy": {
+          "const": "after_completed_qc_pass_only"
+        },
+        "failed_render_state_policy": {
+          "const": "unchanged"
+        },
+        "idempotent_success_callback": {
+          "const": true
+        },
+        "persistent_state_schema": {
+          "const": "schemas/T4_music_selection_state.schema.json"
+        },
+        "cloudflare_state_object": {
+          "const": "music/t4-last-success.json"
+        },
+        "network_required_for_render": {
+          "const": false
+        }
       }
     },
     "timeline": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["duration_s", "frames", "fps", "scene_markers_s", "scene_durations_s"],
+      "required": [
+        "duration_s",
+        "frames",
+        "fps",
+        "scene_markers_s",
+        "scene_durations_s"
+      ],
       "properties": {
-        "duration_s": { "const": 30.0 },
-        "frames": { "const": 900 },
-        "fps": { "const": 30 },
-        "scene_markers_s": { "const": [0, 6, 14, 21, 30] },
-        "scene_durations_s": { "const": [6, 8, 7, 9] }
+        "duration_s": {
+          "const": 30.0
+        },
+        "frames": {
+          "const": 900
+        },
+        "fps": {
+          "const": 30
+        },
+        "scene_markers_s": {
+          "const": [
+            0,
+            6,
+            14,
+            21,
+            30
+          ]
+        },
+        "scene_durations_s": {
+          "const": [
+            6,
+            8,
+            7,
+            9
+          ]
+        }
       }
     },
-    "mix_contract": { "$ref": "#/$defs/mix" },
+    "mix_contract": {
+      "$ref": "#/$defs/mix"
+    },
     "license_contract": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["license", "license_url", "official_download_only", "standalone_redistribution_forbidden", "original_full_tracks_bundled", "adapted_30s_derivatives_bundled_for_video_build", "content_id_track_count", "content_id_disclosure_required", "claim_management_required", "source_manifest", "provenance_certificate"],
+      "required": [
+        "license",
+        "license_url",
+        "official_download_only",
+        "standalone_redistribution_forbidden",
+        "original_full_tracks_bundled",
+        "adapted_30s_derivatives_bundled_for_video_build",
+        "content_id_track_count",
+        "content_id_disclosure_required",
+        "claim_management_required",
+        "source_manifest",
+        "provenance_certificate"
+      ],
       "properties": {
-        "license": { "const": "Pixabay Content License" },
-        "license_url": { "const": "https://pixabay.com/service/license-summary/" },
-        "official_download_only": { "const": true },
-        "standalone_redistribution_forbidden": { "const": true },
-        "original_full_tracks_bundled": { "const": false },
-        "adapted_30s_derivatives_bundled_for_video_build": { "const": true },
-        "content_id_track_count": { "const": 4 },
-        "content_id_disclosure_required": { "const": true },
-        "claim_management_required": { "const": true },
-        "source_manifest": { "const": "audio/music/t4-afrobeat-v1/source_manifest.json" },
-        "provenance_certificate": { "const": "audio/music/t4-afrobeat-v1/evidence/T4_MUSIC_PROVENANCE_CERTIFICATE.json" }
+        "license": {
+          "const": "Pixabay Content License"
+        },
+        "license_url": {
+          "const": "https://pixabay.com/service/license-summary/"
+        },
+        "official_download_only": {
+          "const": true
+        },
+        "standalone_redistribution_forbidden": {
+          "const": true
+        },
+        "original_full_tracks_bundled": {
+          "const": false
+        },
+        "adapted_30s_derivatives_bundled_for_video_build": {
+          "const": true
+        },
+        "content_id_track_count": {
+          "const": 0
+        },
+        "content_id_disclosure_required": {
+          "const": true
+        },
+        "claim_management_required": {
+          "const": false
+        },
+        "source_manifest": {
+          "const": "audio/music/t4-afrobeat-v1/source_manifest.json"
+        },
+        "provenance_certificate": {
+          "const": "audio/music/t4-afrobeat-v1/evidence/T4_MUSIC_PROVENANCE_CERTIFICATE.json"
+        }
       }
     },
     "tracks": {
@@ -80,98 +244,399 @@
       "minItems": 4,
       "maxItems": 4,
       "prefixItems": [
-        { "$ref": "#/$defs/track1" },
-        { "$ref": "#/$defs/track2" },
-        { "$ref": "#/$defs/track3" },
-        { "$ref": "#/$defs/track4" }
+        {
+          "$ref": "#/$defs/track1"
+        },
+        {
+          "$ref": "#/$defs/track2"
+        },
+        {
+          "$ref": "#/$defs/track3"
+        },
+        {
+          "$ref": "#/$defs/track4"
+        }
       ],
       "items": false
     },
     "quality_gate": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["exactly_four_tracks", "approved_pixabay_ids", "duration_exact_decoded_30s", "lufs_acceptance", "true_peak_dbtp_max", "qc_all_pass", "production_ready_track_count", "content_id_track_count"],
+      "required": [
+        "exactly_four_tracks",
+        "approved_pixabay_ids",
+        "duration_exact_decoded_30s",
+        "lufs_acceptance",
+        "true_peak_dbtp_max",
+        "qc_all_pass",
+        "production_ready_track_count",
+        "content_id_track_count"
+      ],
       "properties": {
-        "exactly_four_tracks": { "const": true },
-        "approved_pixabay_ids": { "const": [569473, 153058, 573648, 439622] },
-        "duration_exact_decoded_30s": { "const": true },
-        "lufs_acceptance": { "const": [-17.7, -16.3] },
-        "true_peak_dbtp_max": { "const": -0.7 },
-        "qc_all_pass": { "const": true },
-        "production_ready_track_count": { "const": 4 },
-        "content_id_track_count": { "const": 4 }
+        "exactly_four_tracks": {
+          "const": true
+        },
+        "approved_pixabay_ids": {
+          "const": [
+            260354,
+            154868,
+            162186,
+            321930
+          ]
+        },
+        "duration_exact_decoded_30s": {
+          "const": true
+        },
+        "lufs_acceptance": {
+          "const": [
+            -17.7,
+            -16.3
+          ]
+        },
+        "true_peak_dbtp_max": {
+          "const": -0.7
+        },
+        "qc_all_pass": {
+          "const": true
+        },
+        "production_ready_track_count": {
+          "const": 4
+        },
+        "content_id_track_count": {
+          "const": 0
+        }
       }
+    },
+    "approval": {
+      "const": "approvals/APPROBATION_MUSIQUES_PIXABAY_T4_2026-11-18.json"
     }
   },
   "$defs": {
-    "date": { "type": "string", "format": "date" },
-    "https": { "type": "string", "format": "uri", "pattern": "^https://" },
-    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "https": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
     "mix": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["music_open_gain_db", "music_under_voice_gain_db", "duck_depth_db", "duck_attack_ms", "duck_release_ms", "duck_attack_curve", "duck_release_curve", "master_target_lufs", "master_true_peak_dbtp_max", "sfx"],
+      "required": [
+        "music_open_gain_db",
+        "music_under_voice_gain_db",
+        "duck_depth_db",
+        "duck_attack_ms",
+        "duck_release_ms",
+        "duck_attack_curve",
+        "duck_release_curve",
+        "master_target_lufs",
+        "master_true_peak_dbtp_max",
+        "sfx"
+      ],
       "properties": {
-        "music_open_gain_db": { "const": -3.0 },
-        "music_under_voice_gain_db": { "const": -10.0 },
-        "duck_depth_db": { "const": -7.0 },
-        "duck_attack_ms": { "const": 120 },
-        "duck_release_ms": { "const": 450 },
-        "duck_attack_curve": { "const": "linear_db" },
-        "duck_release_curve": { "const": "linear_db" },
-        "master_target_lufs": { "const": -16.0 },
-        "master_true_peak_dbtp_max": { "const": -2.0 },
-        "sfx": { "const": "none" }
+        "music_open_gain_db": {
+          "const": -3.0
+        },
+        "music_under_voice_gain_db": {
+          "const": -10.0
+        },
+        "duck_depth_db": {
+          "const": -7.0
+        },
+        "duck_attack_ms": {
+          "const": 120
+        },
+        "duck_release_ms": {
+          "const": 450
+        },
+        "duck_attack_curve": {
+          "const": "linear_db"
+        },
+        "duck_release_curve": {
+          "const": "linear_db"
+        },
+        "master_target_lufs": {
+          "const": -16.0
+        },
+        "master_true_peak_dbtp_max": {
+          "const": -2.0
+        },
+        "sfx": {
+          "const": "none"
+        }
       }
     },
     "track": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "choice", "pixabay_id", "title", "artist", "file", "sha256", "bytes", "duration_s", "sample_rate_hz", "channels", "integrated_lufs", "true_peak_dbtp", "official_page", "license", "content_id_registered", "claim_management_required", "ai_generated", "audition_approved_by_owner", "approval_date", "production_eligible", "evidence", "source_sha256"],
+      "required": [
+        "id",
+        "choice",
+        "pixabay_id",
+        "title",
+        "artist",
+        "file",
+        "sha256",
+        "bytes",
+        "duration_s",
+        "sample_rate_hz",
+        "channels",
+        "integrated_lufs",
+        "true_peak_dbtp",
+        "official_page",
+        "license",
+        "content_id_registered",
+        "claim_management_required",
+        "ai_generated",
+        "audition_approved_by_owner",
+        "approval_date",
+        "production_eligible",
+        "evidence",
+        "source_sha256"
+      ],
       "properties": {
-        "id": { "type": "string", "pattern": "^t4_music_[0-9]+$" },
-        "choice": { "enum": ["1", "2", "3", "4"] },
-        "pixabay_id": { "type": "integer", "minimum": 1 },
-        "title": { "type": "string", "minLength": 1 },
-        "artist": { "type": "string", "minLength": 1 },
-        "file": { "type": "string", "pattern": "^audio/music/t4-afrobeat-v1/.*_30s\\.mp3$" },
-        "sha256": { "$ref": "#/$defs/sha256" },
-        "bytes": { "const": 721196 },
-        "duration_s": { "const": 30.0 },
-        "sample_rate_hz": { "const": 48000 },
-        "channels": { "const": 2 },
-        "integrated_lufs": { "type": "number", "minimum": -17.7, "maximum": -16.3 },
-        "true_peak_dbtp": { "type": "number", "maximum": -0.7 },
-        "official_page": { "$ref": "#/$defs/https" },
-        "license": { "const": "https://pixabay.com/service/license-summary/" },
-        "content_id_registered": { "const": true },
-        "claim_management_required": { "const": true },
-        "ai_generated": { "type": "boolean" },
-        "audition_approved_by_owner": { "const": true },
-        "approval_date": { "$ref": "#/$defs/date" },
-        "production_eligible": { "const": true },
+        "id": {
+          "type": "string",
+          "pattern": "^t4_music_[0-9]+$"
+        },
+        "choice": {
+          "enum": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        },
+        "pixabay_id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artist": {
+          "type": "string",
+          "minLength": 1
+        },
+        "file": {
+          "type": "string",
+          "pattern": "^audio/music/t4-afrobeat-v1/.*_30s\\.mp3$"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bytes": {
+          "const": 721196
+        },
+        "duration_s": {
+          "const": 30.0
+        },
+        "sample_rate_hz": {
+          "const": 48000
+        },
+        "channels": {
+          "const": 2
+        },
+        "integrated_lufs": {
+          "type": "number",
+          "minimum": -17.7,
+          "maximum": -16.3
+        },
+        "true_peak_dbtp": {
+          "type": "number",
+          "maximum": -0.7
+        },
+        "official_page": {
+          "$ref": "#/$defs/https"
+        },
+        "license": {
+          "const": "https://pixabay.com/service/license-summary/"
+        },
+        "content_id_registered": {
+          "const": false
+        },
+        "claim_management_required": {
+          "const": false
+        },
+        "ai_generated": {
+          "type": "boolean"
+        },
+        "audition_approved_by_owner": {
+          "const": true
+        },
+        "approval_date": {
+          "$ref": "#/$defs/date"
+        },
+        "production_eligible": {
+          "const": true
+        },
         "evidence": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["page_html_gzip", "page_html_sha256", "page_screenshot", "page_screenshot_sha256", "captured_on", "public_page_http_status", "license_label_on_page", "official_account_download_certificate_archived", "official_account_download_certificate_note"],
+          "required": [
+            "page_html_gzip",
+            "page_html_sha256",
+            "page_screenshot",
+            "page_screenshot_sha256",
+            "captured_on",
+            "public_page_http_status",
+            "license_label_on_page",
+            "content_id_registered_label_observed",
+            "official_account_download_certificate_archived",
+            "official_account_download_certificate_note"
+          ],
           "properties": {
-            "page_html_gzip": { "type": "string", "pattern": "^audio/music/t4-afrobeat-v1/evidence/browser/.*\\.html\\.gz$" },
-            "page_html_sha256": { "$ref": "#/$defs/sha256" },
-            "page_screenshot": { "type": "string", "pattern": "^audio/music/t4-afrobeat-v1/evidence/browser/.*\\.png$" },
-            "page_screenshot_sha256": { "$ref": "#/$defs/sha256" },
-            "captured_on": { "$ref": "#/$defs/date" },
-            "public_page_http_status": { "const": 200 },
-            "license_label_on_page": { "const": "Free for use under the Pixabay Content License" },
-            "official_account_download_certificate_archived": { "const": false },
-            "official_account_download_certificate_note": { "type": "string", "minLength": 1 }
+            "page_html_gzip": {
+              "type": "string",
+              "pattern": "^audio/music/t4-afrobeat-v1/evidence/browser/.*\\.html\\.gz$"
+            },
+            "page_html_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "page_screenshot": {
+              "type": "string",
+              "pattern": "^audio/music/t4-afrobeat-v1/evidence/browser/.*\\.png$"
+            },
+            "page_screenshot_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "captured_on": {
+              "$ref": "#/$defs/date"
+            },
+            "public_page_http_status": {
+              "const": 200
+            },
+            "license_label_on_page": {
+              "const": "Free for use under the Pixabay Content License"
+            },
+            "official_account_download_certificate_archived": {
+              "const": false
+            },
+            "official_account_download_certificate_note": {
+              "type": "string",
+              "minLength": 1
+            },
+            "content_id_registered_label_observed": {
+              "const": false
+            }
           }
         },
-        "source_sha256": { "$ref": "#/$defs/sha256" }
+        "source_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
       }
     },
-    "track1": { "allOf": [{ "$ref": "#/$defs/track" }, { "properties": { "id": { "const": "t4_music_569473" }, "choice": { "const": "1" }, "pixabay_id": { "const": 569473 }, "artist": { "const": "ARPMedia" }, "ai_generated": { "const": false } } }] },
-    "track2": { "allOf": [{ "$ref": "#/$defs/track" }, { "properties": { "id": { "const": "t4_music_153058" }, "choice": { "const": "2" }, "pixabay_id": { "const": 153058 }, "artist": { "const": "FASSounds" }, "ai_generated": { "const": false } } }] },
-    "track3": { "allOf": [{ "$ref": "#/$defs/track" }, { "properties": { "id": { "const": "t4_music_573648" }, "choice": { "const": "3" }, "pixabay_id": { "const": 573648 }, "artist": { "const": "alex-morgan" }, "ai_generated": { "const": true } } }] },
-    "track4": { "allOf": [{ "$ref": "#/$defs/track" }, { "properties": { "id": { "const": "t4_music_439622" }, "choice": { "const": "4" }, "pixabay_id": { "const": 439622 }, "artist": { "const": "SigmaMusicArt" }, "ai_generated": { "const": false } } }] }
+    "track1": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/track"
+        },
+        {
+          "properties": {
+            "id": {
+              "const": "t4_music_260354"
+            },
+            "choice": {
+              "const": "1"
+            },
+            "pixabay_id": {
+              "const": 260354
+            },
+            "artist": {
+              "const": "Ovrsoull"
+            },
+            "ai_generated": {
+              "const": true
+            }
+          }
+        }
+      ]
+    },
+    "track2": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/track"
+        },
+        {
+          "properties": {
+            "id": {
+              "const": "t4_music_154868"
+            },
+            "choice": {
+              "const": "2"
+            },
+            "pixabay_id": {
+              "const": 154868
+            },
+            "artist": {
+              "const": "37660440"
+            },
+            "ai_generated": {
+              "const": false
+            }
+          }
+        }
+      ]
+    },
+    "track3": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/track"
+        },
+        {
+          "properties": {
+            "id": {
+              "const": "t4_music_162186"
+            },
+            "choice": {
+              "const": "3"
+            },
+            "pixabay_id": {
+              "const": 162186
+            },
+            "artist": {
+              "const": "Gis_photography"
+            },
+            "ai_generated": {
+              "const": false
+            }
+          }
+        }
+      ]
+    },
+    "track4": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/track"
+        },
+        {
+          "properties": {
+            "id": {
+              "const": "t4_music_321930"
+            },
+            "choice": {
+              "const": "4"
+            },
+            "pixabay_id": {
+              "const": 321930
+            },
+            "artist": {
+              "const": "47643651"
+            },
+            "ai_generated": {
+              "const": true
+            }
+          }
+        }
+      ]
+    }
   }
 }

@@ -91,9 +91,9 @@ def test_four_music_derivatives_and_public_evidence_are_hash_locked() -> None:
     tracks = config["tracks"]
     assert len(tracks) == len(manifest["tracks"]) == 4
     assert [track["choice"] for track in tracks] == ["1", "2", "3", "4"]
-    assert [track["pixabay_id"] for track in tracks] == [569473, 153058, 573648, 439622]
-    assert [track["artist"] for track in tracks] == ["ARPMedia", "FASSounds", "alex-morgan", "SigmaMusicArt"]
-    assert all(track["content_id_registered"] and track["claim_management_required"] for track in tracks)
+    assert [track["pixabay_id"] for track in tracks] == [260354, 154868, 162186, 321930]
+    assert [track["artist"] for track in tracks] == ["Ovrsoull", "37660440", "Gis_photography", "47643651"]
+    assert all(track["content_id_registered"] is False and track["claim_management_required"] is False for track in tracks)
     for track in tracks:
         derivative = ROOT / track["file"]
         assert derivative.stat().st_size == track["bytes"] == 721196
@@ -104,7 +104,9 @@ def test_four_music_derivatives_and_public_evidence_are_hash_locked() -> None:
         assert sha256(html_snapshot) == evidence["page_html_sha256"]
         assert sha256(screenshot) == evidence["page_screenshot_sha256"]
         page_text = gzip.decompress(html_snapshot.read_bytes()).decode("utf-8", errors="replace")
-        assert "Content ID Registered" in page_text
+        assert "Free for use under the Pixabay" in page_text and "Content License" in page_text
+        assert "Content ID Registered" not in page_text
+        assert evidence["content_id_registered_label_observed"] is False
         assert evidence["official_account_download_certificate_archived"] is False
 
 
@@ -118,35 +120,41 @@ def test_internal_provenance_certificate_is_explicitly_not_a_pixabay_certificate
     source_manifest = ROOT / certificate["source_manifest_file"]
     license_snapshot = ROOT / certificate["license_snapshot_file"]
     assert source_manifest.name == "source_manifest.json"
-    assert license_snapshot.name == "PIXABAY_CONTENT_LICENSE_SNAPSHOT_2026-11-20.md"
+    assert license_snapshot.name == "PIXABAY_CONTENT_LICENSE_SNAPSHOT_2026-11-18.md"
+    approval = ROOT / certificate["approval_file"]
+    assert approval.name == "APPROBATION_MUSIQUES_PIXABAY_T4_2026-11-18.json"
     assert sha256(source_manifest) == certificate["source_manifest_sha256"]
     assert sha256(license_snapshot) == certificate["license_snapshot_sha256"]
-    assert all(record["content_id_registered"] for record in certificate["records"])
+    assert sha256(approval) == certificate["approval_sha256"]
+    assert all(record["content_id_registered"] is False for record in certificate["records"])
+    assert all(record["content_id_registered_label_observed"] is False for record in certificate["records"])
 
 
-def test_effective_voice_music_dates_are_2026_11_20() -> None:
-    files = (
+def test_voice_history_is_preserved_and_replacement_music_is_dated_2026_11_18() -> None:
+    voice_files = (
         "approvals/APPROBATION_VOIX_B_T4_2026-11-20.json",
         "config/T4_VOICE_MIX_V1_0_0.json",
-        "config/T4_MUSIC_PACK_V1_0_0.json",
         "audio/voice/t4-voice-v1/manifest.json",
         "audio/voice/t4-voice-candidates-v1/manifest.json",
+        "audio/scripts/build_t4_voice_stem.py",
+    )
+    for relative in voice_files:
+        assert "2026-11-20" in (ROOT / relative).read_text(), relative
+    music_files = (
+        "approvals/APPROBATION_MUSIQUES_PIXABAY_T4_2026-11-18.json",
+        "config/T4_MUSIC_PACK_V1_0_0.json",
         "audio/music/t4-afrobeat-v1/source_manifest.json",
         "audio/music/t4-afrobeat-v1/BUILD_PROVENANCE.json",
-        "audio/music/t4-afrobeat-v1/evidence/PIXABAY_CONTENT_LICENSE_SNAPSHOT_2026-11-20.md",
+        "audio/music/t4-afrobeat-v1/evidence/PIXABAY_CONTENT_LICENSE_SNAPSHOT_2026-11-18.md",
         "audio/music/t4-afrobeat-v1/evidence/T4_MUSIC_PROVENANCE_CERTIFICATE.json",
-        "audio/scripts/build_t4_voice_stem.py",
         "audio/scripts/build_t4_music_pack.py",
     )
-    for relative in files:
-        text = (ROOT / relative).read_text()
-        assert "2026-11-18" not in text, relative
-        assert "2026-11-20" in text, relative
-    assert not (ROOT / "approvals/APPROBATION_VOIX_B_T4_2026-11-18.json").exists()
-    assert not (ROOT / "audio/music/t4-afrobeat-v1/evidence/PIXABAY_CONTENT_LICENSE_SNAPSHOT_2026-11-18.md").exists()
+    for relative in music_files:
+        assert "2026-11-18" in (ROOT / relative).read_text(), relative
+    assert not (ROOT / "audio/music/t4-afrobeat-v1/evidence/PIXABAY_CONTENT_LICENSE_SNAPSHOT_2026-11-20.md").exists()
 
 
-def test_canonical_package_references_and_server_validated_integrator_status_are_honest() -> None:
+def test_canonical_package_references_and_pending_replacement_status_are_honest() -> None:
     canonical = json.loads((ROOT / "config/T4_EXPERIENCE_CLIENT_PACKAGE_V1_0_0.json").read_text())
     paths = [
         canonical["merchant_payload"]["contract"],
@@ -167,22 +175,25 @@ def test_canonical_package_references_and_server_validated_integrator_status_are
     paths = [path for path in paths if isinstance(path, str) and ("/" in path or path.startswith("."))]
     missing = [path for path in paths if not (ROOT / path).exists()]
     assert missing == []
-    assert canonical["catalog_status"] == "INTEGRATOR_PACKAGE_VALIDATED"
-    assert canonical["complete_audio"]["github_production_master_status"] == "PASS"
+    assert canonical["catalog_status"] == "IMPLEMENTED_PENDING_SERVER_COMPLETE_RENDER"
+    assert canonical["complete_audio"]["github_production_master_status"] == "pending"
     assert canonical["known_protocol_deviations"] == []
     status = json.loads((ROOT / "STATUS.json").read_text())
     assert status["workflow"]["completion_percent_claimed"] is None
-    assert status["server_validation"]["complete_github_render_passed"] is True
-    assert status["server_validation"]["downloaded_complete_release_revalidated"] is True
-    assert status["server_validation"]["integrator_package_run_passed"] is True
-    assert status["server_validation"]["clean_extraction_quality"] == "PASS_28_OF_28"
-    assert status["server_validation"]["downloaded_package_release_revalidated"] is True
+    replacement = status["server_validation"]["replacement_pool"]
+    assert replacement["complete_github_render_passed"] is False
+    assert replacement["downloaded_complete_release_revalidated"] is False
+    assert replacement["integrator_package_run_passed"] is False
+    assert replacement["downloaded_package_release_revalidated"] is False
+    assert status["server_validation"]["historical_previous_pool"]["preserved_as_historical_additive_releases"] is True
+    assert status["integration_claims"]["integrator_package_ready"] is False
     assert status["integration_claims"]["cloudflare_deployed"] is False
     spec = json.loads((ROOT / "packages/t4-experience-client-v1/package_spec.json").read_text())
-    assert spec["status"] == "source_spec_ready_for_deterministic_build"
-    assert spec["external_complete_master"]["status"] == "locked_from_additive_release"
-    assert spec["external_complete_master"]["sha256"] == "b5393c641ddb260167e86858779f2a9b494d789befb081ec3f386d9cda058a1a"
-    assert spec["external_complete_master"]["bytes"] == 12126957
+    assert spec["status"] == "source_spec_waiting_for_github_complete_master"
+    assert spec["external_complete_master"]["status"] == "pending_github_render"
+    assert spec["external_complete_master"]["source_release_tag"] is None
+    assert spec["external_complete_master"]["sha256"] is None
+    assert spec["external_complete_master"]["bytes"] is None
 
 
 def test_cloudflare_generated_contracts_are_current() -> None:

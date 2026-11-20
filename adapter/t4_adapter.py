@@ -16,12 +16,12 @@ MUSIC_PACK = ROOT / "config/T4_MUSIC_PACK_V1_0_0.json"
 VOICE_MIX = ROOT / "config/T4_VOICE_MIX_V1_0_0.json"
 MUSIC_STATE_SCHEMA_VERSION = "1.0.0"
 EXPECTED_VARIANTS = [
-    "t4_music_569473",
-    "t4_music_153058",
-    "t4_music_573648",
-    "t4_music_439622",
+    "t4_music_260354",
+    "t4_music_154868",
+    "t4_music_162186",
+    "t4_music_321930",
 ]
-EXPECTED_PIXABAY_IDS = [569473, 153058, 573648, 439622]
+EXPECTED_PIXABAY_IDS = [260354, 154868, 162186, 321930]
 
 
 class MusicRepeatError(ValueError):
@@ -44,8 +44,10 @@ def approved_tracks(music_pack_path: Path = MUSIC_PACK) -> list[dict[str, Any]]:
         raise ValueError("T4 Pixabay IDs diverge from the owner-approved pool")
     if any(not track.get("audition_approved_by_owner") or not track.get("production_eligible") for track in tracks):
         raise ValueError("Every T4 music variant must be owner-approved and production-eligible")
-    if any(track.get("content_id_registered") is not True for track in tracks):
-        raise ValueError("T4 must disclose that all four selected tracks are Content ID registered")
+    if any(track.get("content_id_registered") is not False for track in tracks):
+        raise ValueError("T4 replacement tracks must have no Content ID Registered label in the dated evidence")
+    if any(track.get("claim_management_required") is not False for track in tracks):
+        raise ValueError("T4 replacement tracks must not require Content ID claim management")
     contract = pack["selection_contract"]
     if contract.get("no_immediate_repeat") is not True:
         raise ValueError("T4 music contract must forbid immediate repetition")

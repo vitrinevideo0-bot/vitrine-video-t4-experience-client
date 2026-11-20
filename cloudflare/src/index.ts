@@ -17,7 +17,7 @@ export interface Env {
 }
 
 type CaptureSlot = "S1" | "S2" | "S3" | "S4";
-type MusicId = "t4_music_569473" | "t4_music_153058" | "t4_music_573648" | "t4_music_439622";
+type MusicId = "t4_music_260354" | "t4_music_154868" | "t4_music_162186" | "t4_music_321930";
 type JobStatus = "UPLOADING" | "READY" | "QUEUED" | "RUNNING" | "COMPLETED" | "FAILED";
 type RequestedMusic = "auto" | MusicId;
 
@@ -77,7 +77,7 @@ interface MusicState {
 }
 
 const SLOTS: CaptureSlot[] = ["S1", "S2", "S3", "S4"];
-const MUSIC_IDS: MusicId[] = ["t4_music_569473", "t4_music_153058", "t4_music_573648", "t4_music_439622"];
+const MUSIC_IDS: MusicId[] = ["t4_music_260354", "t4_music_154868", "t4_music_162186", "t4_music_321930"];
 const DURATIONS: Record<CaptureSlot, number> = { S1: 6000, S2: 8000, S3: 7000, S4: 9000 };
 const ALLOWED_MIME = new Set(["video/mp4", "video/webm", "video/quicktime"]);
 const MUSIC_STATE_KEY = "music/t4-last-success.json";

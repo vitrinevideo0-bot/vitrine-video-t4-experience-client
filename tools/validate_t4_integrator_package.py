@@ -113,7 +113,15 @@ def main() -> int:
         checks.append(check("twelve_executable_screens", len(flow["screens"]) == flow["counts"]["stable_capture_screens"] == 12))
         checks.append(check("scene_durations_6_8_7_9", flow["scene_durations_ms"] == [6000, 8000, 7000, 9000]))
         checks.append(check("four_owner_approved_afrobeat_tracks", len(music["tracks"]) == 4 and all(track["audition_approved_by_owner"] for track in music["tracks"])))
-        checks.append(check("all_music_content_id_disclosed", all(track["content_id_registered"] for track in music["tracks"])))
+        checks.append(check(
+            "all_music_content_id_unregistered_at_capture",
+            all(
+                track["content_id_registered"] is False
+                and track["claim_management_required"] is False
+                and track["evidence"]["content_id_registered_label_observed"] is False
+                for track in music["tracks"]
+            ),
+        ))
         checks.append(check("four_comparable_voice_candidates", len(candidates["candidates"]) == 4 and candidates["same_text_for_all"] is True))
         checks.append(check("owner_selected_voice_B", voice["voice"]["candidate"] == candidates["owner_gate"]["selected_candidate"] == "VOIX-B" and voice["voice"]["voice_id"] == "voice-07"))
         checks.append(check("voice_stem_integrity", sha256(root / voice["voice"]["stem_file"]) == voice["voice"]["stem_sha256"]))

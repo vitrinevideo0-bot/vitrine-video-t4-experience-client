@@ -75,18 +75,20 @@ def sample_qc(audio: np.ndarray) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", type=Path, default=ROOT / "audio/music/t4-afrobeat-v1/source_manifest.json")
-    parser.add_argument("--source-cache", type=Path, default=ROOT / ".cache/t4-music-originals")
+    parser.add_argument("--source-cache", type=Path, default=Path.home() / ".cache/t4-music-originals")
     args = parser.parse_args()
     data = json.loads(args.manifest.read_text(encoding="utf-8"))
     tracks = data["tracks"]
     if len(tracks) != 4 or [track["choice"] for track in tracks] != ["1", "2", "3", "4"]:
         raise RuntimeError("T4 requires exactly the four owner-approved choices 1/2/3/4")
-    if [track["pixabay_id"] for track in tracks] != [569473, 153058, 573648, 439622]:
+    if [track["pixabay_id"] for track in tracks] != [260354, 154868, 162186, 321930]:
         raise RuntimeError("Unexpected T4 Pixabay source set")
     if not all(track["owner_approved"] and track["production_eligible"] for track in tracks):
         raise RuntimeError("Every T4 music source must be owner-approved and production-eligible")
-    if not all(track["content_id_registered"] for track in tracks):
-        raise RuntimeError("The evidence contract must disclose Content ID on all four sources")
+    if not all(track["content_id_registered"] is False for track in tracks):
+        raise RuntimeError("The replacement pool must have no Content ID Registered label in its dated evidence")
+    if not all(track["claim_management_required"] is False and track["never_register_in_content_id"] is True for track in tracks):
+        raise RuntimeError("The replacement pool must forbid project Content ID registration")
 
     report_rows: list[dict[str, Any]] = []
     with tempfile.TemporaryDirectory(prefix="t4-music-build-") as temp_name:
@@ -165,15 +167,17 @@ def main() -> int:
     package = args.manifest.resolve().parent
     report = {
         "schema_version": "1.0.0", "template_id": "RESTAURATION-T4", "status": "PASS",
-        "generated_on": "2026-11-20", "track_count": 4,
+        "generated_on": "2026-11-18", "track_count": 4,
         "original_full_tracks_committed": False,
         "derivatives": report_rows,
         "summary": {"passed": sum(len(row["checks"]) for row in report_rows), "failed": 0},
     }
     report_path = package / "BUILD_PROVENANCE.json"
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    derivative_paths = [ROOT / track["derivative"]["file"] for track in tracks]
-    sums = [*derivative_paths, args.manifest.resolve(), report_path]
+    sums = sorted(
+        path for path in package.rglob("*")
+        if path.is_file() and path.name != "SHA256SUMS.txt"
+    )
     (package / "SHA256SUMS.txt").write_text(
         "".join(f"{sha256(path)}  {path.relative_to(package)}\n" for path in sums), encoding="utf-8"
     )

@@ -16,10 +16,10 @@ from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[2]
 MUSIC_IDS = {
-    "t4_music_569473",
-    "t4_music_153058",
-    "t4_music_573648",
-    "t4_music_439622",
+    "t4_music_260354",
+    "t4_music_154868",
+    "t4_music_162186",
+    "t4_music_321930",
 }
 SLOTS = ("S1", "S2", "S3", "S4")
 
@@ -164,7 +164,8 @@ def main() -> None:
     assert job["music"]["selected_music_id"] in MUSIC_IDS
     assert job["music"]["last_successful_music_id"] is None
     assert job["music"]["state_update_policy"] == "after_completed_qc_pass_only"
-    assert job["music"]["content_id_registered"] is True
+    assert job["music"]["content_id_registered"] is False
+    assert job["music"]["claim_management_required"] is False
     assert job["voice"]["candidate"] == "VOIX-B" and job["voice"]["voice_id"] == "voice-07"
     assert [placement["start_s"] for placement in job["voice"]["placements"]] == [1.2, 6.8, 14.7, 21.8]
     for slot in SLOTS:

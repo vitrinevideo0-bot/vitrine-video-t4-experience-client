@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "display_name": "Expérience client",
   "sector": "RESTAURATION",
-  "catalog_status": "INTEGRATOR_PACKAGE_VALIDATED",
+  "catalog_status": "IMPLEMENTED_PENDING_SERVER_COMPLETE_RENDER",
   "audio_profile": "afrobeat",
   "purpose": "Valoriser un accueil réel, le service, une dégustation consentie puis l'ambiance et le contact du restaurant.",
   "format": {
@@ -15,16 +15,36 @@
     "fps": 30,
     "frames": 900,
     "duration_s": 30.0,
-    "scene_durations_s": [6, 8, 7, 9],
+    "scene_durations_s": [
+      6,
+      8,
+      7,
+      9
+    ],
     "video_codec": "h264",
     "pixel_format": "yuv420p",
     "delivery_audio": "aac_stereo_48000_hz_192_kbps"
   },
   "merchant_payload": {
     "contract": "form/questions_T4.json",
-    "keys": ["nom", "produit", "prix", "whatsapp", "quartier", "accroche"],
-    "required_keys": ["nom", "produit", "prix", "whatsapp", "quartier"],
-    "optional_keys": ["accroche"],
+    "keys": [
+      "nom",
+      "produit",
+      "prix",
+      "whatsapp",
+      "quartier",
+      "accroche"
+    ],
+    "required_keys": [
+      "nom",
+      "produit",
+      "prix",
+      "whatsapp",
+      "quartier"
+    ],
+    "optional_keys": [
+      "accroche"
+    ],
     "invented_content_forbidden": true
   },
   "capture": {
@@ -32,7 +52,12 @@
     "flow": "config/T4_CAPTURE_FLOW_V1_0_0.json",
     "stable_screen_count": 12,
     "simulation": "simulation/T4_12_ECRANS_EXECUTABLE.html",
-    "durations_s": [6, 8, 7, 9],
+    "durations_s": [
+      6,
+      8,
+      7,
+      9
+    ],
     "captured_voice_optional": true,
     "source_speed": 1.0
   },
@@ -42,6 +67,7 @@
     "transition_policy": "effects_only_around_three_rush_changes",
     "final_s4_stable_tail_s": 3.0,
     "music_pack": "config/T4_MUSIC_PACK_V1_0_0.json",
+    "music_approval": "approvals/APPROBATION_MUSIQUES_PIXABAY_T4_2026-11-18.json",
     "voice_candidates": "audio/voice/t4-voice-candidates-v1/manifest.json",
     "voice_candidate_approval": "approvals/APPROBATION_VOIX_B_T4_2026-11-20.json",
     "voice_mix": "config/T4_VOICE_MIX_V1_0_0.json"
@@ -73,7 +99,7 @@
     "one_music_per_video": true,
     "no_immediate_repeat": true,
     "state_commit_policy": "after_completed_qc_pass_and_verified_output_only",
-    "github_production_master_status": "PASS"
+    "github_production_master_status": "pending"
   },
   "catalogue_preparation": {
     "package_spec": "packages/t4-experience-client-v1/package_spec.json",

@@ -41,7 +41,8 @@ def test_exact_owner_approved_pool_and_no_repeat_selection() -> None:
     tracks = approved_tracks()
     assert [track["id"] for track in tracks] == EXPECTED_VARIANTS
     assert len(tracks) == 4
-    assert all(track["content_id_registered"] for track in tracks)
+    assert all(track["content_id_registered"] is False for track in tracks)
+    assert all(track["claim_management_required"] is False for track in tracks)
     for last in EXPECTED_VARIANTS:
         for index in range(40):
             selected = select_music_variant(f"rotation-job-{last}-{index}", last)
