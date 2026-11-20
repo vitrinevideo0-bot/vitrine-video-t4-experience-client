@@ -6,7 +6,9 @@ Date effective : 20 novembre 2026.
 
 L’audit a comparé T4 au niveau d’intégration atteint par T3 et au dossier T4 obsolète de la galerie commune. Les manques locaux ont été corrigés automatiquement : schémas, adaptateur, état musical, simulation exécutable, Worker Cloudflare, tests d’intégration, workflow complet, spécification et outils du paquet intégrateur.
 
-Le statut **100 % n’est pas déclaré**. Les preuves serveur et la permission galerie restent des portes réelles.
+Le commit complet `0a02f82bf1fe4726f21900362929e1ff5529c037` a été poussé et sa CI GitHub `44696224313` est PASS. Le rendu complet GitHub `44696445339` est également PASS. Sa pré-Release additive `t4-experience-client-v4.0.0-complete-candidate-1` a été téléchargée et revalidée indépendamment : quinze actifs sur quinze correspondent au manifeste SHA-256, le QC vaut 26/26, et le master complet est désormais verrouillé par taille, SHA-256 et hash du flux vidéo.
+
+Le statut **100 % n’est pas déclaré**. Le paquet intégrateur doit encore passer sur GitHub, la galerie commune reste en lecture seule et aucun déploiement Cloudflare production n’est prouvé.
 
 ## Capacités désormais présentes dans T4
 
@@ -22,11 +24,27 @@ Le statut **100 % n’est pas déclaré**. Les preuves serveur et la permission 
 | Quatre musiques approuvées | Oui | `config/T4_MUSIC_PACK_V1_0_0.json` |
 | Rotation persistante anti-répétition | Oui | `adapter/t4_adapter.py` |
 | RenderJob / Result / Error | Oui | `schemas/` |
-| Worker R2 + callback + état transactionnel | Oui, local | `cloudflare/src/index.ts` |
-| Test noir Worker | PASS local | `cloudflare/test/control_plane_integration.py` |
-| Workflow de rendu complet | Préparé | `.github/workflows/render-complete.yml` |
-| Paquet déterministe | Outils prêts | `tools/build_t4_integrator_package.py` |
+| Worker R2 + callback + état transactionnel | Oui, testé hors production | `cloudflare/src/index.ts` |
+| Test noir Worker | PASS local et CI | `cloudflare/test/control_plane_integration.py` |
+| Rendu complet GitHub | PASS, run `44696445339` | `proofs/T4_GITHUB_COMPLETE_MASTER_REVALIDATION_2026-11-20.json` |
+| Master V4 complet | Verrouillé | SHA-256 `b5393c641ddb260167e86858779f2a9b494d789befb081ec3f386d9cda058a1a` |
+| Paquet déterministe | Master verrouillé, run serveur à faire | `packages/t4-experience-client-v1/package_spec.json` |
 | Déploiement Cloudflare production | **Non** | frontière explicite |
+
+## Master complet GitHub verrouillé
+
+- run : `44696445339` ;
+- pré-Release : `t4-experience-client-v4.0.0-complete-candidate-1` ;
+- fichier : `VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4` ;
+- taille : `12 126 957` octets ;
+- SHA-256 fichier : `b5393c641ddb260167e86858779f2a9b494d789befb081ec3f386d9cda058a1a` ;
+- SHA-256 flux H.264 : `213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0` ;
+- musique choisie automatiquement : choix 3, alex-morgan ;
+- voix : VOIX-B / `voice-07` ;
+- QC : **PASS 26/26** ;
+- audio final : −16,18 LUFS, −1,93 dBTP, sans écrêtage.
+
+La piste sélectionnée et les trois autres pistes du pool sont marquées **Content ID Registered**. Cette preuve ne promet donc pas l’absence de réclamation automatisée.
 
 ## Différence correcte entre rendu approuvé et rendu client
 
@@ -42,14 +60,10 @@ L’identité GitHub active `vitrinevideo0-bot` possède la permission **READ** 
 
 Preuve machine : `integration-handoff/T4_GALLERY_HANDOFF_V1.json`.
 
-## Portes avant 100 %
+## Portes restantes avant une affirmation à 100 %
 
-1. commit et push de cette implémentation ;
-2. CI complète PASS ;
-3. rendu complet GitHub PASS ;
-4. pré-Release additive téléchargée et revalidée ;
-5. hash du master injecté dans le golden lock et la spécification du paquet ;
-6. ZIP déterministe construit deux fois à l’identique ;
-7. validation après extraction propre PASS ;
-8. mise à jour galerie poussée lorsque la permission le permet ;
-9. déploiement Cloudflare déclaré uniquement si endpoint, compte et bucket R2 production sont réellement prouvés.
+1. pousser le commit qui verrouille le master V4 ;
+2. construire deux fois le ZIP intégrateur et prouver son identité bit à bit sur GitHub ;
+3. valider ce ZIP après extraction propre sur GitHub ;
+4. pousser la mise à jour galerie lorsque la permission le permet ;
+5. déclarer un déploiement Cloudflare uniquement si endpoint, compte, secrets et bucket R2 production sont réellement prouvés.

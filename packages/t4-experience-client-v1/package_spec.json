@@ -4,7 +4,7 @@
   "package_id": "restauration-t4-experience-client-v1.0.0",
   "template_id": "RESTAURATION-T4",
   "template_version": "1.0.0",
-  "status": "source_spec_waiting_for_github_complete_master",
+  "status": "source_spec_ready_for_deterministic_build",
   "include": [
     {
       "path": "README.md",
@@ -51,6 +51,10 @@
       "role": "transition_timeline"
     },
     {
+      "path": "rushes/manifest.json",
+      "role": "licensed_demo_rush_manifest_without_raw_media"
+    },
+    {
       "path": "form/questions_T4.json",
       "role": "six_question_form"
     },
@@ -83,12 +87,8 @@
       "role": "reproducible_audio_builders"
     },
     {
-      "path": "approvals/APPROBATION_VOIX_B_T4_2026-11-20.json",
-      "role": "owner_voice_selection"
-    },
-    {
-      "path": "approvals/CHOIX_TRANSITIONS_HYBRIDES_V3_2026-11-18.json",
-      "role": "owner_visual_selection"
+      "path": "approvals",
+      "role": "owner_visual_voice_and_implementation_decisions"
     },
     {
       "path": "adapter",
@@ -103,8 +103,8 @@
       "role": "strict_schemas"
     },
     {
-      "path": "demo/render_job_complete_v1_0_0.json",
-      "role": "complete_render_job_example"
+      "path": "demo",
+      "role": "silent_and_complete_render_job_examples"
     },
     {
       "path": "fixtures/t4-experience-client",
@@ -153,16 +153,20 @@
     {
       "path": "proofs/T4_LOCAL_COMPLETE_PREFLIGHT_2026-11-20.json",
       "role": "local_preflight_explicitly_not_production"
+    },
+    {
+      "path": "proofs/T4_GITHUB_COMPLETE_MASTER_REVALIDATION_2026-11-20.json",
+      "role": "github_complete_master_release_revalidation"
     }
   ],
   "external_complete_master": {
-    "status": "pending_github_render",
+    "status": "locked_from_additive_release",
     "required_in_built_zip": true,
     "package_path": "golden/VIDEO_T4_COMPLETE_V1_0_0.mp4",
-    "source_release_tag": null,
+    "source_release_tag": "t4-experience-client-v4.0.0-complete-candidate-1",
     "source_filename": "VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4",
-    "sha256": null,
-    "bytes": null,
+    "sha256": "b5393c641ddb260167e86858779f2a9b494d789befb081ec3f386d9cda058a1a",
+    "bytes": 12126957,
     "video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0"
   },
   "constraints": {

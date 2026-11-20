@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "template_id": "RESTAURATION-T4",
-  "status": "pending_github_complete_master",
+  "status": "github_complete_master_locked",
   "visual": {
     "approved_file_sha256": "5acd4eb958c1ec00a663066d57b39bbb43e61f39dbd9c1403db458b5e34bed9a",
     "approved_video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
@@ -44,10 +44,20 @@
     "schemas/T4_render_result.schema.json": "9fadf6a83919136c81f96927f537d5e3d66f6355ce1165508563d4cf5da66b63"
   },
   "complete_master": {
-    "github_run_id": null,
-    "release_tag": null,
-    "file_sha256": null,
-    "bytes": null,
-    "status": "pending"
+    "github_run_id": "44696445339",
+    "github_run_url": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/actions/runs/44696445339",
+    "release_tag": "t4-experience-client-v4.0.0-complete-candidate-1",
+    "release_url": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/releases/tag/t4-experience-client-v4.0.0-complete-candidate-1",
+    "source_filename": "VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4",
+    "file_sha256": "b5393c641ddb260167e86858779f2a9b494d789befb081ec3f386d9cda058a1a",
+    "bytes": 12126957,
+    "video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "selected_music_id": "t4_music_573648",
+    "quality": {
+      "status": "PASS",
+      "passed": 26,
+      "total": 26
+    },
+    "status": "locked_from_additive_release"
   }
 }

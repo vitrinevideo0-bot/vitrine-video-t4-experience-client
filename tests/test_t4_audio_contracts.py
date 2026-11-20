@@ -146,7 +146,7 @@ def test_effective_voice_music_dates_are_2026_11_20() -> None:
     assert not (ROOT / "audio/music/t4-afrobeat-v1/evidence/PIXABAY_CONTENT_LICENSE_SNAPSHOT_2026-11-18.md").exists()
 
 
-def test_canonical_package_references_exist_and_pending_gates_are_honest() -> None:
+def test_canonical_package_references_exist_and_server_master_lock_is_honest() -> None:
     canonical = json.loads((ROOT / "config/T4_EXPERIENCE_CLIENT_PACKAGE_V1_0_0.json").read_text())
     paths = [
         canonical["merchant_payload"]["contract"],
@@ -167,14 +167,19 @@ def test_canonical_package_references_exist_and_pending_gates_are_honest() -> No
     paths = [path for path in paths if isinstance(path, str) and ("/" in path or path.startswith("."))]
     missing = [path for path in paths if not (ROOT / path).exists()]
     assert missing == []
-    assert canonical["complete_audio"]["github_production_master_status"] == "pending"
-    assert canonical["known_protocol_deviations"]
+    assert canonical["catalog_status"] == "SERVER_VALIDATED_READY_FOR_INTEGRATOR"
+    assert canonical["complete_audio"]["github_production_master_status"] == "PASS"
+    assert canonical["known_protocol_deviations"] == []
     status = json.loads((ROOT / "STATUS.json").read_text())
     assert status["workflow"]["completion_percent_claimed"] is None
+    assert status["server_validation"]["complete_github_render_passed"] is True
+    assert status["server_validation"]["downloaded_release_revalidated"] is True
     assert status["integration_claims"]["cloudflare_deployed"] is False
     spec = json.loads((ROOT / "packages/t4-experience-client-v1/package_spec.json").read_text())
-    assert spec["external_complete_master"]["status"] == "pending_github_render"
-    assert spec["external_complete_master"]["sha256"] is None
+    assert spec["status"] == "source_spec_ready_for_deterministic_build"
+    assert spec["external_complete_master"]["status"] == "locked_from_additive_release"
+    assert spec["external_complete_master"]["sha256"] == "b5393c641ddb260167e86858779f2a9b494d789befb081ec3f386d9cda058a1a"
+    assert spec["external_complete_master"]["bytes"] == 12126957
 
 
 def test_cloudflare_generated_contracts_are_current() -> None:

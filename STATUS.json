@@ -4,8 +4,8 @@
   "template_name": "Expérience client",
   "updated_on": "2026-11-20",
   "workflow": {
-    "status_number": 17,
-    "status": "Implementation complete locally; GitHub production render and additive release pending",
+    "status_number": 18,
+    "status": "GitHub complete master rendered, released, downloaded, independently revalidated, and locked; deterministic integrator package run pending",
     "completion_percent_claimed": null,
     "completion_claim_blocked_until_all_server_proofs_pass": true
   },
@@ -31,9 +31,17 @@
     "cloudflare_black_box_integration_passed": true
   },
   "server_validation": {
-    "complete_github_render_run_id": null,
-    "complete_github_render_passed": false,
-    "downloaded_release_revalidated": false,
+    "implementation_commit": "0a02f82bf1fe4726f21900362929e1ff5529c037",
+    "implementation_ci_run_id": "44696224313",
+    "implementation_ci_passed": true,
+    "complete_github_render_run_id": "44696445339",
+    "complete_github_render_passed": true,
+    "complete_release_tag": "t4-experience-client-v4.0.0-complete-candidate-1",
+    "complete_master_sha256": "b5393c641ddb260167e86858779f2a9b494d789befb081ec3f386d9cda058a1a",
+    "complete_master_bytes": 12126957,
+    "complete_master_video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "complete_render_quality": "PASS_26_OF_26",
+    "downloaded_release_revalidated": true,
     "integrator_package_run_id": null,
     "clean_extraction_validated": false
   },
@@ -47,9 +55,9 @@
     "ota_implemented": false
   },
   "open_gates": [
-    "Commit and push the complete implementation to the T4 GitHub repository.",
-    "Run the complete render workflow on GitHub Actions and revalidate the downloaded additive Release.",
-    "Lock the resulting complete master in the deterministic integrator package and validate a clean extraction.",
-    "The common gallery repository is READ-only for the authenticated account; prepare the gallery update without claiming it was pushed."
+    "Push the complete-master lock commit, then run the deterministic package workflow on GitHub.",
+    "Build the ZIP twice identically and pass clean-extraction validation on GitHub.",
+    "The common gallery repository is READ-only for the authenticated account; the prepared update cannot yet be pushed.",
+    "No Cloudflare production deployment is claimed or proven."
   ]
 }

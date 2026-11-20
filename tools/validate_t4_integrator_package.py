@@ -111,7 +111,7 @@ def main() -> int:
         candidates = load(root / "audio/voice/t4-voice-candidates-v1/manifest.json")
         checks.append(check("six_questions", len(questions["fields"]) == 6))
         checks.append(check("twelve_executable_screens", len(flow["screens"]) == flow["counts"]["stable_capture_screens"] == 12))
-        checks.append(check("scene_durations_6_8_7_9", list(flow["scene_durations_ms"].values()) == [6000, 8000, 7000, 9000]))
+        checks.append(check("scene_durations_6_8_7_9", flow["scene_durations_ms"] == [6000, 8000, 7000, 9000]))
         checks.append(check("four_owner_approved_afrobeat_tracks", len(music["tracks"]) == 4 and all(track["audition_approved_by_owner"] for track in music["tracks"])))
         checks.append(check("all_music_content_id_disclosed", all(track["content_id_registered"] for track in music["tracks"])))
         checks.append(check("four_comparable_voice_candidates", len(candidates["candidates"]) == 4 and candidates["same_text_for_all"] is True))
@@ -186,7 +186,12 @@ def main() -> int:
         "zip": {"file": args.zip.name, "bytes": args.zip.stat().st_size, "sha256": sha256(args.zip)},
         "checks": checks,
         "summary": {"passed": sum(item["status"] == "PASS" for item in checks), "failed": sum(item["status"] == "FAIL" for item in checks), "total": len(checks)},
-        "strict_universal_protocol_100_percent": status == "PASS",
+        "package_validation_complete": status == "PASS",
+        "strict_universal_protocol_100_percent": False,
+        "strict_universal_protocol_100_percent_blocked_by": [
+            "common_gallery_push_not_proven",
+            "cloudflare_production_deployment_not_proven",
+        ],
         "cloudflare_deployed": False,
     }
     args.proof.parent.mkdir(parents=True, exist_ok=True)

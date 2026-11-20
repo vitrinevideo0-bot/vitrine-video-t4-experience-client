@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "status": "PASS",
+  "scope": "GitHub Actions complete render, additive Release download, and independent master revalidation",
+  "production_delivery": true,
+  "cloudflare_production_deployment": false,
+  "github": {
+    "repository": "vitrinevideo0-bot/vitrine-video-t4-experience-client",
+    "commit": "0a02f82bf1fe4726f21900362929e1ff5529c037",
+    "ci_run_id": "44696224313",
+    "ci_conclusion": "success",
+    "render_run_id": "44696445339",
+    "render_run_number": 1,
+    "render_conclusion": "success",
+    "render_url": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/actions/runs/44696445339"
+  },
+  "release": {
+    "tag": "t4-experience-client-v4.0.0-complete-candidate-1",
+    "url": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/releases/tag/t4-experience-client-v4.0.0-complete-candidate-1",
+    "title": "T4 Expérience client — rendu complet VOIX-B #1",
+    "prerelease": true,
+    "published_at": "2026-11-20T07:39:16Z",
+    "target_commit": "0a02f82bf1fe4726f21900362929e1ff5529c037",
+    "asset_count": 16,
+    "checksummed_asset_count": 15,
+    "release_checksum_manifest_sha256": "a84b88f8628a69299885ba62a54a027b10c068e64ff6ac3c78722289faf251e4",
+    "all_release_checksums_verified": true
+  },
+  "complete_master": {
+    "filename": "VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4",
+    "sha256": "b5393c641ddb260167e86858779f2a9b494d789befb081ec3f386d9cda058a1a",
+    "bytes": 12126957,
+    "video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "duration_s": 30.0,
+    "frames": 900,
+    "width": 720,
+    "height": 1280,
+    "fps": "30/1",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "audio_sample_rate": 48000,
+    "audio_channels": 2,
+    "integrated_lufs": -16.18,
+    "true_peak_dbtp": -1.93,
+    "visual_stream_matches_owner_approved_v3": true
+  },
+  "selection": {
+    "music_id": "t4_music_573648",
+    "choice": "3",
+    "artist": "alex-morgan",
+    "title": "Afrobeat Instrumental Summer Groove",
+    "one_music_only": true,
+    "content_id_registered": true,
+    "voice_candidate": "VOIX-B",
+    "voice_id": "voice-07"
+  },
+  "quality": {
+    "status": "PASS",
+    "passed": 26,
+    "failed": 0,
+    "total": 26,
+    "render_report_sha256": "f9b7b4336b9fbe888cbceddd169d0973133e1ce39b8ea4826dad3decf7c82b6d",
+    "render_result_sha256": "e2afb4352673044e4a2f62e12bb3aa7e998f2c9f674736eb5722691f79986e1a",
+    "render_job_sha256": "d50cabef83409aaaa99fbcb3067d8f594ffa8da464fe05fc6e7e5448e436f97b"
+  },
+  "checks": [
+    {
+      "check": "pushed_commit_ci_passed",
+      "status": "PASS"
+    },
+    {
+      "check": "github_complete_render_passed",
+      "status": "PASS"
+    },
+    {
+      "check": "additive_prerelease_targets_render_commit",
+      "status": "PASS"
+    },
+    {
+      "check": "all_release_assets_match_sha256_manifest",
+      "status": "PASS"
+    },
+    {
+      "check": "master_file_hash_and_size_revalidated_after_download",
+      "status": "PASS"
+    },
+    {
+      "check": "approved_v3_video_bitstream_preserved",
+      "status": "PASS"
+    },
+    {
+      "check": "media_contract_30s_900_frames_720x1280_h264_aac",
+      "status": "PASS"
+    },
+    {
+      "check": "render_quality_26_of_26",
+      "status": "PASS"
+    }
+  ],
+  "warning": "This is a GitHub production-render proof, not proof of a Cloudflare production deployment. The selected Pixabay track is Content ID Registered and an automated claim remains possible."
+}

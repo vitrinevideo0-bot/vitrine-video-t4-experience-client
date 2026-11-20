@@ -85,9 +85,9 @@ Le test d’intégration couvre notamment : rejeu idempotent, échec sans mutati
 
 ## Contrat catalogue et paquet intégrateur
 
-`config/T4_EXPERIENCE_CLIENT_PACKAGE_V1_0_0.json` aligne T4 sur le niveau architectural T3. `packages/t4-experience-client-v1/package_spec.json`, le constructeur déterministe et le validateur après extraction propre sont présents. Ils refusent encore de construire le ZIP tant que le master complet GitHub et sa Release additive ne sont pas verrouillés par taille et SHA-256.
+`config/T4_EXPERIENCE_CLIENT_PACKAGE_V1_0_0.json` aligne T4 sur le niveau architectural T3. Le rendu complet GitHub `44696445339` et sa pré-Release additive `t4-experience-client-v4.0.0-complete-candidate-1` ont été revalidés. Le master V4 est verrouillé par sa taille, son SHA-256 `b5393c641ddb260167e86858779f2a9b494d789befb081ec3f386d9cda058a1a` et le hash de son flux H.264.
 
-L’audit `reports/AUDIT_ARCHITECTURE_T3_T4_GALLERY_2026-11-20.md` ne déclare pas 100 % avant ces preuves. La mise à jour de la galerie commune est préparée, mais le compte actif n’y possède actuellement que la permission `READ` ; aucun push galerie n’est revendiqué.
+`packages/t4-experience-client-v1/package_spec.json`, le constructeur déterministe et le validateur après extraction propre sont prêts pour le workflow serveur du paquet. L’audit `reports/AUDIT_ARCHITECTURE_T3_T4_GALLERY_2026-11-20.md` ne déclare pas 100 % avant cette dernière preuve serveur. La mise à jour de la galerie commune est préparée, mais le compte actif n’y possède actuellement que la permission `READ` ; aucun push galerie n’est revendiqué.
 
 ## Contrôles locaux
 
