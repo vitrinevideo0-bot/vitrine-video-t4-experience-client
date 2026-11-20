@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "created_on": "2026-11-18",
+  "status": "PASS",
+  "scope": "Local non-production full-render preflight of every owner-approved replacement-pool music choice",
+  "approved_visual": {
+    "file_sha256": "5acd4eb958c1ec00a663066d57b39bbb43e61f39dbd9c1403db458b5e34bed9a",
+    "video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0"
+  },
+  "tracks": [
+    {
+      "choice": "1",
+      "music_id": "t4_music_260354",
+      "pixabay_id": 260354,
+      "content_id_registered": false,
+      "mp4_sha256": "deb932c5ccd18cfd72b099304a1d7a6c5c292fe0932df13b9538b6d91149aec0",
+      "mp4_bytes": 12133463,
+      "integrated_lufs": -16.22,
+      "true_peak_dbtp": -1.91,
+      "video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+      "render_result_status": "COMPLETED",
+      "quality": {
+        "passed": 26,
+        "failed": 0,
+        "total": 26
+      }
+    },
+    {
+      "choice": "2",
+      "music_id": "t4_music_154868",
+      "pixabay_id": 154868,
+      "content_id_registered": false,
+      "mp4_sha256": "3e0397fe39bd68247ff61e724b6687cd063a9b7e2df2393071e47ab12bd61a3b",
+      "mp4_bytes": 12143942,
+      "integrated_lufs": -16.21,
+      "true_peak_dbtp": -1.9,
+      "video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+      "render_result_status": "COMPLETED",
+      "quality": {
+        "passed": 26,
+        "failed": 0,
+        "total": 26
+      }
+    },
+    {
+      "choice": "3",
+      "music_id": "t4_music_162186",
+      "pixabay_id": 162186,
+      "content_id_registered": false,
+      "mp4_sha256": "36377e421a0c3bf7f4c9cca86f62fb954623ed6d9ffb62fcc6551cce542359ee",
+      "mp4_bytes": 12157788,
+      "integrated_lufs": -16.22,
+      "true_peak_dbtp": -1.98,
+      "video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+      "render_result_status": "COMPLETED",
+      "quality": {
+        "passed": 26,
+        "failed": 0,
+        "total": 26
+      }
+    },
+    {
+      "choice": "4",
+      "music_id": "t4_music_321930",
+      "pixabay_id": 321930,
+      "content_id_registered": false,
+      "mp4_sha256": "b793f62eaae3e47d3934a1db4a99d5a7ab3a6faea7bfded43de49f2ae660feb6",
+      "mp4_bytes": 12128523,
+      "integrated_lufs": -16.24,
+      "true_peak_dbtp": -1.75,
+      "video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+      "render_result_status": "COMPLETED",
+      "quality": {
+        "passed": 26,
+        "failed": 0,
+        "total": 26
+      }
+    }
+  ],
+  "checks": [
+    {
+      "check": "four_distinct_owner_approved_tracks_rendered",
+      "status": "PASS"
+    },
+    {
+      "check": "approved_order_exact",
+      "status": "PASS"
+    },
+    {
+      "check": "all_content_id_registered_false",
+      "status": "PASS"
+    },
+    {
+      "check": "all_render_results_completed",
+      "status": "PASS"
+    },
+    {
+      "check": "all_quality_gates_pass_26_of_26",
+      "status": "PASS"
+    },
+    {
+      "check": "all_duration_resolution_frame_audio_contracts_pass",
+      "status": "PASS"
+    },
+    {
+      "check": "all_voice_b_ducking_and_intelligibility_checks_pass",
+      "status": "PASS"
+    },
+    {
+      "check": "all_video_bitstreams_preserved",
+      "status": "PASS"
+    },
+    {
+      "check": "one_music_per_video",
+      "status": "PASS"
+    },
+    {
+      "check": "production_deployment_claimed",
+      "status": "PASS"
+    }
+  ],
+  "summary": {
+    "passed": 10,
+    "failed": 0,
+    "total": 10
+  },
+  "limits": {
+    "local_non_production": true,
+    "github_release_master_choice": 3,
+    "cloudflare_deployed": false,
+    "r2_production_upload": false,
+    "full_pixabay_originals_redistributed": false
+  }
+}

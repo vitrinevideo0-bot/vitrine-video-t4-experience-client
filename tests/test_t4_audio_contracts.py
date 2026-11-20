@@ -184,10 +184,10 @@ def test_canonical_package_references_and_server_validated_replacement_status_ar
     assert replacement["implementation_ci_passed"] is True
     assert replacement["complete_github_render_passed"] is True
     assert replacement["downloaded_complete_release_revalidated"] is True
-    assert replacement["integrator_package_run_passed"] is False
-    assert replacement["downloaded_package_release_revalidated"] is False
+    assert replacement["integrator_package_run_passed"] is True
+    assert replacement["downloaded_package_release_revalidated"] is True
     assert status["server_validation"]["historical_previous_pool"]["preserved_as_historical_additive_releases"] is True
-    assert status["integration_claims"]["integrator_package_ready"] is False
+    assert status["integration_claims"]["integrator_package_ready"] is True
     assert status["integration_claims"]["cloudflare_deployed"] is False
     spec = json.loads((ROOT / "packages/t4-experience-client-v1/package_spec.json").read_text())
     assert spec["status"] == "source_spec_ready_for_deterministic_build"

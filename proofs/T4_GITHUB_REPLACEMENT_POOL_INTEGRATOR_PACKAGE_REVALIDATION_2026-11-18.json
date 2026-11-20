@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "created_on": "2026-11-18",
+  "status": "PASS",
+  "scope": "Downloaded additive integrator-package Release revalidation for the owner-approved Pixabay replacement pool",
+  "source_commit": "6f4bf38e440a2221fb40abfc3e4e79a630e98061",
+  "github_run": {
+    "id": "44703479773",
+    "url": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/actions/runs/44703479773",
+    "conclusion": "success"
+  },
+  "release": {
+    "tag": "t4-experience-client-integrator-v1.0.0-2",
+    "url": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/releases/tag/t4-experience-client-integrator-v1.0.0-2",
+    "target_commit": "6f4bf38e440a2221fb40abfc3e4e79a630e98061"
+  },
+  "package": {
+    "file": "restauration-t4-experience-client-v1.0.0.zip",
+    "sha256": "932613f1b6c33b9b72a45c8ec9c809abf5c73332a4087ff9e7718acd5966a8f5",
+    "bytes": 26574325,
+    "manifest_entry_count": 149,
+    "zip_entry_count_including_root_directory": 150,
+    "clean_extraction_quality": {
+      "passed": 28,
+      "failed": 0,
+      "total": 28
+    },
+    "golden_master_sha256": "a1cf0abf8f00724468c1489ce14f5e656b3eb85730c5d1e2a4ec383117fe74bd",
+    "music_derivative_mp3_count": 4
+  },
+  "checks": [
+    {
+      "check": "integrator_workflow_success",
+      "status": "PASS"
+    },
+    {
+      "check": "release_is_additive_and_historical_release_preserved",
+      "status": "PASS"
+    },
+    {
+      "check": "release_asset_checksums_pass",
+      "status": "PASS"
+    },
+    {
+      "check": "build_report_pass",
+      "status": "PASS"
+    },
+    {
+      "check": "deterministic_double_build_identical",
+      "status": "PASS"
+    },
+    {
+      "check": "workflow_clean_extraction_pass_28_of_28",
+      "status": "PASS"
+    },
+    {
+      "check": "downloaded_release_clean_extraction_pass_28_of_28",
+      "status": "PASS"
+    },
+    {
+      "check": "downloaded_zip_sha256_matches_release",
+      "status": "PASS"
+    },
+    {
+      "check": "downloaded_zip_size_matches_release",
+      "status": "PASS"
+    },
+    {
+      "check": "locked_github_master_embedded",
+      "status": "PASS"
+    },
+    {
+      "check": "only_four_music_derivatives_included",
+      "status": "PASS"
+    },
+    {
+      "check": "full_pixabay_originals_absent",
+      "status": "PASS"
+    },
+    {
+      "check": "standalone_music_release_assets_absent",
+      "status": "PASS"
+    },
+    {
+      "check": "cloudflare_production_deployment_claimed",
+      "status": "PASS"
+    }
+  ],
+  "summary": {
+    "passed": 14,
+    "failed": 0,
+    "total": 14
+  },
+  "deployment_claims": {
+    "integrator_package_release_revalidated": true,
+    "cloudflare_deployed": false,
+    "r2_production_bucket_proven": false
+  }
+}
