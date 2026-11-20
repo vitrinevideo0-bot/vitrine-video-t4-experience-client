@@ -6,14 +6,19 @@
   "common_gallery_repository": "j9028379-hue/vitrine-video-gabarits",
   "authenticated_account": "vitrinevideo0-bot",
   "gallery_permission_observed": "READ",
-  "status": "GITHUB_COMPLETE_MASTER_LOCKED_PACKAGE_GALLERY_AND_CLOUDFLARE_PRODUCTION_GATES_OPEN",
+  "status": "INTEGRATOR_PACKAGE_VALIDATED_GALLERY_AND_CLOUDFLARE_PRODUCTION_GATES_OPEN",
   "server_evidence": {
     "implementation_ci_run_id": "44696224313",
     "complete_render_run_id": "44696445339",
     "complete_release_tag": "t4-experience-client-v4.0.0-complete-candidate-1",
-    "release_revalidation": "PASS",
+    "complete_release_revalidation": "PASS",
     "complete_master_sha256": "b5393c641ddb260167e86858779f2a9b494d789befb081ec3f386d9cda058a1a",
-    "complete_master_video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0"
+    "complete_master_video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "master_lock_ci_run_id": "44697117316",
+    "integrator_package_run_id": "44697329915",
+    "integrator_package_release_tag": "t4-experience-client-integrator-v1.0.0-1",
+    "integrator_package_sha256": "c97da4deecae09f58b587c1fc508c8f48fce729c5800e4258c774a3dfca8c883",
+    "integrator_package_release_revalidation": "PASS_28_OF_28"
   },
   "checks": [
     { "capability": "six_question_contract", "t3_reference": true, "t4": true, "evidence": "form/questions_T4.json" },
@@ -31,7 +36,7 @@
     { "capability": "cloudflare_control_plane", "t3_reference": "handoff_only", "t4": true, "evidence": "cloudflare/src/index.ts" },
     { "capability": "cloudflare_black_box_integration", "t3_reference": false, "t4": true, "evidence": "cloudflare/test/control_plane_integration.py" },
     { "capability": "github_complete_render_workflow", "t3_reference": "server_validated", "t4": "server_validated_run_44696445339_release_revalidated", "evidence": "proofs/T4_GITHUB_COMPLETE_MASTER_REVALIDATION_2026-11-20.json" },
-    { "capability": "deterministic_integrator_package", "t3_reference": "server_validated", "t4": "master_locked_source_spec_ready_server_build_pending", "evidence": "packages/t4-experience-client-v1/package_spec.json" },
+    { "capability": "deterministic_integrator_package", "t3_reference": "server_validated", "t4": "server_validated_run_44697329915_double_build_and_clean_extraction_28_of_28_release_revalidated", "evidence": "proofs/T4_INTEGRATOR_PACKAGE_SERVER_VALIDATION_2026-11-20.json" },
     { "capability": "common_gallery_entry", "t3_reference": true, "t4": "update_prepared_push_blocked", "evidence": "integration-handoff/T4_GALLERY_HANDOFF_V1.json" },
     { "capability": "cloudflare_production_deployment", "t3_reference": false, "t4": false, "evidence": "integration-handoff/T4_CLOUDFLARE_BOUNDARY_V1.json" }
   ],
@@ -47,19 +52,23 @@
     "Cloudflare Worker and black-box integration tests",
     "standalone executable 6-question 12-screen simulation",
     "deterministic package builder and clean-extraction validator",
+    "complete package closure for rush manifest, owner decisions, and render-job examples",
+    "clean-extraction validator correction for the canonical scene-duration array",
     "GitHub complete render and package workflows",
     "Cloudflare and gallery handoff contracts"
   ],
   "closed_gates": [
     "Implementation commit pushed and CI passed.",
     "GitHub complete production render passed.",
-    "Additive Release downloaded and independently revalidated.",
-    "Complete master locked by Release tag, file size, SHA-256, and video bitstream hash."
+    "Complete additive Release downloaded and independently revalidated.",
+    "Complete master locked by Release tag, file size, SHA-256, and video bitstream hash.",
+    "Deterministic integrator ZIP built twice identically on GitHub.",
+    "Clean extraction passed 28 of 28 checks on GitHub and again after downloading the package Release."
   ],
   "open_gates": [
-    "The deterministic package must pass double-build identity and clean-extraction validation on GitHub.",
     "The common gallery update cannot be pushed with READ permission.",
-    "No Cloudflare production deployment is proven."
+    "No Cloudflare production deployment or R2 production bucket is proven.",
+    "Android integration and OTA implementation are not proven."
   ],
   "claim_100_percent": false
 }

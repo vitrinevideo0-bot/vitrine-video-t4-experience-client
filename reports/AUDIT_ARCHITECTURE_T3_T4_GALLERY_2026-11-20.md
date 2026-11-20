@@ -4,11 +4,13 @@ Date effective : 20 novembre 2026.
 
 ## Résultat actuel
 
-L’audit a comparé T4 au niveau d’intégration atteint par T3 et au dossier T4 obsolète de la galerie commune. Les manques locaux ont été corrigés automatiquement : schémas, adaptateur, état musical, simulation exécutable, Worker Cloudflare, tests d’intégration, workflow complet, spécification et outils du paquet intégrateur.
+L’audit a comparé T4 au niveau d’intégration atteint par T3 et au dossier T4 obsolète de la galerie commune. Les manques ont été corrigés automatiquement : schémas, adaptateur, état musical, simulation exécutable, Worker Cloudflare, tests d’intégration, workflows complets, spécification, fermeture de l’inventaire et outils du paquet intégrateur.
 
-Le commit complet `0a02f82bf1fe4726f21900362929e1ff5529c037` a été poussé et sa CI GitHub `44696224313` est PASS. Le rendu complet GitHub `44696445339` est également PASS. Sa pré-Release additive `t4-experience-client-v4.0.0-complete-candidate-1` a été téléchargée et revalidée indépendamment : quinze actifs sur quinze correspondent au manifeste SHA-256, le QC vaut 26/26, et le master complet est désormais verrouillé par taille, SHA-256 et hash du flux vidéo.
+Le commit complet `0a02f82bf1fe4726f21900362929e1ff5529c037` a été poussé et sa CI GitHub `44696224313` est PASS. Le rendu complet GitHub `44696445339` est PASS. Sa pré-Release additive `t4-experience-client-v4.0.0-complete-candidate-1` a été téléchargée et revalidée indépendamment : quinze actifs sur quinze correspondent au manifeste SHA-256, le QC vaut 26/26, et le master complet est verrouillé par taille, SHA-256 et hash du flux vidéo.
 
-Le statut **100 % n’est pas déclaré**. Le paquet intégrateur doit encore passer sur GitHub, la galerie commune reste en lecture seule et aucun déploiement Cloudflare production n’est prouvé.
+Le verrouillage a été poussé dans `7ab0090d6dd0928a3e7bdb2723ac69b2d4d844a2`, avec CI `44697117316` PASS. Le workflow intégrateur `44697329915` a ensuite construit deux ZIP bit à bit identiques, validé une extraction propre 28/28 et publié la pré-Release additive `t4-experience-client-integrator-v1.0.0-1`. Cette Release a été téléchargée ; ses quatre actifs contrôlés correspondent au manifeste, puis le ZIP a repassé indépendamment les 28 contrôles d’extraction propre.
+
+Le statut **100 % n’est toujours pas déclaré**. La galerie commune reste en lecture seule, aucun déploiement Cloudflare/R2 production n’est prouvé, et aucune intégration Android/OTA n’est revendiquée.
 
 ## Capacités désormais présentes dans T4
 
@@ -28,7 +30,7 @@ Le statut **100 % n’est pas déclaré**. Le paquet intégrateur doit encore pa
 | Test noir Worker | PASS local et CI | `cloudflare/test/control_plane_integration.py` |
 | Rendu complet GitHub | PASS, run `44696445339` | `proofs/T4_GITHUB_COMPLETE_MASTER_REVALIDATION_2026-11-20.json` |
 | Master V4 complet | Verrouillé | SHA-256 `b5393c641ddb260167e86858779f2a9b494d789befb081ec3f386d9cda058a1a` |
-| Paquet déterministe | Master verrouillé, run serveur à faire | `packages/t4-experience-client-v1/package_spec.json` |
+| Paquet intégrateur | PASS, run `44697329915`, extraction 28/28 | `proofs/T4_INTEGRATOR_PACKAGE_SERVER_VALIDATION_2026-11-20.json` |
 | Déploiement Cloudflare production | **Non** | frontière explicite |
 
 ## Master complet GitHub verrouillé
@@ -46,6 +48,22 @@ Le statut **100 % n’est pas déclaré**. Le paquet intégrateur doit encore pa
 
 La piste sélectionnée et les trois autres pistes du pool sont marquées **Content ID Registered**. Cette preuve ne promet donc pas l’absence de réclamation automatisée.
 
+## Paquet intégrateur validé
+
+- run : `44697329915` ;
+- pré-Release : `t4-experience-client-integrator-v1.0.0-1` ;
+- fichier : `restauration-t4-experience-client-v1.0.0.zip` ;
+- taille : `28 068 769` octets ;
+- SHA-256 : `c97da4deecae09f58b587c1fc508c8f48fce729c5800e4258c774a3dfca8c883` ;
+- inventaire : `143` entrées ;
+- deux constructions GitHub : identiques ;
+- extraction propre GitHub : **PASS 28/28** ;
+- revalidation après téléchargement de la Release : **PASS 28/28** ;
+- originaux Pixabay complets : absents ;
+- ressources musicales autonomes de Release : absentes ;
+- secrets injectés : aucun ;
+- déploiement Cloudflare : non.
+
 ## Différence correcte entre rendu approuvé et rendu client
 
 Le rendu manuel de l’exemplaire approuvé retélécharge le master V3 officiel et conserve son flux H.264 bit pour bit pendant le mux.
@@ -62,8 +80,6 @@ Preuve machine : `integration-handoff/T4_GALLERY_HANDOFF_V1.json`.
 
 ## Portes restantes avant une affirmation à 100 %
 
-1. pousser le commit qui verrouille le master V4 ;
-2. construire deux fois le ZIP intégrateur et prouver son identité bit à bit sur GitHub ;
-3. valider ce ZIP après extraction propre sur GitHub ;
-4. pousser la mise à jour galerie lorsque la permission le permet ;
-5. déclarer un déploiement Cloudflare uniquement si endpoint, compte, secrets et bucket R2 production sont réellement prouvés.
+1. pousser la mise à jour galerie lorsque la permission le permet ;
+2. déclarer un déploiement Cloudflare uniquement si endpoint, compte, secrets et bucket R2 production sont réellement prouvés ;
+3. revendiquer Android ou OTA uniquement après une intégration réellement exécutée et testée.

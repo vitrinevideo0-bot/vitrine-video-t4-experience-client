@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "status": "PASS",
+  "scope": "GitHub deterministic double build, clean extraction validation, additive package Release, and independent post-Release revalidation",
+  "github": {
+    "repository": "vitrinevideo0-bot/vitrine-video-t4-experience-client",
+    "source_commit": "7ab0090d6dd0928a3e7bdb2723ac69b2d4d844a2",
+    "source_ci_run_id": "44697117316",
+    "source_ci_conclusion": "success",
+    "package_run_id": "44697329915",
+    "package_run_number": 1,
+    "package_conclusion": "success",
+    "package_run_url": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/actions/runs/44697329915"
+  },
+  "release": {
+    "tag": "t4-experience-client-integrator-v1.0.0-1",
+    "url": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/releases/tag/t4-experience-client-integrator-v1.0.0-1",
+    "title": "T4 Expérience client — paquet intégrateur v1.0.0 #1",
+    "prerelease": true,
+    "published_at": "2026-11-20T07:46:42Z",
+    "target_commit": "7ab0090d6dd0928a3e7bdb2723ac69b2d4d844a2",
+    "asset_count": 5,
+    "checksummed_asset_count": 4,
+    "release_checksum_manifest_sha256": "870a51de72ef28f3d0c944026f1ea321c739de6431d97e384eade5135f6f9715",
+    "all_release_checksums_verified": true
+  },
+  "package": {
+    "id": "restauration-t4-experience-client-v1.0.0",
+    "filename": "restauration-t4-experience-client-v1.0.0.zip",
+    "sha256": "c97da4deecae09f58b587c1fc508c8f48fce729c5800e4258c774a3dfca8c883",
+    "bytes": 28068769,
+    "entry_count": 143,
+    "deterministic_double_build_identical": true,
+    "build_report_sha256": "2d73b1fad510ab7d24af56993deb2d528b892b53ab3e9610606c2ef4bd59d563",
+    "server_clean_extraction_proof_sha256": "408c4d452bd7c45a48e507a21984965d6dab47724dc7d0b9ce843c1182c7bece"
+  },
+  "golden_master": {
+    "sha256": "b5393c641ddb260167e86858779f2a9b494d789befb081ec3f386d9cda058a1a",
+    "bytes": 12126957,
+    "video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0"
+  },
+  "clean_extraction": {
+    "server_status": "PASS",
+    "server_passed": 28,
+    "server_failed": 0,
+    "server_total": 28,
+    "post_release_independent_status": "PASS",
+    "post_release_independent_passed": 28,
+    "post_release_independent_failed": 0,
+    "post_release_independent_total": 28,
+    "post_release_proof_sha256": "1a5af06ba90d229b7601ef2ca9ae13ff4a838251bf0eafe5ad1a8a6eef0ffbca"
+  },
+  "safety": {
+    "full_pixabay_originals_included": false,
+    "standalone_music_release_assets_created": false,
+    "secrets_injected": false,
+    "cloudflare_deployed": false
+  },
+  "checks": [
+    {
+      "check": "source_lock_commit_ci_passed",
+      "status": "PASS"
+    },
+    {
+      "check": "github_package_workflow_passed",
+      "status": "PASS"
+    },
+    {
+      "check": "two_package_builds_identical",
+      "status": "PASS"
+    },
+    {
+      "check": "server_clean_extraction_28_of_28",
+      "status": "PASS"
+    },
+    {
+      "check": "additive_prerelease_targets_source_commit",
+      "status": "PASS"
+    },
+    {
+      "check": "all_release_assets_match_sha256_manifest",
+      "status": "PASS"
+    },
+    {
+      "check": "downloaded_zip_hash_and_size_revalidated",
+      "status": "PASS"
+    },
+    {
+      "check": "independent_post_release_clean_extraction_28_of_28",
+      "status": "PASS"
+    }
+  ],
+  "package_validation_complete": true,
+  "strict_universal_protocol_100_percent": false,
+  "strict_universal_protocol_100_percent_blocked_by": [
+    "common_gallery_push_not_proven",
+    "cloudflare_production_deployment_not_proven"
+  ],
+  "warning": "The package is server-validated and ready for integrator use. This proof does not claim a gallery push, Android integration, OTA implementation, R2 production bucket, or Cloudflare production deployment."
+}

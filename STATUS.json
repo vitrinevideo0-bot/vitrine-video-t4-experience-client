@@ -4,10 +4,10 @@
   "template_name": "Expérience client",
   "updated_on": "2026-11-20",
   "workflow": {
-    "status_number": 18,
-    "status": "GitHub complete master rendered, released, downloaded, independently revalidated, and locked; deterministic integrator package run pending",
+    "status_number": 19,
+    "status": "GitHub complete master and deterministic integrator package are server-validated; gallery and Cloudflare production gates remain open",
     "completion_percent_claimed": null,
-    "completion_claim_blocked_until_all_server_proofs_pass": true
+    "completion_claim_blocked_until_all_external_proofs_pass": true
   },
   "owner_decisions": {
     "visual": "Hybride cinématique",
@@ -41,23 +41,36 @@
     "complete_master_bytes": 12126957,
     "complete_master_video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
     "complete_render_quality": "PASS_26_OF_26",
-    "downloaded_release_revalidated": true,
-    "integrator_package_run_id": null,
-    "clean_extraction_validated": false
+    "downloaded_complete_release_revalidated": true,
+    "master_lock_commit": "7ab0090d6dd0928a3e7bdb2723ac69b2d4d844a2",
+    "master_lock_ci_run_id": "44697117316",
+    "master_lock_ci_passed": true,
+    "integrator_package_run_id": "44697329915",
+    "integrator_package_run_passed": true,
+    "integrator_package_release_tag": "t4-experience-client-integrator-v1.0.0-1",
+    "integrator_package_sha256": "c97da4deecae09f58b587c1fc508c8f48fce729c5800e4258c774a3dfca8c883",
+    "integrator_package_bytes": 28068769,
+    "integrator_package_entries": 143,
+    "deterministic_double_build_identical": true,
+    "clean_extraction_validated": true,
+    "clean_extraction_quality": "PASS_28_OF_28",
+    "downloaded_package_release_revalidated": true
   },
   "integration_claims": {
+    "integrator_package_ready": true,
     "cloudflare_control_plane_prepared": true,
-    "cloudflare_control_plane_tested_locally": true,
+    "cloudflare_control_plane_tested_locally_and_in_ci": true,
     "cloudflare_deployed": false,
     "r2_production_bucket_proven": false,
     "github_repository_dispatch_contract_prepared": true,
+    "common_gallery_update_prepared": true,
+    "common_gallery_update_pushed": false,
     "android_integrated": false,
     "ota_implemented": false
   },
   "open_gates": [
-    "Push the complete-master lock commit, then run the deterministic package workflow on GitHub.",
-    "Build the ZIP twice identically and pass clean-extraction validation on GitHub.",
     "The common gallery repository is READ-only for the authenticated account; the prepared update cannot yet be pushed.",
-    "No Cloudflare production deployment is claimed or proven."
+    "No Cloudflare production deployment or R2 production bucket is claimed or proven.",
+    "Android integration and OTA implementation remain outside the proven delivery."
   ]
 }

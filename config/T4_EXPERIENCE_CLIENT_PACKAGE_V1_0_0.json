@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "display_name": "Expérience client",
   "sector": "RESTAURATION",
-  "catalog_status": "SERVER_VALIDATED_READY_FOR_INTEGRATOR",
+  "catalog_status": "INTEGRATOR_PACKAGE_VALIDATED",
   "audio_profile": "afrobeat",
   "purpose": "Valoriser un accueil réel, le service, une dégustation consentie puis l'ambiance et le contact du restaurant.",
   "format": {
