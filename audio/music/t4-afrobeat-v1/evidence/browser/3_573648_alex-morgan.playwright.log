@@ -1,0 +1,17 @@
+
+Running 1 test using 1 worker
+
+[1A[2K[1/1] pixabay-browser-test.spec.js:4:1 › extract official audio URL
+[1A[2Kpixabay-browser-test.spec.js:4:1 › extract official audio URL
+{
+  "status": 200,
+  "title": "Afrobeat Instrumental Summer Groove by alex-morgan | Royalty-free Music - Pixabay",
+  "url": "https://pixabay.com/music/modern-jazz-afrobeat-instrumental-summer-groove-573648/",
+  "body": "Music\nExplore\nMedia\nPhotos\nIllustrations\nVectors\nVideos\nMusic\nSound Effects\n3D Models\nGIFs\nDiscover\nCurated CollectionsPixabay RadioPopular ImagesPopular VideosPopular MusicPopular Searches\nTrending\nThanksgivingBlack FridayChristmasWinterWallpaper\nCommunity\nContests\nLive\nCreatorsAmbassadorsForumBlog\nAbout\nAbout UsFAQLicense SummaryTerms of ServiceAcceptable Use PolicyPrivacy PolicyCookies PolicyContent Safety and ComplianceReport ContentAPI\nLanguage\nČeštinaDanskDeutschEnglishEspañolFrançaisIndonesiaItalianoMagyarNederlandsNorskPolskiPortuguêsRomânăSlovenčinaSuomiSvenskaTürkçeViệtไทยБългарскиРусскийΕλληνική日本語한국어简体中文\nLog in\nJoin\nUpload\nAfrobeat Instrumental Summer Groovealex-morgan\n0:00\n2:23\nContent ID Registered\nAuto-match your soundtrack to your footage with one-click Beat Sync.\nTry Canva Pro for free\nAI generated\nAfrobeat, Afrobeat instrumental, Afrobeat background music. Free for use.\n1 comment\nThe community are waiting to hear from you!\nLog in or Join Pixabay to view comments\nLog i",
+  "urls": [
+    "https://cdn.pixabay.com/audio/2026/07/25/05-00-14-877_200x200.jpg",
+    "https://cdn.pixabay.com/download/audio/2026/07/25/audio_4b57d6b62a.mp3?filename=alex-morgan-afrobeat-instrumental-summer-groove-573648.mp3"
+  ]
+}
+
+[1A[2K  1 passed (20.9s)

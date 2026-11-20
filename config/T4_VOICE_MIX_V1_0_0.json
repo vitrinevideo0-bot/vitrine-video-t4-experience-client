@@ -1,0 +1,124 @@
+{
+  "$schema": "../schemas/T4_voice_mix.schema.json",
+  "schema_version": "1.0.0",
+  "id": "restauration_T4_voice_mix_v1_0_0",
+  "display_name": "T4 — VOIX-B française et ducking de quatre musiques Afrobeat",
+  "status": "owner_approved_voice_mix_contract",
+  "approved_on": "2026-11-20",
+  "duration_s": 30.0,
+  "sample_rate_hz": 48000,
+  "visual_approved": {
+    "commit": "3e03a709154ef4f9bf941c29e0e7f202c1cc8757",
+    "github_run_id": "44686336980",
+    "release_tag": "t4-experience-client-v3.0.0-hybrid-candidate-3",
+    "download_url": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/releases/download/t4-experience-client-v3.0.0-hybrid-candidate-3/VIDEO_T4_EXPERIENCE_CLIENT_TRANSITIONS_HYBRIDES_V3_A_VALIDER.mp4",
+    "filename": "VIDEO_T4_EXPERIENCE_CLIENT_TRANSITIONS_HYBRIDES_V3_A_VALIDER.mp4",
+    "file_sha256": "5acd4eb958c1ec00a663066d57b39bbb43e61f39dbd9c1403db458b5e34bed9a",
+    "video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "video_reencode_forbidden": true
+  },
+  "music_pack": "config/T4_MUSIC_PACK_V1_0_0.json",
+  "voice": {
+    "provider": "Arena.ai Agent Mode",
+    "candidate": "VOIX-B",
+    "voice_id": "voice-07",
+    "approval": "approvals/APPROBATION_VOIX_B_T4_2026-11-20.json",
+    "language": "fr",
+    "identity": "masculine advertising",
+    "stem_file": "audio/voice/t4-voice-v1/t4_voice_stem_30s.wav",
+    "normalization_target_lufs": -20.0,
+    "normalization_tolerance_lu": 0.15,
+    "normalization_true_peak_dbtp_max": -3.0,
+    "retiming_forbidden": true,
+    "clips": [
+      {
+        "scene": 1,
+        "scene_window_s": [
+          0.0,
+          6.0
+        ],
+        "start_s": 1.2,
+        "text": "Bienvenue à La Table de Kandi, près du marché central.",
+        "source": "audio/voice/t4-voice-v1/source/voix_fr_scene1.mp3",
+        "processed": "audio/voice/t4-voice-v1/processed/voix_fr_scene1_norm.wav",
+        "source_sha256": "90e64e911efba2eadf722ef73aa6a324b4720ab8488d412a28a2f567550677bd",
+        "processed_sha256": "5a8d640b80fb8a41b3d99fe61ad86e9656e55c55dc2131a75112918b3021067e",
+        "duration_s": 2.890896,
+        "end_s": 4.090896
+      },
+      {
+        "scene": 2,
+        "scene_window_s": [
+          6.0,
+          14.0
+        ],
+        "start_s": 6.8,
+        "text": "Découvrez notre poulet braisé et alloco, à trois mille cinq cents francs CFA.",
+        "source": "audio/voice/t4-voice-v1/source/voix_fr_scene2.mp3",
+        "processed": "audio/voice/t4-voice-v1/processed/voix_fr_scene2_norm.wav",
+        "source_sha256": "3e4d9a28a56f2d1e4454c54df90045699c2d5251ca7c73263fd5fb05422f4039",
+        "processed_sha256": "eee7384d4c17f3fc0db69fb7fbeb46805dd8325e9de3a42b890f22f48191d504",
+        "duration_s": 4.388583,
+        "end_s": 11.188583
+      },
+      {
+        "scene": 3,
+        "scene_window_s": [
+          14.0,
+          21.0
+        ],
+        "start_s": 14.7,
+        "text": "Une bouchée, un sourire : bien accueillis, bien servis.",
+        "source": "audio/voice/t4-voice-v1/source/voix_fr_scene3.mp3",
+        "processed": "audio/voice/t4-voice-v1/processed/voix_fr_scene3_norm.wav",
+        "source_sha256": "b6689cf71b6fea5e8b3e246ea25d09b10e7ac8b4bb821e701c1f2281f135c6e3",
+        "processed_sha256": "e09393f445008c60b6b4d046d9311a936ea3cdd6d4e33f6f4e7ee9eb6f69e805",
+        "duration_s": 4.771708,
+        "end_s": 19.471708
+      },
+      {
+        "scene": 4,
+        "scene_window_s": [
+          21.0,
+          30.0
+        ],
+        "start_s": 21.8,
+        "text": "Retrouvez-nous à Kandi, ou commandez directement sur WhatsApp.",
+        "source": "audio/voice/t4-voice-v1/source/voix_fr_scene4.mp3",
+        "processed": "audio/voice/t4-voice-v1/processed/voix_fr_scene4_norm.wav",
+        "source_sha256": "5483884be780eac7a419521f507ba4bc5e38eed9dfdf55f203dd4d4cb02de351",
+        "processed_sha256": "d079bc90186170669fd3d75b283435393de93b5e32e3ce75735b8329b70f7174",
+        "duration_s": 3.239187,
+        "end_s": 25.039188
+      }
+    ],
+    "stem_sha256": "74ec6378ba0b724631793c02c2d3f0308913c1790f6606784e587ccd2e34a759",
+    "stem_bytes": 4320102
+  },
+  "mix_contract": {
+    "music_open_gain_db": -3.0,
+    "music_under_voice_gain_db": -10.0,
+    "duck_depth_db": -7.0,
+    "duck_attack_ms": 120,
+    "duck_release_ms": 450,
+    "duck_attack_curve": "linear_db",
+    "duck_release_curve": "linear_db",
+    "voice_gain_db": 0.0,
+    "sfx": "none",
+    "master_target_lufs": -16.0,
+    "master_true_peak_dbtp_max": -2.0,
+    "delivery_audio": "AAC stereo 48 kHz"
+  },
+  "quality_gates": {
+    "exact_music_variant_count": 4,
+    "duration_tolerance_s": 0.001,
+    "integrated_lufs_min": -16.5,
+    "integrated_lufs_max": -15.5,
+    "wav_true_peak_dbtp_max": -1.9,
+    "aac_true_peak_dbtp_max": -1.0,
+    "minimum_active_speech_to_music_db": 4.0,
+    "clipped_sample_count_max": 0,
+    "visual_video_bitstream_must_match": true,
+    "human_voice_choice_required": true
+  }
+}

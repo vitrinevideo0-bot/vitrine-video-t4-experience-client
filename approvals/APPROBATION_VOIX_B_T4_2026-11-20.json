@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "decision_id": "t4-owner-voice-selection-2026-11-20",
+  "template_id": "RESTAURATION-T4",
+  "decision": "approved",
+  "selected_candidate": "VOIX-B",
+  "selected_internal_voice_id": "voice-07",
+  "language": "fr",
+  "identity": "masculine advertising",
+  "decided_on": "2026-11-20",
+  "decision_channel": "arena_ask_user",
+  "question_id": "t4_voice_selection_retry",
+  "selected_option_id": "voice_b",
+  "comparison_manifest": "audio/voice/t4-voice-candidates-v1/manifest.json",
+  "comparison_page": "audio/voice/t4-voice-candidates-v1/T4_ECOUTE_4_VOIX.html",
+  "same_text_for_all_candidates": true,
+  "levels_normalized_before_selection": true,
+  "silence_is_approval": false,
+  "scope": [
+    "official T4 French voice",
+    "four scene voice clips",
+    "30-second voice stem",
+    "voice and music ducking mix",
+    "GitHub complete render"
+  ]
+}

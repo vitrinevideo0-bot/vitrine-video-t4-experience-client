@@ -1,0 +1,306 @@
+name: Rendu T4 complet — VOIX-B et rotation Afrobeat
+
+on:
+  workflow_dispatch:
+    inputs:
+      music_id:
+        description: Musique demandée (auto respecte la rotation sans répétition)
+        required: true
+        type: choice
+        default: auto
+        options:
+          - auto
+          - t4_music_569473
+          - t4_music_153058
+          - t4_music_573648
+          - t4_music_439622
+      last_successful_music_id:
+        description: Dernière réussite connue pour un lancement manuel
+        required: true
+        type: choice
+        default: none
+        options:
+          - none
+          - t4_music_569473
+          - t4_music_153058
+          - t4_music_573648
+          - t4_music_439622
+      publish_prerelease:
+        description: Publier une pré-Release additive du rendu manuel
+        required: true
+        type: boolean
+        default: true
+  repository_dispatch:
+    types: [t4_render_job]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: t4-complete-${{ github.event.client_payload.job_id || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  render-qc-deliver:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout T4
+        uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Installer FFmpeg et les dépendances verrouillées
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+
+      - name: Vérifier contrats, schémas, checksums et rotation
+        run: |
+          python -m compileall -q adapter audio/scripts engine tools tests
+          pytest -q
+          python tools/build_t4_cloudflare_contracts.py --check
+          (cd audio/voice/t4-voice-v1 && sha256sum -c SHA256SUMS.txt)
+          (cd audio/music/t4-afrobeat-v1 && sha256sum -c SHA256SUMS.txt)
+
+      - name: Obtenir ou construire le RenderJob
+        env:
+          CALLBACK_TOKEN: ${{ secrets.T4_CALLBACK_TOKEN }}
+          EVENT_NAME: ${{ github.event_name }}
+          API_BASE: ${{ github.event.client_payload.api_base }}
+          DISPATCH_JOB_ID: ${{ github.event.client_payload.job_id }}
+          INPUT_MUSIC_ID: ${{ inputs.music_id }}
+          INPUT_LAST_MUSIC_ID: ${{ inputs.last_successful_music_id }}
+        run: |
+          set -euo pipefail
+          mkdir -p .tmp/t4-complete
+          if [ "$EVENT_NAME" = repository_dispatch ]; then
+            test -n "$CALLBACK_TOKEN"
+            test -n "$API_BASE"
+            test -n "$DISPATCH_JOB_ID"
+            curl --fail-with-body --silent --show-error \
+              -H "Authorization: Bearer $CALLBACK_TOKEN" \
+              "$API_BASE/v1/jobs/$DISPATCH_JOB_ID/payload" \
+              -o .tmp/t4-complete/job-response.json
+            jq -e '.job' .tmp/t4-complete/job-response.json > .tmp/t4-complete/render-job.json
+            echo "T4_API_BASE=$API_BASE" >> "$GITHUB_ENV"
+            echo "T4_JOB_ID=$DISPATCH_JOB_ID" >> "$GITHUB_ENV"
+            echo "T4_CALLBACK_READY=true" >> "$GITHUB_ENV"
+          else
+            JOB_ID="t4-complete-github-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+            ARGS=(--render-job-id "$JOB_ID" --input demo/render_job_hybrid_v3.json --output .tmp/t4-complete/render-job.json --control-plane github_actions_manual)
+            if [ "$INPUT_MUSIC_ID" != auto ]; then ARGS+=(--explicit-music-id "$INPUT_MUSIC_ID"); fi
+            if [ "$INPUT_LAST_MUSIC_ID" != none ]; then ARGS+=(--last-successful-music-id "$INPUT_LAST_MUSIC_ID"); fi
+            python adapter/t4_adapter.py build-job "${ARGS[@]}"
+            echo "T4_JOB_ID=$JOB_ID" >> "$GITHUB_ENV"
+          fi
+          python - <<'PY'
+          import json
+          from jsonschema import Draft202012Validator
+          job=json.load(open('.tmp/t4-complete/render-job.json'))
+          schema=json.load(open('schemas/T4_render_job.schema.json'))
+          Draft202012Validator(schema).validate(job)
+          print('T4_RENDER_JOB_SCHEMA_PASS', job['job_id'], job['music']['selected_music_id'], job['render']['visual_mode'])
+          PY
+
+      - name: Préparer le flux visuel silencieux approuvé ou les quatre captures runtime
+        env:
+          CALLBACK_TOKEN: ${{ secrets.T4_CALLBACK_TOKEN }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT_NAME" = repository_dispatch ]; then
+            mkdir -p .tmp/t4-runtime-captures .tmp/t4-runtime-visual output/t4-runtime-hybrid-v3
+            for SLOT in S1 S2 S3 S4; do
+              MIME=$(jq -r --arg slot "$SLOT" '.captures[$slot].mime_type' .tmp/t4-complete/render-job.json)
+              case "$MIME" in
+                video/webm) EXT=webm ;;
+                video/quicktime) EXT=mov ;;
+                video/mp4) EXT=mp4 ;;
+                *) echo "MIME capture interdit: $MIME" >&2; exit 1 ;;
+              esac
+              curl --fail-with-body --silent --show-error \
+                -H "Authorization: Bearer $CALLBACK_TOKEN" \
+                "$T4_API_BASE/v1/jobs/$T4_JOB_ID/captures/$SLOT" \
+                -o ".tmp/t4-runtime-captures/$SLOT.$EXT"
+              EXPECTED=$(jq -r --arg slot "$SLOT" '.captures[$slot].sha256' .tmp/t4-complete/render-job.json)
+              echo "$EXPECTED  .tmp/t4-runtime-captures/$SLOT.$EXT" | sha256sum -c -
+            done
+            python tools/build_t4_runtime_visual_inputs.py \
+              --render-job .tmp/t4-complete/render-job.json \
+              --capture-dir .tmp/t4-runtime-captures \
+              --manifest .tmp/t4-runtime-visual/manifest.json \
+              --visual-job .tmp/t4-runtime-visual/render-job-v3.json
+            python engine/render_silent.py \
+              --manifest .tmp/t4-runtime-visual/manifest.json \
+              --contract reverse-engineering/T4_TRANSITIONS_HYBRIDES_30S_V3.json \
+              --render-job .tmp/t4-runtime-visual/render-job-v3.json \
+              --cache .tmp/t4-runtime-captures \
+              --work .tmp/t4-runtime-visual/work \
+              --output-dir output/t4-runtime-hybrid-v3
+            echo "T4_SILENT_VIDEO=output/t4-runtime-hybrid-v3/VIDEO_T4_RUNTIME_HYBRID_SILENT.mp4" >> "$GITHUB_ENV"
+            echo "T4_RUNTIME_VISUAL_ARG=--allow-runtime-visual" >> "$GITHUB_ENV"
+          else
+            mkdir -p .tmp/t4-approved-master
+            URL=$(jq -r '.render.visual_source_url' .tmp/t4-complete/render-job.json)
+            EXPECTED=$(jq -r '.render.visual_source_sha256' .tmp/t4-complete/render-job.json)
+            MASTER=.tmp/t4-approved-master/VIDEO_T4_EXPERIENCE_CLIENT_TRANSITIONS_HYBRIDES_V3_A_VALIDER.mp4
+            curl --fail --location --retry 3 --retry-delay 2 --output "$MASTER" "$URL"
+            echo "$EXPECTED  $MASTER" | sha256sum -c -
+            echo "T4_SILENT_VIDEO=$MASTER" >> "$GITHUB_ENV"
+            echo "T4_RUNTIME_VISUAL_ARG=" >> "$GITHUB_ENV"
+          fi
+
+      - name: Mixer VOIX-B, appliquer le ducking, masteriser et multiplexer sans réencoder le flux vidéo
+        run: |
+          set -euo pipefail
+          rm -rf output/t4-complete-v4.0.0
+          ARGS=(
+            --silent-video "$T4_SILENT_VIDEO"
+            --render-job .tmp/t4-complete/render-job.json
+            --output-dir output/t4-complete-v4.0.0
+          )
+          if [ -n "$T4_RUNTIME_VISUAL_ARG" ]; then ARGS+=("$T4_RUNTIME_VISUAL_ARG"); fi
+          python audio/scripts/build_t4_complete.py "${ARGS[@]}"
+          (cd output/t4-complete-v4.0.0 && sha256sum -c SHA256SUMS.txt)
+          python - <<'PY'
+          import json
+          from jsonschema import Draft202012Validator
+          result=json.load(open('output/t4-complete-v4.0.0/T4_RENDER_RESULT.json'))
+          schema=json.load(open('schemas/T4_render_result.schema.json'))
+          Draft202012Validator(schema).validate(result)
+          assert result['status']=='COMPLETED' and result['quality']['status']=='PASS'
+          print('T4_COMPLETE_RENDER_RESULT_PASS', result['output']['sha256'])
+          PY
+
+      - name: Déposer le MP4 vérifié dans R2 puis valider le callback
+        if: github.event_name == 'repository_dispatch'
+        env:
+          CALLBACK_TOKEN: ${{ secrets.T4_CALLBACK_TOKEN }}
+        run: |
+          set -euo pipefail
+          OUT=output/t4-complete-v4.0.0/VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4
+          SHA=$(sha256sum "$OUT" | cut -d' ' -f1)
+          BYTES=$(stat -c '%s' "$OUT")
+          curl --fail-with-body --silent --show-error \
+            -X PUT \
+            -H "Authorization: Bearer $CALLBACK_TOKEN" \
+            -H 'Content-Type: video/mp4' \
+            -H "Content-Length: $BYTES" \
+            -H "X-Content-SHA256: $SHA" \
+            --data-binary "@$OUT" \
+            "$T4_API_BASE/v1/jobs/$T4_JOB_ID/output" \
+            -o .tmp/t4-complete/output-storage-response.json
+          jq -n -e --slurpfile result output/t4-complete-v4.0.0/T4_RENDER_RESULT.json \
+            --arg run_id "$GITHUB_RUN_ID" \
+            --arg run_url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            '{status:"COMPLETED",github_run_id:$run_id,github_run_url:$run_url,result:$result[0]}' \
+            > .tmp/t4-complete/completed-event.json
+          curl --fail-with-body --silent --show-error \
+            -X POST \
+            -H "Authorization: Bearer $CALLBACK_TOKEN" \
+            -H 'Content-Type: application/json' \
+            --data-binary @.tmp/t4-complete/completed-event.json \
+            "$T4_API_BASE/v1/jobs/$T4_JOB_ID/events" \
+            -o .tmp/t4-complete/completed-response.json
+          jq -e '.status == "COMPLETED"' .tmp/t4-complete/completed-response.json
+
+      - name: Assembler la livraison sans audio musical autonome
+        run: |
+          set -euo pipefail
+          rm -rf release
+          mkdir release
+          cp output/t4-complete-v4.0.0/VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4 release/
+          cp output/t4-complete-v4.0.0/T4_COMPLETE_RENDER_REPORT.json release/
+          cp output/t4-complete-v4.0.0/T4_RENDER_RESULT.json release/
+          cp .tmp/t4-complete/render-job.json release/T4_RENDER_JOB.json
+          cp config/T4_VOICE_MIX_V1_0_0.json release/
+          cp config/T4_MUSIC_PACK_V1_0_0.json release/
+          cp schemas/T4_voice_mix.schema.json release/
+          cp schemas/T4_voice_candidates.schema.json release/
+          cp schemas/T4_music_pack.schema.json release/
+          cp schemas/T4_render_job.schema.json release/
+          cp schemas/T4_render_result.schema.json release/
+          cp audio/voice/t4-voice-candidates-v1/manifest.json release/T4_VOICE_CANDIDATES_MANIFEST.json
+          cp approvals/APPROBATION_VOIX_B_T4_2026-11-20.json release/
+          cp audio/music/t4-afrobeat-v1/evidence/T4_MUSIC_PROVENANCE_CERTIFICATE.json release/
+          cp audio/music/t4-afrobeat-v1/evidence/PIXABAY_CONTENT_LICENSE_SNAPSHOT_2026-11-20.md release/
+          if [ -f output/t4-runtime-hybrid-v3/T4_SILENT_RENDER_REPORT.json ]; then
+            cp output/t4-runtime-hybrid-v3/T4_SILENT_RENDER_REPORT.json release/T4_RUNTIME_VISUAL_RENDER_REPORT.json
+          fi
+          if find release -maxdepth 1 -type f \( -name '*.mp3' -o -name '*.wav' -o -name 'S[1-4]_*.mp4' \) | grep -q .; then
+            echo 'Audio autonome ou rush brut interdit dans la livraison' >&2
+            exit 1
+          fi
+          (cd release && find . -maxdepth 1 -type f ! -name SHA256SUMS.txt -printf '%f\n' | sort | xargs sha256sum > SHA256SUMS.txt)
+          cat release/SHA256SUMS.txt
+
+      - name: Publier l’artefact GitHub Actions complet
+        uses: actions/upload-artifact@v4
+        with:
+          name: T4-complete-voice-B-rotated-music-${{ github.run_id }}
+          path: release/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Préparer les notes de pré-Release additive
+        if: github.event_name == 'workflow_dispatch' && inputs.publish_prerelease
+        run: |
+          cat > /tmp/t4-complete-release-notes.md <<'EOF'
+          # RESTAURATION-T4 — rendu complet VOIX-B + Afrobeat
+
+          - direction visuelle : **Hybride cinématique**, déjà approuvée ;
+          - flux H.264 du master silencieux officiel conservé bit pour bit pendant le mux ;
+          - voix propriétaire : **VOIX-B / voice-07**, quatre placements fixes ;
+          - exactement une des quatre musiques Afrobeat approuvées ;
+          - ducking : −3 dB hors parole, −10 dB sous parole, attaque 120 ms, relâchement 450 ms ;
+          - master : cible −16 LUFS, plafond −2 dBTP ;
+          - 30,000 s, 720 × 1280, 30 i/s, 900 images, H.264 + AAC stéréo 48 kHz ;
+          - contrôles d’intégrité, intelligibilité et absence d’écrêtage inclus.
+
+          Les quatre pages Pixabay indiquent **Content ID Registered**. Une réclamation automatisée reste possible ; le certificat interne de provenance et les preuves publiques sont archivés. Aucun certificat de téléchargement Pixabay lié à un compte authentifié n’est revendiqué.
+          EOF
+
+      - name: Publier une pré-Release immuable sans écraser l’historique
+        if: github.event_name == 'workflow_dispatch' && inputs.publish_prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          TAG="t4-experience-client-v4.0.0-complete-candidate-${GITHUB_RUN_NUMBER}"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "La Release $TAG existe déjà : refus de l’écraser." >&2
+            exit 1
+          fi
+          gh release create "$TAG" release/* \
+            --target "$GITHUB_SHA" \
+            --title "T4 Expérience client — rendu complet VOIX-B #${GITHUB_RUN_NUMBER}" \
+            --notes-file /tmp/t4-complete-release-notes.md \
+            --prerelease
+
+      - name: Signaler un RenderError au plan de contrôle
+        if: failure() && github.event_name == 'repository_dispatch'
+        continue-on-error: true
+        env:
+          CALLBACK_TOKEN: ${{ secrets.T4_CALLBACK_TOKEN }}
+        run: |
+          set -euo pipefail
+          jq -n \
+            --arg job_id "${T4_JOB_ID:-${{ github.event.client_payload.job_id }}}" \
+            --arg run_id "$GITHUB_RUN_ID" \
+            --arg run_url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            '{status:"FAILED",github_run_id:$run_id,github_run_url:$run_url,error:{schema_version:"1.0.0",status:"FAILED",job_id:$job_id,code:"T4_GITHUB_RENDER_FAILED",message:"Le rendu ou le contrôle qualité GitHub Actions a échoué.",retryable:true,stage:"QUALITY_CONTROL"}}' \
+            > .tmp/t4-complete/failed-event.json
+          curl --fail-with-body --silent --show-error \
+            -X POST \
+            -H "Authorization: Bearer $CALLBACK_TOKEN" \
+            -H 'Content-Type: application/json' \
+            --data-binary @.tmp/t4-complete/failed-event.json \
+            "${T4_API_BASE:-${{ github.event.client_payload.api_base }}}/v1/jobs/${T4_JOB_ID:-${{ github.event.client_payload.job_id }}}/events"

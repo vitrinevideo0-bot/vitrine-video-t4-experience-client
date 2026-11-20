@@ -1,0 +1,17 @@
+
+Running 1 test using 1 worker
+
+[1A[2K[1/1] pixabay-browser-test.spec.js:4:1 › extract official audio URL
+[1A[2Kpixabay-browser-test.spec.js:4:1 › extract official audio URL
+{
+  "status": 200,
+  "title": "Afrobeat Afro Beat by ARPMedia | Royalty-free Music - Pixabay",
+  "url": "https://pixabay.com/music/afrobeat-afrobeat-afro-beat-569473/",
+  "body": "Music\nExplore\nLog in\nJoin\nUpload\nAfrobeat Afro Beat\nARPMedia\n0:00\n2:25\nContent ID Registered\nAuto-match your soundtrack to your footage with one-click Beat Sync.\nTry Canva Pro for free\nAfrobeat, Afrobeat instrumental, Afrobeat background music music. Free for use.\nComments\nThe community are waiting to hear from you!\nLog in or Join Pixabay to view comments\nLog in\nJoin Pixabay\nAfrobeat\nAfrobeat Instrumental\nAfrobeat Background Music\nAfrobeat Music\nAfrobeat Background\nAfrobeat Dance\nAfrobeat African\nAfrobeat Drums\nAfrobeat Percussion\nAfrobeat Rhythm\nAfrobeat Party\nAfrobeat Summer\nAfrobeat Vibe\nAfrobeat World\nAfrobeat Festival\nAfrobeat Lifestyle\nAfrobeat Commercial\nAfrobeat Advertising\nAfrobeat Intro\nAfrobeat Opener\nAfrobeat Promo\nAfro Beat\nAfro\nAfro Beats 2025\nAfrican\nRelated free music\nAfrobeat\nSub_Clair\n3:05\nAfrobeat\nAfrobeat No Copyright\nAfrobeat Instrumental\nSub_Clair\n3:05\nAfrobeat\nAfrobeat Instrumental ...\nAfro Beat\nkiravale\n3:58\nAfrobeat\nAfro Beat\nLoad more\nGenre\nAfrobeat\nUpbeat\nEle",
+  "urls": [
+    "https://cdn.pixabay.com/audio/2026/07/18/08-11-49-336_200x200.jpg",
+    "https://cdn.pixabay.com/download/audio/2026/07/18/audio_7d06d90c07.mp3?filename=arpmedia-afrobeat-afro-beat-569473.mp3"
+  ]
+}
+
+[1A[2K  1 passed (17.6s)

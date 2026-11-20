@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "candidate_count": 4,
+  "same_text": true,
+  "language": "fr",
+  "target_integrated_lufs": -20.0,
+  "target_true_peak_dbtp": -3.0,
+  "target_lra_lu": 7.0,
+  "retiming_forbidden": true,
+  "candidates": [
+    {
+      "source": "source/T4_VOIX_A.mp3",
+      "source_sha256": "3a66decb6fa7187cb0e87998933fcd8e223d5555a54cba4cf8ccf636ad2ac773",
+      "normalized": "normalized/T4_VOIX_A.wav",
+      "normalized_sha256": "75aaa0a976f7f57ce4ac75ba2da136c690b53a846bf0c240606d453d43aad082",
+      "duration_seconds": 16.381688,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "integrated_lufs": -19.99,
+      "true_peak_dbtp": -5.86,
+      "loudness_range_lu": 2.0,
+      "retimed": false
+    },
+    {
+      "source": "source/T4_VOIX_B.mp3",
+      "source_sha256": "a3b0c23e1fe65776106d7c9ad8420f93843e92fb8305d1a84e73e8321e76d6d1",
+      "normalized": "normalized/T4_VOIX_B.wav",
+      "normalized_sha256": "b31a73c879ded27de8b2c03634df49d105795e633666ea29507a0e3c927ca2ba",
+      "duration_seconds": 11.807354,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "integrated_lufs": -20.07,
+      "true_peak_dbtp": -3.09,
+      "loudness_range_lu": 2.0,
+      "retimed": false
+    },
+    {
+      "source": "source/T4_VOIX_C.mp3",
+      "source_sha256": "fb22f07748446988509cfa7f1ff3799fa57704b710ab7bd92a4927a3e0c8b2bb",
+      "normalized": "normalized/T4_VOIX_C.wav",
+      "normalized_sha256": "077a0277fa5ec280e3875a9cd76eac53234a20cf3b55fe25ae37c9840495c4e8",
+      "duration_seconds": 15.905667,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "integrated_lufs": -20.01,
+      "true_peak_dbtp": -3.07,
+      "loudness_range_lu": 2.3,
+      "retimed": false
+    },
+    {
+      "source": "source/T4_VOIX_D.mp3",
+      "source_sha256": "760e16a138a67f3f48f2d55b110b1ef6633f3ce8ced49a091959ca9cc3d07bc6",
+      "normalized": "normalized/T4_VOIX_D.wav",
+      "normalized_sha256": "0e0c8748085acbb8418b9449a5fbf164da85d4053f570ff062930aab16299e97",
+      "duration_seconds": 17.631083,
+      "sample_rate_hz": 48000,
+      "channels": 1,
+      "integrated_lufs": -20.0,
+      "true_peak_dbtp": -3.1,
+      "loudness_range_lu": 2.3,
+      "retimed": false
+    }
+  ]
+}

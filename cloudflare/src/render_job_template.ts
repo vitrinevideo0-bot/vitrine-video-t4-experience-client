@@ -1,0 +1,110 @@
+// Generated from demo/render_job_complete_v1_0_0.json; do not edit by hand.
+export const RENDER_JOB_TEMPLATE = {
+  "schema_version": "1.0.0",
+  "job_id": "t4-complete-demo-2026-11-20-0001",
+  "idempotency_key": "t4-complete-demo-2026-11-20-0001",
+  "template_id": "RESTAURATION-T4",
+  "template_version": "4.0.0-complete-audio",
+  "merchant_payload": {
+    "nom": "La Table de Kandi",
+    "produit": "Poulet braisé et alloco",
+    "prix": "3500",
+    "whatsapp": "+229 01 97 00 00 00",
+    "quartier": "Kandi · près du marché central",
+    "accroche": "Bien accueillis, bien servis"
+  },
+  "captures": {
+    "S1": {
+      "source": "rushes/manifest.json#S1"
+    },
+    "S2": {
+      "source": "rushes/manifest.json#S2"
+    },
+    "S3": {
+      "source": "rushes/manifest.json#S3"
+    },
+    "S4": {
+      "source": "rushes/manifest.json#S4"
+    }
+  },
+  "music": {
+    "selection_mode": "deterministic_excluding_last_successful",
+    "selected_music_id": "t4_music_153058",
+    "selected_choice": "2",
+    "pixabay_id": 153058,
+    "file": "audio/music/t4-afrobeat-v1/t4_153058_fassounds_30s.mp3",
+    "sha256": "23345911198a1a53cc6f74926fce817cf6abe41d403c7d38a16a8ef1f8b1d7fb",
+    "source_sha256": "61d28ee2429bcfec1678a4abb0d78da89ad836b8e51ae946816eb05bf71ff8e8",
+    "content_id_registered": true,
+    "claim_management_required": true,
+    "last_successful_music_id": null,
+    "state_update_policy": "after_completed_qc_pass_only"
+  },
+  "voice": {
+    "candidate": "VOIX-B",
+    "voice_id": "voice-07",
+    "language": "fr",
+    "stem_file": "audio/voice/t4-voice-v1/t4_voice_stem_30s.wav",
+    "stem_sha256": "74ec6378ba0b724631793c02c2d3f0308913c1790f6606784e587ccd2e34a759",
+    "placements": [
+      {
+        "scene": 1,
+        "start_s": 1.2,
+        "end_s": 4.090896,
+        "text": "Bienvenue à La Table de Kandi, près du marché central."
+      },
+      {
+        "scene": 2,
+        "start_s": 6.8,
+        "end_s": 11.188583,
+        "text": "Découvrez notre poulet braisé et alloco, à trois mille cinq cents francs CFA."
+      },
+      {
+        "scene": 3,
+        "start_s": 14.7,
+        "end_s": 19.471708,
+        "text": "Une bouchée, un sourire : bien accueillis, bien servis."
+      },
+      {
+        "scene": 4,
+        "start_s": 21.8,
+        "end_s": 25.039188,
+        "text": "Retrouvez-nous à Kandi, ou commandez directement sur WhatsApp."
+      }
+    ]
+  },
+  "render": {
+    "visual_mode": "approved_master_stream_copy",
+    "visual_source_role": "approved_render_source",
+    "visual_source_url": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/releases/download/t4-experience-client-v3.0.0-hybrid-candidate-3/VIDEO_T4_EXPERIENCE_CLIENT_TRANSITIONS_HYBRIDES_V3_A_VALIDER.mp4",
+    "visual_source_sha256": "5acd4eb958c1ec00a663066d57b39bbb43e61f39dbd9c1403db458b5e34bed9a",
+    "visual_video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "visual_reencode_forbidden": true,
+    "audio_mux_video_reencode_forbidden": true,
+    "runtime_capture_manifest_required": false,
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "frames": 900,
+    "duration_s": 30.0,
+    "output_count": 1,
+    "output_filename": "VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4",
+    "production_render_plane": "github_actions"
+  },
+  "mix_contract": {
+    "music_open_gain_db": -3.0,
+    "music_under_voice_gain_db": -10.0,
+    "duck_depth_db": -7.0,
+    "duck_attack_ms": 120,
+    "duck_release_ms": 450,
+    "duck_attack_curve": "linear_db",
+    "duck_release_curve": "linear_db",
+    "voice_gain_db": 0.0,
+    "sfx": "none",
+    "master_target_lufs": -16.0,
+    "master_true_peak_dbtp_max": -2.0,
+    "delivery_audio": "AAC stereo 48 kHz"
+  },
+  "control_plane": "github_actions_manual",
+  "cloudflare_rendering_forbidden": true
+} as const;

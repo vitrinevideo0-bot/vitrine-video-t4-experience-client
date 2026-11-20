@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "status": "COMPLETED",
+  "job_id": "t4-complete-fixture-0001",
+  "idempotency_key": "t4-complete-fixture-0001",
+  "template_id": "RESTAURATION-T4",
+  "template_version": "4.0.0-complete-audio",
+  "profile_used": "T4_GITHUB_ACTIONS_COMPLETE_V1",
+  "control_plane": "github_actions_manual",
+  "output": {
+    "uri": "output/runtime/t4-complete-fixture-0001/VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4",
+    "file": "VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4",
+    "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "bytes": 12000000
+  },
+  "quality": {
+    "status": "PASS",
+    "report": "T4_COMPLETE_RENDER_REPORT.json",
+    "passed": 26,
+    "total": 26
+  },
+  "inputs": {
+    "music_source_sha256": "61d28ee2429bcfec1678a4abb0d78da89ad836b8e51ae946816eb05bf71ff8e8",
+    "music_derivative_sha256": "23345911198a1a53cc6f74926fce817cf6abe41d403c7d38a16a8ef1f8b1d7fb",
+    "voice_stem_sha256": "74ec6378ba0b724631793c02c2d3f0308913c1790f6606784e587ccd2e34a759",
+    "visual_video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "approved_visual_reference_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "capture_sha256": {}
+  },
+  "music_state_commit_allowed": true
+}

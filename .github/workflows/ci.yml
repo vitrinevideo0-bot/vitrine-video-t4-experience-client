@@ -1,4 +1,4 @@
-name: Contrats et moteur T4 V3
+name: Contrats, audio, Worker et moteur T4
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v5
 
@@ -21,13 +21,26 @@ jobs:
           python-version: '3.12'
           cache: pip
 
-      - name: Installer les dépendances verrouillées
-        run: python -m pip install -r requirements.txt
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22.12.0'
+          cache: npm
+          cache-dependency-path: cloudflare/package-lock.json
 
-      - name: Compiler et tester les transitions hybrides V3
+      - name: Installer les dépendances verrouillées
         run: |
-          python -m compileall -q engine tools tests
-          python -m unittest discover -s tests -v
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          python -m pip install -r requirements.txt
+          npm ci --prefix cloudflare
+
+      - name: Compiler et tester les contrats T4 complets
+        run: |
+          python -m compileall -q adapter audio/scripts engine tools tests
+          pytest -q
+          python tools/build_t4_cloudflare_contracts.py --check
+          (cd audio/voice/t4-voice-v1 && sha256sum -c SHA256SUMS.txt)
+          (cd audio/music/t4-afrobeat-v1 && sha256sum -c SHA256SUMS.txt)
 
       - name: Prouver la reproductibilité du contrat des 12 écrans
         run: |
@@ -44,3 +57,38 @@ jobs:
           rm -rf /tmp/t4-ui-screens
           python tools/generate_t4_ui_screens.py --output-dir /tmp/t4-ui-screens
           diff -qr ui-screens /tmp/t4-ui-screens
+
+      - name: Compiler et empaqueter le Worker Cloudflare sans le déployer
+        working-directory: cloudflare
+        run: npm test
+
+      - name: Tester le plan de contrôle Cloudflare, R2 et la rotation transactionnelle
+        working-directory: cloudflare
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/t4-wrangler-ci
+          python test/mock_github_api.py --port 8791 > /tmp/t4-mock-github.log 2>&1 &
+          MOCK_PID=$!
+          npx wrangler dev --local --ip 127.0.0.1 --port 8788 --persist-to /tmp/t4-wrangler-ci \
+            --var CLIENT_API_TOKEN:test-client \
+            --var CALLBACK_TOKEN:test-callback \
+            --var GITHUB_TOKEN:test-github \
+            --var GITHUB_API_BASE:http://127.0.0.1:8791 \
+            --var PUBLIC_API_BASE:http://127.0.0.1:8788 \
+            > /tmp/t4-wrangler.log 2>&1 &
+          WRANGLER_PID=$!
+          cleanup() { kill "$WRANGLER_PID" "$MOCK_PID" 2>/dev/null || true; }
+          trap cleanup EXIT
+          python - <<'PY'
+          import time, urllib.request
+          for _ in range(120):
+              try:
+                  with urllib.request.urlopen('http://127.0.0.1:8788/health', timeout=1) as response:
+                      if response.status == 200:
+                          break
+              except Exception:
+                  time.sleep(0.25)
+          else:
+              raise SystemExit('Wrangler did not become ready')
+          PY
+          python test/control_plane_integration.py --base http://127.0.0.1:8788

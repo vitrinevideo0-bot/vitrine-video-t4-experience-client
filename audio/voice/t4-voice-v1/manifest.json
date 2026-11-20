@@ -1,0 +1,179 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "status": "PASS",
+  "generated_on": "2026-11-20",
+  "generated_plane": "local_preflight",
+  "config": "config/T4_VOICE_MIX_V1_0_0.json",
+  "provider": "Arena.ai Agent Mode",
+  "candidate": "VOIX-B",
+  "voice_id": "voice-07",
+  "approval": "approvals/APPROBATION_VOIX_B_T4_2026-11-20.json",
+  "language": "fr",
+  "retimed": false,
+  "clips": [
+    {
+      "scene": 1,
+      "scene_window_s": [
+        0.0,
+        6.0
+      ],
+      "start_s": 1.2,
+      "text": "Bienvenue à La Table de Kandi, près du marché central.",
+      "source": "audio/voice/t4-voice-v1/source/voix_fr_scene1.mp3",
+      "processed": "audio/voice/t4-voice-v1/processed/voix_fr_scene1_norm.wav",
+      "source_sha256": "90e64e911efba2eadf722ef73aa6a324b4720ab8488d412a28a2f567550677bd",
+      "end_s": 4.090896,
+      "duration_s": 2.890896,
+      "decoded_samples": 138763,
+      "processed_sha256": "5a8d640b80fb8a41b3d99fe61ad86e9656e55c55dc2131a75112918b3021067e",
+      "normalization": {
+        "applied_gain_db": -0.55,
+        "integrated_lufs": -20.0,
+        "true_peak_dbtp": -4.71,
+        "loudness_range_lu": 0.0
+      },
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "pcm_s16le",
+            "sample_rate": "48000",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "2.890896",
+          "size": "277604"
+        }
+      }
+    },
+    {
+      "scene": 2,
+      "scene_window_s": [
+        6.0,
+        14.0
+      ],
+      "start_s": 6.8,
+      "text": "Découvrez notre poulet braisé et alloco, à trois mille cinq cents francs CFA.",
+      "source": "audio/voice/t4-voice-v1/source/voix_fr_scene2.mp3",
+      "processed": "audio/voice/t4-voice-v1/processed/voix_fr_scene2_norm.wav",
+      "source_sha256": "3e4d9a28a56f2d1e4454c54df90045699c2d5251ca7c73263fd5fb05422f4039",
+      "end_s": 11.188583,
+      "duration_s": 4.388583,
+      "decoded_samples": 210652,
+      "processed_sha256": "eee7384d4c17f3fc0db69fb7fbeb46805dd8325e9de3a42b890f22f48191d504",
+      "normalization": {
+        "applied_gain_db": 0.02,
+        "integrated_lufs": -20.05,
+        "true_peak_dbtp": -3.08,
+        "loudness_range_lu": 2.9
+      },
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "pcm_s16le",
+            "sample_rate": "48000",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "4.388583",
+          "size": "421382"
+        }
+      }
+    },
+    {
+      "scene": 3,
+      "scene_window_s": [
+        14.0,
+        21.0
+      ],
+      "start_s": 14.7,
+      "text": "Une bouchée, un sourire : bien accueillis, bien servis.",
+      "source": "audio/voice/t4-voice-v1/source/voix_fr_scene3.mp3",
+      "processed": "audio/voice/t4-voice-v1/processed/voix_fr_scene3_norm.wav",
+      "source_sha256": "b6689cf71b6fea5e8b3e246ea25d09b10e7ac8b4bb821e701c1f2281f135c6e3",
+      "end_s": 19.471708,
+      "duration_s": 4.771708,
+      "decoded_samples": 229042,
+      "processed_sha256": "e09393f445008c60b6b4d046d9311a936ea3cdd6d4e33f6f4e7ee9eb6f69e805",
+      "normalization": {
+        "applied_gain_db": 0.18,
+        "integrated_lufs": -20.02,
+        "true_peak_dbtp": -3.09,
+        "loudness_range_lu": 2.9
+      },
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "pcm_s16le",
+            "sample_rate": "48000",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "4.771708",
+          "size": "458162"
+        }
+      }
+    },
+    {
+      "scene": 4,
+      "scene_window_s": [
+        21.0,
+        30.0
+      ],
+      "start_s": 21.8,
+      "text": "Retrouvez-nous à Kandi, ou commandez directement sur WhatsApp.",
+      "source": "audio/voice/t4-voice-v1/source/voix_fr_scene4.mp3",
+      "processed": "audio/voice/t4-voice-v1/processed/voix_fr_scene4_norm.wav",
+      "source_sha256": "5483884be780eac7a419521f507ba4bc5e38eed9dfdf55f203dd4d4cb02de351",
+      "end_s": 25.039188,
+      "duration_s": 3.239187,
+      "decoded_samples": 155481,
+      "processed_sha256": "d079bc90186170669fd3d75b283435393de93b5e32e3ce75735b8329b70f7174",
+      "normalization": {
+        "applied_gain_db": -0.4,
+        "integrated_lufs": -20.0,
+        "true_peak_dbtp": -4.66,
+        "loudness_range_lu": 0.2
+      },
+      "probe": {
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "pcm_s16le",
+            "sample_rate": "48000",
+            "channels": 1
+          }
+        ],
+        "format": {
+          "duration": "3.239188",
+          "size": "311040"
+        }
+      }
+    }
+  ],
+  "stem": {
+    "file": "audio/voice/t4-voice-v1/t4_voice_stem_30s.wav",
+    "sha256": "74ec6378ba0b724631793c02c2d3f0308913c1790f6606784e587ccd2e34a759",
+    "bytes": 4320102,
+    "decoded_samples": 1440000,
+    "duration_s": 30.0,
+    "sample_rate_hz": 48000,
+    "channels": 1,
+    "integrated_lufs": -19.71,
+    "true_peak_dbtp": -3.08,
+    "sample_peak_dbfs": -3.083,
+    "clipped_sample_count": 0,
+    "nan_count": 0,
+    "inf_count": 0
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "$schema": "../../schemas/T4_integrator_package_spec.schema.json",
+  "schema_version": "1.0.0",
+  "package_id": "restauration-t4-experience-client-v1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "template_version": "1.0.0",
+  "status": "source_spec_waiting_for_github_complete_master",
+  "include": [
+    {
+      "path": "README.md",
+      "role": "template_readme"
+    },
+    {
+      "path": "STATUS.json",
+      "role": "workflow_status"
+    },
+    {
+      "path": "requirements.txt",
+      "role": "python_dependencies"
+    },
+    {
+      "path": "config/T4_EXPERIENCE_CLIENT_PACKAGE_V1_0_0.json",
+      "role": "canonical_template"
+    },
+    {
+      "path": "packages/t4-experience-client-v1/package_spec.json",
+      "role": "package_source_spec"
+    },
+    {
+      "path": "config/T4_CAPTURE_FLOW_V1_0_0.json",
+      "role": "capture_flow"
+    },
+    {
+      "path": "config/T4_EXPERIENCE_CLIENT_TEMPLATE_V3_0_0.json",
+      "role": "approved_visual_template"
+    },
+    {
+      "path": "config/T4_HYBRID_CINEMATIC_TRANSITIONS_V3_0_0.json",
+      "role": "approved_transition_contract"
+    },
+    {
+      "path": "config/T4_MUSIC_PACK_V1_0_0.json",
+      "role": "four_track_music_catalogue"
+    },
+    {
+      "path": "config/T4_VOICE_MIX_V1_0_0.json",
+      "role": "owner_selected_voice_mix"
+    },
+    {
+      "path": "reverse-engineering/T4_TRANSITIONS_HYBRIDES_30S_V3.json",
+      "role": "transition_timeline"
+    },
+    {
+      "path": "form/questions_T4.json",
+      "role": "six_question_form"
+    },
+    {
+      "path": "capture-guide/consignes_T4.json",
+      "role": "four_scene_capture_guide"
+    },
+    {
+      "path": "ui-screens",
+      "role": "twelve_screen_proofs"
+    },
+    {
+      "path": "simulation",
+      "role": "executable_six_question_twelve_screen_simulation"
+    },
+    {
+      "path": "audio/music/t4-afrobeat-v1",
+      "role": "four_adapted_music_build_inputs_and_provenance"
+    },
+    {
+      "path": "audio/voice/t4-voice-candidates-v1",
+      "role": "four_comparable_voice_candidates"
+    },
+    {
+      "path": "audio/voice/t4-voice-v1",
+      "role": "selected_voice_scene_clips_and_stem"
+    },
+    {
+      "path": "audio/scripts",
+      "role": "reproducible_audio_builders"
+    },
+    {
+      "path": "approvals/APPROBATION_VOIX_B_T4_2026-11-20.json",
+      "role": "owner_voice_selection"
+    },
+    {
+      "path": "approvals/CHOIX_TRANSITIONS_HYBRIDES_V3_2026-11-18.json",
+      "role": "owner_visual_selection"
+    },
+    {
+      "path": "adapter",
+      "role": "runtime_adapter_and_transactional_rotation"
+    },
+    {
+      "path": "engine",
+      "role": "approved_visual_engine"
+    },
+    {
+      "path": "schemas",
+      "role": "strict_schemas"
+    },
+    {
+      "path": "demo/render_job_complete_v1_0_0.json",
+      "role": "complete_render_job_example"
+    },
+    {
+      "path": "fixtures/t4-experience-client",
+      "role": "runtime_fixtures"
+    },
+    {
+      "path": "conformance/T4_GOLDEN_V1.json",
+      "role": "golden_conformance_lock"
+    },
+    {
+      "path": "cloudflare",
+      "role": "control_plane_source_without_dependencies_or_secrets"
+    },
+    {
+      "path": ".github/workflows/render-complete.yml",
+      "role": "github_render_callback_and_release_contract"
+    },
+    {
+      "path": "tools",
+      "role": "builders_fetchers_and_validators"
+    },
+    {
+      "path": "tests",
+      "role": "test_suite"
+    },
+    {
+      "path": "integration-handoff",
+      "role": "cloudflare_and_gallery_handoff"
+    },
+    {
+      "path": "docs/T4_COMPLETE_AUDIO_AND_CONTROL_PLANE.md",
+      "role": "complete_architecture_documentation"
+    },
+    {
+      "path": "docs/LICENCES_RUSHS.md",
+      "role": "visual_source_licensing"
+    },
+    {
+      "path": "reports/AUDIT_ARCHITECTURE_T3_T4_GALLERY_2026-11-20.md",
+      "role": "architecture_audit"
+    },
+    {
+      "path": "reports/AUDIT_ARCHITECTURE_T3_T4_GALLERY_2026-11-20.json",
+      "role": "architecture_audit_machine"
+    },
+    {
+      "path": "proofs/T4_LOCAL_COMPLETE_PREFLIGHT_2026-11-20.json",
+      "role": "local_preflight_explicitly_not_production"
+    }
+  ],
+  "external_complete_master": {
+    "status": "pending_github_render",
+    "required_in_built_zip": true,
+    "package_path": "golden/VIDEO_T4_COMPLETE_V1_0_0.mp4",
+    "source_release_tag": null,
+    "source_filename": "VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4",
+    "sha256": null,
+    "bytes": null,
+    "video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0"
+  },
+  "constraints": {
+    "full_pixabay_originals_forbidden": true,
+    "standalone_music_release_forbidden": true,
+    "secrets_forbidden": true,
+    "temporary_paths_forbidden": true,
+    "node_modules_forbidden": true,
+    "cloudflare_deployed": false,
+    "ota_implemented": false,
+    "deterministic_zip": true
+  }
+}

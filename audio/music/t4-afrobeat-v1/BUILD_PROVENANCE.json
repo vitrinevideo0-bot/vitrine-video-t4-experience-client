@@ -1,0 +1,230 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "status": "PASS",
+  "generated_on": "2026-11-20",
+  "track_count": 4,
+  "original_full_tracks_committed": false,
+  "derivatives": [
+    {
+      "choice": "1",
+      "id": "t4_music_569473",
+      "pixabay_id": 569473,
+      "title": "Afrobeat Afro Beat",
+      "artist": "ARPMedia",
+      "source_sha256": "8cc3ae6499844eeaa75c039a36f325395eee6d3eda52ac03c2bfd2b8f1547f07",
+      "derivative": {
+        "file": "audio/music/t4-afrobeat-v1/t4_569473_arpmedia_30s.mp3",
+        "sha256": "1af1bf8abe20b1f340d8c1d518ef45912dac20cbd92b0ea9bdb380272aebc524",
+        "bytes": 721196,
+        "decoded_samples": 1440000,
+        "decoded_duration_s": 30.0,
+        "container_duration_s": 30.024,
+        "sample_rate_hz": 48000,
+        "channels": 2,
+        "integrated_lufs": -17.67,
+        "true_peak_dbtp": -3.32,
+        "sample_peak_dbfs": -3.316,
+        "clipped_sample_count": 0,
+        "nan_count": 0,
+        "inf_count": 0
+      },
+      "checks": [
+        {
+          "check": "decoded_samples_exact",
+          "status": "PASS"
+        },
+        {
+          "check": "duration_exact",
+          "status": "PASS"
+        },
+        {
+          "check": "integrated_loudness",
+          "status": "PASS"
+        },
+        {
+          "check": "true_peak",
+          "status": "PASS"
+        },
+        {
+          "check": "stereo_48khz",
+          "status": "PASS"
+        },
+        {
+          "check": "no_clipping",
+          "status": "PASS"
+        },
+        {
+          "check": "finite_samples",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "choice": "2",
+      "id": "t4_music_153058",
+      "pixabay_id": 153058,
+      "title": "The Afrobeat",
+      "artist": "FASSounds",
+      "source_sha256": "61d28ee2429bcfec1678a4abb0d78da89ad836b8e51ae946816eb05bf71ff8e8",
+      "derivative": {
+        "file": "audio/music/t4-afrobeat-v1/t4_153058_fassounds_30s.mp3",
+        "sha256": "23345911198a1a53cc6f74926fce817cf6abe41d403c7d38a16a8ef1f8b1d7fb",
+        "bytes": 721196,
+        "decoded_samples": 1440000,
+        "decoded_duration_s": 30.0,
+        "container_duration_s": 30.024,
+        "sample_rate_hz": 48000,
+        "channels": 2,
+        "integrated_lufs": -17.29,
+        "true_peak_dbtp": -4.51,
+        "sample_peak_dbfs": -4.515,
+        "clipped_sample_count": 0,
+        "nan_count": 0,
+        "inf_count": 0
+      },
+      "checks": [
+        {
+          "check": "decoded_samples_exact",
+          "status": "PASS"
+        },
+        {
+          "check": "duration_exact",
+          "status": "PASS"
+        },
+        {
+          "check": "integrated_loudness",
+          "status": "PASS"
+        },
+        {
+          "check": "true_peak",
+          "status": "PASS"
+        },
+        {
+          "check": "stereo_48khz",
+          "status": "PASS"
+        },
+        {
+          "check": "no_clipping",
+          "status": "PASS"
+        },
+        {
+          "check": "finite_samples",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "choice": "3",
+      "id": "t4_music_573648",
+      "pixabay_id": 573648,
+      "title": "Afrobeat Instrumental Summer Groove",
+      "artist": "alex-morgan",
+      "source_sha256": "578d21387e1634fd73c67a8c0d1bcadb3e1adba69b27a286d553ecfb1911c55b",
+      "derivative": {
+        "file": "audio/music/t4-afrobeat-v1/t4_573648_alex-morgan_30s.mp3",
+        "sha256": "103a9cf168ef76cf9592cc5085ad82ee75cb0f5d9cdb3be861650ea012ba7ffe",
+        "bytes": 721196,
+        "decoded_samples": 1440000,
+        "decoded_duration_s": 30.0,
+        "container_duration_s": 30.024,
+        "sample_rate_hz": 48000,
+        "channels": 2,
+        "integrated_lufs": -17.24,
+        "true_peak_dbtp": -4.57,
+        "sample_peak_dbfs": -4.579,
+        "clipped_sample_count": 0,
+        "nan_count": 0,
+        "inf_count": 0
+      },
+      "checks": [
+        {
+          "check": "decoded_samples_exact",
+          "status": "PASS"
+        },
+        {
+          "check": "duration_exact",
+          "status": "PASS"
+        },
+        {
+          "check": "integrated_loudness",
+          "status": "PASS"
+        },
+        {
+          "check": "true_peak",
+          "status": "PASS"
+        },
+        {
+          "check": "stereo_48khz",
+          "status": "PASS"
+        },
+        {
+          "check": "no_clipping",
+          "status": "PASS"
+        },
+        {
+          "check": "finite_samples",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "choice": "4",
+      "id": "t4_music_439622",
+      "pixabay_id": 439622,
+      "title": "Afrobeat Afro Beat",
+      "artist": "SigmaMusicArt",
+      "source_sha256": "0355d7d2dd2cbf8ace19d3c473a5f0fa48b4341a4904e3c0974d670f59fffa40",
+      "derivative": {
+        "file": "audio/music/t4-afrobeat-v1/t4_439622_sigmamusicart_30s.mp3",
+        "sha256": "03ac453e294323a70c5df26628f4cebb75d2fbf9047226dfb63f6488ff3c390a",
+        "bytes": 721196,
+        "decoded_samples": 1440000,
+        "decoded_duration_s": 30.0,
+        "container_duration_s": 30.024,
+        "sample_rate_hz": 48000,
+        "channels": 2,
+        "integrated_lufs": -17.3,
+        "true_peak_dbtp": -2.26,
+        "sample_peak_dbfs": -2.295,
+        "clipped_sample_count": 0,
+        "nan_count": 0,
+        "inf_count": 0
+      },
+      "checks": [
+        {
+          "check": "decoded_samples_exact",
+          "status": "PASS"
+        },
+        {
+          "check": "duration_exact",
+          "status": "PASS"
+        },
+        {
+          "check": "integrated_loudness",
+          "status": "PASS"
+        },
+        {
+          "check": "true_peak",
+          "status": "PASS"
+        },
+        {
+          "check": "stereo_48khz",
+          "status": "PASS"
+        },
+        {
+          "check": "no_clipping",
+          "status": "PASS"
+        },
+        {
+          "check": "finite_samples",
+          "status": "PASS"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "passed": 28,
+    "failed": 0
+  }
+}

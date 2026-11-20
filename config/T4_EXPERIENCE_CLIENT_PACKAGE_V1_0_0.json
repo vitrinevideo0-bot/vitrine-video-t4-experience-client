@@ -1,0 +1,93 @@
+{
+  "$schema": "../schemas/T4_template_package.schema.json",
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "version": "1.0.0",
+  "display_name": "Expérience client",
+  "sector": "RESTAURATION",
+  "catalog_status": "IMPLEMENTED_PENDING_SERVER_COMPLETE_RENDER",
+  "audio_profile": "afrobeat",
+  "purpose": "Valoriser un accueil réel, le service, une dégustation consentie puis l'ambiance et le contact du restaurant.",
+  "format": {
+    "width": 720,
+    "height": 1280,
+    "orientation": "portrait",
+    "fps": 30,
+    "frames": 900,
+    "duration_s": 30.0,
+    "scene_durations_s": [6, 8, 7, 9],
+    "video_codec": "h264",
+    "pixel_format": "yuv420p",
+    "delivery_audio": "aac_stereo_48000_hz_192_kbps"
+  },
+  "merchant_payload": {
+    "contract": "form/questions_T4.json",
+    "keys": ["nom", "produit", "prix", "whatsapp", "quartier", "accroche"],
+    "required_keys": ["nom", "produit", "prix", "whatsapp", "quartier"],
+    "optional_keys": ["accroche"],
+    "invented_content_forbidden": true
+  },
+  "capture": {
+    "guide": "capture-guide/consignes_T4.json",
+    "flow": "config/T4_CAPTURE_FLOW_V1_0_0.json",
+    "stable_screen_count": 12,
+    "simulation": "simulation/T4_12_ECRANS_EXECUTABLE.html",
+    "durations_s": [6, 8, 7, 9],
+    "captured_voice_optional": true,
+    "source_speed": 1.0
+  },
+  "creative_contracts": {
+    "visual_template": "config/T4_EXPERIENCE_CLIENT_TEMPLATE_V3_0_0.json",
+    "transitions": "reverse-engineering/T4_TRANSITIONS_HYBRIDES_30S_V3.json",
+    "transition_policy": "effects_only_around_three_rush_changes",
+    "final_s4_stable_tail_s": 3.0,
+    "music_pack": "config/T4_MUSIC_PACK_V1_0_0.json",
+    "voice_candidates": "audio/voice/t4-voice-candidates-v1/manifest.json",
+    "voice_candidate_approval": "approvals/APPROBATION_VOIX_B_T4_2026-11-20.json",
+    "voice_mix": "config/T4_VOICE_MIX_V1_0_0.json"
+  },
+  "runtime_contracts": {
+    "adapter": "adapter/t4_adapter.py",
+    "render_job_schema": "schemas/T4_render_job.schema.json",
+    "render_result_schema": "schemas/T4_render_result.schema.json",
+    "render_error_schema": "schemas/T4_render_error.schema.json",
+    "music_selection_state_schema": "schemas/T4_music_selection_state.schema.json",
+    "cloudflare_worker": "cloudflare/src/index.ts",
+    "cloudflare_rendering_forbidden": true,
+    "production_render_plane": "github_actions",
+    "workflow": ".github/workflows/render-complete.yml"
+  },
+  "approved_visual_reference": {
+    "commit": "3e03a709154ef4f9bf941c29e0e7f202c1cc8757",
+    "github_run_id": "44686336980",
+    "release_tag": "t4-experience-client-v3.0.0-hybrid-candidate-3",
+    "file_sha256": "5acd4eb958c1ec00a663066d57b39bbb43e61f39dbd9c1403db458b5e34bed9a",
+    "video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "owner_approved": true
+  },
+  "complete_audio": {
+    "voice_candidate": "VOIX-B",
+    "voice_id": "voice-07",
+    "voice_stem_sha256": "74ec6378ba0b724631793c02c2d3f0308913c1790f6606784e587ccd2e34a759",
+    "music_variant_count": 4,
+    "one_music_per_video": true,
+    "no_immediate_repeat": true,
+    "state_commit_policy": "after_completed_qc_pass_and_verified_output_only",
+    "github_production_master_status": "pending"
+  },
+  "catalogue_preparation": {
+    "package_spec": "packages/t4-experience-client-v1/package_spec.json",
+    "deterministic_integrator_zip_required": true,
+    "offline_reconstruction_required": true,
+    "cloudflare_code_added": true,
+    "cloudflare_deployed": false,
+    "ota_implemented": false,
+    "android_integration_implemented": false
+  },
+  "known_protocol_deviations": [
+    "complete_github_production_render_pending",
+    "downloaded_additive_release_revalidation_pending",
+    "deterministic_integrator_package_pending",
+    "common_gallery_push_blocked_by_read_only_permission"
+  ]
+}

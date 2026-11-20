@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "status": "FAILED",
+  "job_id": "t4-complete-fixture-0001",
+  "code": "T4_UNSUPPORTED_MEDIA",
+  "message": "Le média fourni ne respecte pas le contrat T4.",
+  "retryable": false,
+  "stage": "VALIDATE_INPUT",
+  "details": {
+    "fixture": true
+  }
+}

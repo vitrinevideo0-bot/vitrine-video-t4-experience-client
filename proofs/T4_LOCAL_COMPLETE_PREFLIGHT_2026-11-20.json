@@ -1,0 +1,140 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "status": "PASS",
+  "scope": "local_preflight_before_GitHub_production_render",
+  "created_on": "2026-11-20",
+  "production_delivery": false,
+  "cloudflare_production_deployment": false,
+  "warning": "This proof records local preflight only. The authoritative complete master must be produced by GitHub Actions.",
+  "approved_visual": {
+    "mode": "approved_master_stream_copy",
+    "source_role": "approved_render_source",
+    "input_file": "VIDEO_T4_EXPERIENCE_CLIENT_TRANSITIONS_HYBRIDES_V3_A_VALIDER.mp4",
+    "input_file_sha256": "5acd4eb958c1ec00a663066d57b39bbb43e61f39dbd9c1403db458b5e34bed9a",
+    "input_video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "output_video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "approved_reference_file_sha256": "5acd4eb958c1ec00a663066d57b39bbb43e61f39dbd9c1403db458b5e34bed9a",
+    "approved_reference_video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "approved_reference_exact": true,
+    "audio_mux_bitstream_copy": true
+  },
+  "selection": {
+    "id": "t4_music_153058",
+    "choice": "2",
+    "pixabay_id": 153058,
+    "title": "The Afrobeat",
+    "artist": "FASSounds",
+    "file": "audio/music/t4-afrobeat-v1/t4_153058_fassounds_30s.mp3",
+    "sha256": "23345911198a1a53cc6f74926fce817cf6abe41d403c7d38a16a8ef1f8b1d7fb",
+    "source_sha256": "61d28ee2429bcfec1678a4abb0d78da89ad836b8e51ae946816eb05bf71ff8e8",
+    "content_id_registered": true,
+    "last_successful_music_id": null,
+    "state_update_policy": "after_completed_qc_pass_only"
+  },
+  "voice": {
+    "candidate": "VOIX-B",
+    "voice_id": "voice-07",
+    "stem_file": "audio/voice/t4-voice-v1/t4_voice_stem_30s.wav",
+    "stem_sha256": "74ec6378ba0b724631793c02c2d3f0308913c1790f6606784e587ccd2e34a759",
+    "placements": [
+      {
+        "scene": 1,
+        "start_s": 1.2,
+        "end_s": 4.090896,
+        "text": "Bienvenue à La Table de Kandi, près du marché central."
+      },
+      {
+        "scene": 2,
+        "start_s": 6.8,
+        "end_s": 11.188583,
+        "text": "Découvrez notre poulet braisé et alloco, à trois mille cinq cents francs CFA."
+      },
+      {
+        "scene": 3,
+        "start_s": 14.7,
+        "end_s": 19.471708,
+        "text": "Une bouchée, un sourire : bien accueillis, bien servis."
+      },
+      {
+        "scene": 4,
+        "start_s": 21.8,
+        "end_s": 25.039188,
+        "text": "Retrouvez-nous à Kandi, ou commandez directement sur WhatsApp."
+      }
+    ]
+  },
+  "master_wav": {
+    "sha256": "a0da2a0adb1613c28b6316cbe6310c3cb907965ff49b61259cf45dbf6e643597",
+    "duration_samples": 1440000,
+    "integrated_lufs": -16.16,
+    "true_peak_dbtp": -1.99,
+    "clipped_sample_count": 0,
+    "nan_count": 0,
+    "inf_count": 0
+  },
+  "final_video": {
+    "file": "VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4",
+    "sha256": "8d5171c1c674af6e63082a3721585383699ad238fd8eb899f80656691aae4ca7",
+    "bytes": 12129263,
+    "duration_s": 30.0,
+    "frames": 900,
+    "width": 720,
+    "height": 1280,
+    "fps": "30/1",
+    "video_codec": "h264",
+    "pixel_format": "yuv420p",
+    "audio_codec": "aac",
+    "audio_sample_rate": 48000,
+    "audio_channels": 2,
+    "integrated_lufs": -16.21,
+    "true_peak_dbtp": -1.94,
+    "clipped_sample_count": 0
+  },
+  "intelligibility": {
+    "method": "20 ms frames; active voice above -38 dBFS; pre-master stems",
+    "active_speech_s": 11.3,
+    "aggregate_speech_to_music_db": 11.09,
+    "median_speech_to_music_db": 9.59,
+    "p10_speech_to_music_db": -1.13,
+    "scenes": [
+      {
+        "scene": 1,
+        "active_speech_s": 2.36,
+        "median_speech_to_music_db": 11.46,
+        "p10_speech_to_music_db": -1.77
+      },
+      {
+        "scene": 2,
+        "active_speech_s": 3.2,
+        "median_speech_to_music_db": 9.81,
+        "p10_speech_to_music_db": -2.55
+      },
+      {
+        "scene": 3,
+        "active_speech_s": 3.22,
+        "median_speech_to_music_db": 9.17,
+        "p10_speech_to_music_db": -0.52
+      },
+      {
+        "scene": 4,
+        "active_speech_s": 2.52,
+        "median_speech_to_music_db": 9.25,
+        "p10_speech_to_music_db": -0.5
+      }
+    ]
+  },
+  "render_checks": {
+    "passed": 26,
+    "failed": 0,
+    "total": 26
+  },
+  "render_report_sha256": "993993f5c4d098f712daf3740abdbdc5029a23671e24d81588976d47e80463bf",
+  "render_result_sha256": "496f9c0c85b3adb05e67f3037ffee252fa26497eebbdf398bc4f6da5504f9e3f",
+  "repository_tests": {
+    "pytest": "35 PASS",
+    "cloudflare_typescript": "PASS",
+    "wrangler_dry_run": "PASS",
+    "cloudflare_black_box_integration": "PASS"
+  }
+}

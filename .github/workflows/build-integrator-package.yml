@@ -1,0 +1,116 @@
+name: Paquet intégrateur déterministe T4
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_release:
+        description: Publier une Release additive du paquet validé
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: t4-integrator-package-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-validate-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22.12.0'
+          cache: npm
+          cache-dependency-path: cloudflare/package-lock.json
+
+      - name: Installer les dépendances verrouillées
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          python -m pip install -r requirements.txt
+          npm ci --prefix cloudflare
+
+      - name: Vérifier que le master complet GitHub est verrouillé
+        run: |
+          python - <<'PY'
+          import json
+          spec=json.load(open('packages/t4-experience-client-v1/package_spec.json'))
+          assert spec['status']=='source_spec_ready_for_deterministic_build', spec['status']
+          golden=spec['external_complete_master']
+          assert golden['status']=='locked_from_additive_release'
+          assert golden['source_release_tag'] and golden['sha256'] and golden['bytes']
+          print('T4_PACKAGE_SPEC_READY',golden['source_release_tag'],golden['sha256'])
+          PY
+
+      - name: Télécharger le master complet depuis la Release additive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/t4-golden
+          TAG=$(jq -r '.external_complete_master.source_release_tag' packages/t4-experience-client-v1/package_spec.json)
+          FILE=$(jq -r '.external_complete_master.source_filename' packages/t4-experience-client-v1/package_spec.json)
+          gh release download "$TAG" --pattern "$FILE" --dir /tmp/t4-golden
+          EXPECTED=$(jq -r '.external_complete_master.sha256' packages/t4-experience-client-v1/package_spec.json)
+          echo "$EXPECTED  /tmp/t4-golden/$FILE" | sha256sum -c -
+          echo "T4_GOLDEN_MASTER=/tmp/t4-golden/$FILE" >> "$GITHUB_ENV"
+
+      - name: Tester le dépôt et le Worker sans déploiement
+        run: |
+          pytest -q
+          python tools/build_t4_cloudflare_contracts.py --check
+          npm test --prefix cloudflare
+
+      - name: Construire deux fois et prouver le ZIP déterministe
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/t4-package-a /tmp/t4-package-b package-release
+          python tools/build_t4_integrator_package.py --golden-master "$T4_GOLDEN_MASTER" --output-dir /tmp/t4-package-a
+          python tools/build_t4_integrator_package.py --golden-master "$T4_GOLDEN_MASTER" --output-dir /tmp/t4-package-b
+          ZIP=$(jq -r '.package_id' packages/t4-experience-client-v1/package_spec.json).zip
+          cmp "/tmp/t4-package-a/$ZIP" "/tmp/t4-package-b/$ZIP"
+          test "$(sha256sum "/tmp/t4-package-a/$ZIP" | cut -d' ' -f1)" = "$(sha256sum "/tmp/t4-package-b/$ZIP" | cut -d' ' -f1)"
+          mkdir package-release
+          cp "/tmp/t4-package-a/$ZIP" package-release/
+          cp /tmp/t4-package-a/T4_INTEGRATOR_PACKAGE_BUILD_REPORT.json package-release/
+          cp /tmp/t4-package-a/SHA256SUMS.txt package-release/BUILD_SHA256SUMS.txt
+          python tools/validate_t4_integrator_package.py \
+            --zip "package-release/$ZIP" \
+            --proof package-release/T4_INTEGRATOR_PACKAGE_CLEAN_EXTRACTION_PROOF.json
+          (cd package-release && find . -maxdepth 1 -type f ! -name SHA256SUMS.txt -printf '%f\n' | sort | xargs sha256sum > SHA256SUMS.txt)
+
+      - name: Publier l’artefact du paquet
+        uses: actions/upload-artifact@v4
+        with:
+          name: T4-integrator-package-${{ github.run_id }}
+          path: package-release/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publier une Release additive du paquet
+        if: inputs.publish_release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          TAG="t4-experience-client-integrator-v1.0.0-${GITHUB_RUN_NUMBER}"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "La Release $TAG existe déjà : refus de l’écraser." >&2
+            exit 1
+          fi
+          gh release create "$TAG" package-release/* \
+            --target "$GITHUB_SHA" \
+            --title "T4 Expérience client — paquet intégrateur v1.0.0 #${GITHUB_RUN_NUMBER}" \
+            --notes "Paquet déterministe validé après extraction propre. Cloudflare est préparé et testé localement, mais non déployé en production." \
+            --prerelease

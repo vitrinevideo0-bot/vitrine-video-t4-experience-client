@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/raw/main/schemas/T4_voice_candidates.schema.json",
+  "title": "RESTAURATION-T4 comparable voice candidates",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "id", "template_id", "status", "created_on", "provider", "language", "requested_identity", "audition_text", "same_text_for_all", "candidate_count", "normalization", "candidates", "owner_gate"],
+  "properties": {
+    "$schema": { "const": "../../../schemas/T4_voice_candidates.schema.json" },
+    "schema_version": { "const": "1.0.0" },
+    "id": { "const": "t4_voice_candidates_v1_0_0" },
+    "template_id": { "const": "RESTAURATION-T4" },
+    "status": { "const": "owner_selected" },
+    "created_on": { "const": "2026-11-20" },
+    "provider": { "type": "string", "minLength": 1 },
+    "language": { "const": "fr" },
+    "requested_identity": { "const": "masculine advertising" },
+    "audition_text": { "type": "string", "minLength": 100 },
+    "same_text_for_all": { "const": true },
+    "candidate_count": { "const": 4 },
+    "normalization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sample_rate_hz", "channels", "target_integrated_lufs", "integrated_lufs_tolerance", "true_peak_dbtp_max", "retiming_forbidden"],
+      "properties": {
+        "sample_rate_hz": { "const": 48000 },
+        "channels": { "const": 1 },
+        "target_integrated_lufs": { "const": -20.0 },
+        "integrated_lufs_tolerance": { "maximum": 0.15 },
+        "true_peak_dbtp_max": { "const": -3.0 },
+        "retiming_forbidden": { "const": true }
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        { "$ref": "#/$defs/candidateA" },
+        { "$ref": "#/$defs/candidateB" },
+        { "$ref": "#/$defs/candidateC" },
+        { "$ref": "#/$defs/candidateD" }
+      ],
+      "items": false
+    },
+    "owner_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "selected_candidate", "selected_internal_voice_id", "decided_on", "decision_channel", "question_id", "approval_record", "silence_is_approval"],
+      "properties": {
+        "decision": { "const": "selected" },
+        "selected_candidate": { "const": "VOIX-B" },
+        "selected_internal_voice_id": { "const": "voice-07" },
+        "decided_on": { "const": "2026-11-20" },
+        "decision_channel": { "const": "arena_ask_user" },
+        "question_id": { "type": "string", "minLength": 1 },
+        "approval_record": { "const": "approvals/APPROBATION_VOIX_B_T4_2026-11-20.json" },
+        "silence_is_approval": { "const": false }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate", "internal_voice_id", "origin_note", "source_file", "source_sha256", "listening_file", "listening_sha256", "duration_seconds", "sample_rate_hz", "channels", "integrated_lufs", "true_peak_dbtp", "retimed"],
+      "properties": {
+        "candidate": { "enum": ["VOIX-A", "VOIX-B", "VOIX-C", "VOIX-D"] },
+        "internal_voice_id": { "pattern": "^voice-[0-9]+$" },
+        "origin_note": { "type": "string", "minLength": 1 },
+        "source_file": { "type": "string", "pattern": "^source/T4_VOIX_[A-D]\\.mp3$" },
+        "source_sha256": { "$ref": "#/$defs/sha256" },
+        "listening_file": { "type": "string", "pattern": "^normalized/T4_VOIX_[A-D]\\.wav$" },
+        "listening_sha256": { "$ref": "#/$defs/sha256" },
+        "duration_seconds": { "type": "number", "exclusiveMinimum": 0 },
+        "sample_rate_hz": { "const": 48000 },
+        "channels": { "const": 1 },
+        "integrated_lufs": { "type": "number", "minimum": -20.15, "maximum": -19.85 },
+        "true_peak_dbtp": { "type": "number", "maximum": -3.0 },
+        "retimed": { "const": false }
+      }
+    },
+    "candidateA": { "allOf": [{ "$ref": "#/$defs/candidate" }, { "properties": { "candidate": { "const": "VOIX-A" }, "internal_voice_id": { "const": "voice-06" } } }] },
+    "candidateB": { "allOf": [{ "$ref": "#/$defs/candidate" }, { "properties": { "candidate": { "const": "VOIX-B" }, "internal_voice_id": { "const": "voice-07" } } }] },
+    "candidateC": { "allOf": [{ "$ref": "#/$defs/candidate" }, { "properties": { "candidate": { "const": "VOIX-C" }, "internal_voice_id": { "const": "voice-08" } } }] },
+    "candidateD": { "allOf": [{ "$ref": "#/$defs/candidate" }, { "properties": { "candidate": { "const": "VOIX-D" }, "internal_voice_id": { "const": "voice-09" } } }] }
+  }
+}

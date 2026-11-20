@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/raw/main/schemas/T4_render_result.schema.json",
+  "title": "RESTAURATION-T4 RenderResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "job_id", "idempotency_key", "template_id", "template_version", "profile_used", "control_plane", "output", "quality", "inputs", "music_state_commit_allowed"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "status": { "const": "COMPLETED" },
+    "job_id": { "$ref": "#/$defs/id" },
+    "idempotency_key": { "$ref": "#/$defs/id" },
+    "template_id": { "const": "RESTAURATION-T4" },
+    "template_version": { "const": "4.0.0-complete-audio" },
+    "profile_used": { "const": "T4_GITHUB_ACTIONS_COMPLETE_V1" },
+    "control_plane": { "enum": ["github_actions_manual", "cloudflare_worker"] },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["uri", "file", "sha256", "bytes"],
+      "properties": {
+        "uri": { "type": "string", "pattern": "^output/runtime/.+\\.mp4$" },
+        "file": { "const": "VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "report", "passed", "total"],
+      "properties": {
+        "status": { "const": "PASS" },
+        "report": { "const": "T4_COMPLETE_RENDER_REPORT.json" },
+        "passed": { "type": "integer", "minimum": 1 },
+        "total": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["music_source_sha256", "music_derivative_sha256", "voice_stem_sha256", "visual_video_bitstream_sha256", "approved_visual_reference_bitstream_sha256", "capture_sha256"],
+      "properties": {
+        "music_source_sha256": { "$ref": "#/$defs/sha256" },
+        "music_derivative_sha256": { "$ref": "#/$defs/sha256" },
+        "voice_stem_sha256": { "$ref": "#/$defs/sha256" },
+        "visual_video_bitstream_sha256": { "$ref": "#/$defs/sha256" },
+        "approved_visual_reference_bitstream_sha256": { "$ref": "#/$defs/sha256" },
+        "capture_sha256": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "S1": { "$ref": "#/$defs/sha256" },
+            "S2": { "$ref": "#/$defs/sha256" },
+            "S3": { "$ref": "#/$defs/sha256" },
+            "S4": { "$ref": "#/$defs/sha256" }
+          }
+        }
+      }
+    },
+    "music_state_commit_allowed": { "const": true }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "control_plane": { "const": "cloudflare_worker" } } },
+      "then": { "properties": { "inputs": { "properties": { "capture_sha256": { "required": ["S1", "S2", "S3", "S4"] } } } } }
+    }
+  ],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]{7,127}$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

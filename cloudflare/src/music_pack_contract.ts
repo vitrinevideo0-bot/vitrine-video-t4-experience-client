@@ -1,0 +1,258 @@
+// Generated from config/T4_MUSIC_PACK_V1_0_0.json; do not edit by hand.
+export const MUSIC_PACK_CONTRACT = {
+  "$schema": "../schemas/T4_music_pack.schema.json",
+  "schema_version": "1.0.0",
+  "id": "restauration_T4_afrobeat_music_v1_0_0",
+  "template_id": "RESTAURATION-T4",
+  "audio_profile": "afrobeat",
+  "display_name": "T4 — quatre musiques Afrobeat approuvées",
+  "status": "release_ready_all_four_tracks",
+  "approved_on": "2026-11-20",
+  "owner_approved_order": [
+    {
+      "choice": "1",
+      "artist": "ARPMedia",
+      "pixabay_id": 569473
+    },
+    {
+      "choice": "2",
+      "artist": "FASSounds",
+      "pixabay_id": 153058
+    },
+    {
+      "choice": "3",
+      "artist": "alex-morgan",
+      "pixabay_id": 573648
+    },
+    {
+      "choice": "4",
+      "artist": "SigmaMusicArt",
+      "pixabay_id": 439622
+    }
+  ],
+  "selection_contract": {
+    "variant_count": 4,
+    "owner_approved_variant_ids": [
+      "t4_music_569473",
+      "t4_music_153058",
+      "t4_music_573648",
+      "t4_music_439622"
+    ],
+    "default_request": "auto",
+    "automatic_algorithm": "sha256(render_job_id) modulo eligible variants excluding last_successful_music_id",
+    "no_immediate_repeat": true,
+    "explicit_repeat_policy": "reject",
+    "first_render_pool_size": 4,
+    "subsequent_pool_size": 3,
+    "state_key": "last_successful_music_id",
+    "state_update_policy": "after_completed_qc_pass_only",
+    "failed_render_state_policy": "unchanged",
+    "idempotent_success_callback": true,
+    "persistent_state_schema": "schemas/T4_music_selection_state.schema.json",
+    "cloudflare_state_object": "music/t4-last-success.json",
+    "network_required_for_render": false
+  },
+  "timeline": {
+    "duration_s": 30.0,
+    "frames": 900,
+    "fps": 30,
+    "scene_markers_s": [
+      0,
+      6,
+      14,
+      21,
+      30
+    ],
+    "scene_durations_s": [
+      6,
+      8,
+      7,
+      9
+    ]
+  },
+  "mix_contract": {
+    "music_open_gain_db": -3.0,
+    "music_under_voice_gain_db": -10.0,
+    "duck_depth_db": -7.0,
+    "duck_attack_ms": 120,
+    "duck_release_ms": 450,
+    "duck_attack_curve": "linear_db",
+    "duck_release_curve": "linear_db",
+    "master_target_lufs": -16.0,
+    "master_true_peak_dbtp_max": -2.0,
+    "sfx": "none"
+  },
+  "license_contract": {
+    "license": "Pixabay Content License",
+    "license_url": "https://pixabay.com/service/license-summary/",
+    "official_download_only": true,
+    "standalone_redistribution_forbidden": true,
+    "original_full_tracks_bundled": false,
+    "adapted_30s_derivatives_bundled_for_video_build": true,
+    "content_id_track_count": 4,
+    "content_id_disclosure_required": true,
+    "claim_management_required": true,
+    "source_manifest": "audio/music/t4-afrobeat-v1/source_manifest.json",
+    "provenance_certificate": "audio/music/t4-afrobeat-v1/evidence/T4_MUSIC_PROVENANCE_CERTIFICATE.json"
+  },
+  "tracks": [
+    {
+      "id": "t4_music_569473",
+      "choice": "1",
+      "pixabay_id": 569473,
+      "title": "Afrobeat Afro Beat",
+      "artist": "ARPMedia",
+      "file": "audio/music/t4-afrobeat-v1/t4_569473_arpmedia_30s.mp3",
+      "sha256": "1af1bf8abe20b1f340d8c1d518ef45912dac20cbd92b0ea9bdb380272aebc524",
+      "bytes": 721196,
+      "duration_s": 30.0,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "integrated_lufs": -17.67,
+      "true_peak_dbtp": -3.32,
+      "official_page": "https://pixabay.com/music/afrobeat-afrobeat-afro-beat-569473/",
+      "license": "https://pixabay.com/service/license-summary/",
+      "content_id_registered": true,
+      "claim_management_required": true,
+      "ai_generated": false,
+      "audition_approved_by_owner": true,
+      "approval_date": "2026-11-20",
+      "production_eligible": true,
+      "evidence": {
+        "page_html_gzip": "audio/music/t4-afrobeat-v1/evidence/browser/1_569473_arpmedia.html.gz",
+        "page_html_sha256": "1311f4b00380e96b32619362023652600702fb6b42eea2c3f6082bd097758e76",
+        "page_screenshot": "audio/music/t4-afrobeat-v1/evidence/browser/1_569473_arpmedia.png",
+        "page_screenshot_sha256": "2e2c4044132089f9417e47310f1f16e42c80973dfd1c871295d1833cc7b1a87d",
+        "captured_on": "2026-11-20",
+        "public_page_http_status": 200,
+        "license_label_on_page": "Free for use under the Pixabay Content License",
+        "official_account_download_certificate_archived": false,
+        "official_account_download_certificate_note": "Anonymous public download; no authenticated Pixabay account certificate was issued."
+      },
+      "source_sha256": "8cc3ae6499844eeaa75c039a36f325395eee6d3eda52ac03c2bfd2b8f1547f07"
+    },
+    {
+      "id": "t4_music_153058",
+      "choice": "2",
+      "pixabay_id": 153058,
+      "title": "The Afrobeat",
+      "artist": "FASSounds",
+      "file": "audio/music/t4-afrobeat-v1/t4_153058_fassounds_30s.mp3",
+      "sha256": "23345911198a1a53cc6f74926fce817cf6abe41d403c7d38a16a8ef1f8b1d7fb",
+      "bytes": 721196,
+      "duration_s": 30.0,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "integrated_lufs": -17.29,
+      "true_peak_dbtp": -4.51,
+      "official_page": "https://pixabay.com/music/afrobeat-the-afrobeat-153058/",
+      "license": "https://pixabay.com/service/license-summary/",
+      "content_id_registered": true,
+      "claim_management_required": true,
+      "ai_generated": false,
+      "audition_approved_by_owner": true,
+      "approval_date": "2026-11-20",
+      "production_eligible": true,
+      "evidence": {
+        "page_html_gzip": "audio/music/t4-afrobeat-v1/evidence/browser/2_153058_fassounds.html.gz",
+        "page_html_sha256": "5c2ca8c6d1f9de349137d1eea99cd15e99cc9d40e2c0e7822105b27ec4fe39d2",
+        "page_screenshot": "audio/music/t4-afrobeat-v1/evidence/browser/2_153058_fassounds.png",
+        "page_screenshot_sha256": "0bdbfecae01015e2bec09eca1bfbd6a58e510ae6656b0284e9b10cd832bf0eeb",
+        "captured_on": "2026-11-20",
+        "public_page_http_status": 200,
+        "license_label_on_page": "Free for use under the Pixabay Content License",
+        "official_account_download_certificate_archived": false,
+        "official_account_download_certificate_note": "Anonymous public download; no authenticated Pixabay account certificate was issued."
+      },
+      "source_sha256": "61d28ee2429bcfec1678a4abb0d78da89ad836b8e51ae946816eb05bf71ff8e8"
+    },
+    {
+      "id": "t4_music_573648",
+      "choice": "3",
+      "pixabay_id": 573648,
+      "title": "Afrobeat Instrumental Summer Groove",
+      "artist": "alex-morgan",
+      "file": "audio/music/t4-afrobeat-v1/t4_573648_alex-morgan_30s.mp3",
+      "sha256": "103a9cf168ef76cf9592cc5085ad82ee75cb0f5d9cdb3be861650ea012ba7ffe",
+      "bytes": 721196,
+      "duration_s": 30.0,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "integrated_lufs": -17.24,
+      "true_peak_dbtp": -4.57,
+      "official_page": "https://pixabay.com/music/modern-jazz-afrobeat-instrumental-summer-groove-573648/",
+      "license": "https://pixabay.com/service/license-summary/",
+      "content_id_registered": true,
+      "claim_management_required": true,
+      "ai_generated": true,
+      "audition_approved_by_owner": true,
+      "approval_date": "2026-11-20",
+      "production_eligible": true,
+      "evidence": {
+        "page_html_gzip": "audio/music/t4-afrobeat-v1/evidence/browser/3_573648_alex-morgan.html.gz",
+        "page_html_sha256": "232fbd6feb7e779493ca9e55ff0d268455f58ffc0a559440f65d5676b463fa89",
+        "page_screenshot": "audio/music/t4-afrobeat-v1/evidence/browser/3_573648_alex-morgan.png",
+        "page_screenshot_sha256": "166fa13cbf7d645320b4d1d698f5d2b515f732e0a71facf68bf6e9905a1d1868",
+        "captured_on": "2026-11-20",
+        "public_page_http_status": 200,
+        "license_label_on_page": "Free for use under the Pixabay Content License",
+        "official_account_download_certificate_archived": false,
+        "official_account_download_certificate_note": "Anonymous public download; no authenticated Pixabay account certificate was issued."
+      },
+      "source_sha256": "578d21387e1634fd73c67a8c0d1bcadb3e1adba69b27a286d553ecfb1911c55b"
+    },
+    {
+      "id": "t4_music_439622",
+      "choice": "4",
+      "pixabay_id": 439622,
+      "title": "Afrobeat Afro Beat",
+      "artist": "SigmaMusicArt",
+      "file": "audio/music/t4-afrobeat-v1/t4_439622_sigmamusicart_30s.mp3",
+      "sha256": "03ac453e294323a70c5df26628f4cebb75d2fbf9047226dfb63f6488ff3c390a",
+      "bytes": 721196,
+      "duration_s": 30.0,
+      "sample_rate_hz": 48000,
+      "channels": 2,
+      "integrated_lufs": -17.3,
+      "true_peak_dbtp": -2.26,
+      "official_page": "https://pixabay.com/music/afrobeat-afrobeat-afro-beat-439622/",
+      "license": "https://pixabay.com/service/license-summary/",
+      "content_id_registered": true,
+      "claim_management_required": true,
+      "ai_generated": false,
+      "audition_approved_by_owner": true,
+      "approval_date": "2026-11-20",
+      "production_eligible": true,
+      "evidence": {
+        "page_html_gzip": "audio/music/t4-afrobeat-v1/evidence/browser/4_439622_sigmamusicart.html.gz",
+        "page_html_sha256": "06d835f8de9cd8f42a6b4d9caa8b8ca496b3973e4fe89a6e2685d9c3c8044986",
+        "page_screenshot": "audio/music/t4-afrobeat-v1/evidence/browser/4_439622_sigmamusicart.png",
+        "page_screenshot_sha256": "8e4fac4c3aee86da8f636275a1ca95a67a04d3f8caa7ec8d5ae630550150bdeb",
+        "captured_on": "2026-11-20",
+        "public_page_http_status": 200,
+        "license_label_on_page": "Free for use under the Pixabay Content License",
+        "official_account_download_certificate_archived": false,
+        "official_account_download_certificate_note": "Anonymous public download; no authenticated Pixabay account certificate was issued."
+      },
+      "source_sha256": "0355d7d2dd2cbf8ace19d3c473a5f0fa48b4341a4904e3c0974d670f59fffa40"
+    }
+  ],
+  "quality_gate": {
+    "exactly_four_tracks": true,
+    "approved_pixabay_ids": [
+      569473,
+      153058,
+      573648,
+      439622
+    ],
+    "duration_exact_decoded_30s": true,
+    "lufs_acceptance": [
+      -17.7,
+      -16.3
+    ],
+    "true_peak_dbtp_max": -0.7,
+    "qc_all_pass": true,
+    "production_ready_track_count": 4,
+    "content_id_track_count": 4
+  }
+} as const;

@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "template_name": "Expérience client",
+  "updated_on": "2026-11-20",
+  "workflow": {
+    "status_number": 17,
+    "status": "Implementation complete locally; GitHub production render and additive release pending",
+    "completion_percent_claimed": null,
+    "completion_claim_blocked_until_all_server_proofs_pass": true
+  },
+  "owner_decisions": {
+    "visual": "Hybride cinématique",
+    "visual_approved": true,
+    "voice": "VOIX-B",
+    "voice_id": "voice-07",
+    "voice_approved": true,
+    "music_variant_count": 4,
+    "music_genre": "Afrobeat",
+    "music_pool_approved": true
+  },
+  "local_validation": {
+    "silent_master_downloaded_from_official_release": true,
+    "silent_master_file_sha256_verified": true,
+    "silent_master_video_bitstream_sha256_verified": true,
+    "complete_preflight_status": "PASS",
+    "complete_preflight_is_production_delivery": false,
+    "python_tests_passed": 35,
+    "cloudflare_typescript_passed": true,
+    "cloudflare_dry_run_passed": true,
+    "cloudflare_black_box_integration_passed": true
+  },
+  "server_validation": {
+    "complete_github_render_run_id": null,
+    "complete_github_render_passed": false,
+    "downloaded_release_revalidated": false,
+    "integrator_package_run_id": null,
+    "clean_extraction_validated": false
+  },
+  "integration_claims": {
+    "cloudflare_control_plane_prepared": true,
+    "cloudflare_control_plane_tested_locally": true,
+    "cloudflare_deployed": false,
+    "r2_production_bucket_proven": false,
+    "github_repository_dispatch_contract_prepared": true,
+    "android_integrated": false,
+    "ota_implemented": false
+  },
+  "open_gates": [
+    "Commit and push the complete implementation to the T4 GitHub repository.",
+    "Run the complete render workflow on GitHub Actions and revalidate the downloaded additive Release.",
+    "Lock the resulting complete master in the deterministic integrator package and validate a clean extraction.",
+    "The common gallery repository is READ-only for the authenticated account; prepare the gallery update without claiming it was pushed."
+  ]
+}

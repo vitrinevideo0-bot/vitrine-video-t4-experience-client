@@ -32,7 +32,8 @@ Les contrats V1 et V2 restent uniquement comme historique.
 - `form/questions_T4.json` — six questions compatibles T1/T2/T3 ;
 - `capture-guide/consignes_T4.json` — quatre prises 6/8/7/9 s ;
 - `config/T4_CAPTURE_FLOW_V1_0_0.json` — exactement douze écrans A/B/C ;
-- `ui-screens/manifest.json` — douze preuves PNG et leur planche.
+- `ui-screens/manifest.json` — douze preuves PNG et leur planche ;
+- `simulation/T4_12_ECRANS_EXECUTABLE.html` — simulation autonome des six questions et des douze états, générée depuis les deux JSON.
 
 | Scène | Durée | Contenu |
 |---|---:|---|
@@ -58,6 +59,36 @@ Le workflow `.github/workflows/render-silent.yml` :
 
 Les rushes bruts ne sont jamais suivis par Git ni publiés séparément.
 
+## Rendu complet — VOIX-B et quatre musiques Afrobeat
+
+La voix propriétaire est **VOIX-B / `voice-07`**, approuvée dans `approvals/APPROBATION_VOIX_B_T4_2026-11-20.json`. Son stem mono 48 kHz de 30 secondes est verrouillé par le SHA-256 `74ec6378ba0b724631793c02c2d3f0308913c1790f6606784e587ccd2e34a759`.
+
+Le paquet `config/T4_MUSIC_PACK_V1_0_0.json` contient exactement quatre pistes approuvées : ARPMedia, FASSounds, alex-morgan et SigmaMusicArt. Une vidéo n’en utilise qu’une. L’algorithme retire toujours la dernière réussite ; un choix explicite identique est rejeté et un échec ne modifie pas l’état.
+
+Le mix suit le modèle P1/T1 :
+
+- musique à −3 dB hors parole et −10 dB sous parole ;
+- attaque 120 ms, relâchement 450 ms ;
+- cible −16 LUFS, plafond −2 dBTP ;
+- AAC stéréo 48 kHz à 192 kb/s ;
+- contrôle de la marge parole/musique, de l’écrêtage et du flux vidéo.
+
+Le workflow `.github/workflows/render-complete.yml` produit un seul MP4 complet. Pour l’exemplaire approuvé, il retélécharge le master officiel et conserve son flux H.264 bit pour bit avec `-c:v copy`. Les lancements issus du Worker reconstruisent les quatre captures client avec le moteur V3, puis conservent ce nouveau flux pendant le mux audio.
+
+Les quatre pages Pixabay indiquent **Content ID Registered**. Les preuves et le certificat interne de provenance sont archivés, sans prétendre disposer d’un certificat Pixabay authentifié. Les MP3 dérivés ne sont jamais joints séparément aux Releases.
+
+## Plan de contrôle Cloudflare
+
+`cloudflare/src/index.ts` porte les capacités T2 : R2, SHA-256, RenderJob, dispatch GitHub, RenderResult/RenderError, callback validé, stockage du MP4 final et rotation transactionnelle après `COMPLETED` + QC PASS seulement. Cloudflare ne rend pas la vidéo.
+
+Le test d’intégration couvre notamment : rejeu idempotent, échec sans mutation, choix explicite répétitif rejeté et conflit concurrent sur la même prochaine musique. Le détail est dans `docs/T4_COMPLETE_AUDIO_AND_CONTROL_PLANE.md`.
+
+## Contrat catalogue et paquet intégrateur
+
+`config/T4_EXPERIENCE_CLIENT_PACKAGE_V1_0_0.json` aligne T4 sur le niveau architectural T3. `packages/t4-experience-client-v1/package_spec.json`, le constructeur déterministe et le validateur après extraction propre sont présents. Ils refusent encore de construire le ZIP tant que le master complet GitHub et sa Release additive ne sont pas verrouillés par taille et SHA-256.
+
+L’audit `reports/AUDIT_ARCHITECTURE_T3_T4_GALLERY_2026-11-20.md` ne déclare pas 100 % avant ces preuves. La mise à jour de la galerie commune est préparée, mais le compte actif n’y possède actuellement que la permission `READ` ; aucun push galerie n’est revendiqué.
+
 ## Contrôles locaux
 
 ```bash
@@ -65,7 +96,14 @@ python -m pip install -r requirements.txt
 python tools/build_t4_capture_flow.py
 python tools/build_t4_transition_contract.py
 python tools/generate_t4_ui_screens.py
-python -m unittest discover -s tests -v
+python tools/build_t4_simulation.py --output /tmp/T4_12_ECRANS_EXECUTABLE.html
+cmp simulation/T4_12_ECRANS_EXECUTABLE.html /tmp/T4_12_ECRANS_EXECUTABLE.html
+python tools/build_t4_cloudflare_contracts.py --check
+pytest -q
+(cd audio/voice/t4-voice-v1 && sha256sum -c SHA256SUMS.txt)
+(cd audio/music/t4-afrobeat-v1 && sha256sum -c SHA256SUMS.txt)
+npm ci --prefix cloudflare
+npm test --prefix cloudflare
 ```
 
 Préflight vidéo facultatif :

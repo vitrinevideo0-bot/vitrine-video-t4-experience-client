@@ -1,0 +1,20 @@
+name = "t4-experience-client-control-plane"
+main = "src/index.ts"
+compatibility_date = "2026-11-18"
+workers_dev = true
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+
+[vars]
+GITHUB_OWNER = "vitrinevideo0-bot"
+GITHUB_REPO = "vitrine-video-t4-experience-client"
+GITHUB_API_BASE = "https://api.github.com"
+PUBLIC_API_BASE = "https://replace-with-worker-url.example"
+
+[[r2_buckets]]
+binding = "T4_MEDIA"
+bucket_name = "t4-experience-client-media"
+preview_bucket_name = "t4-experience-client-media-preview"

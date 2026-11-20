@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/raw/main/schemas/T4_music_selection_state.schema.json",
+  "title": "RESTAURATION-T4 transactional music rotation state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "last_successful_music_id", "last_successful_render_job_id", "successful_render_count"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "last_successful_music_id": {
+      "type": ["string", "null"],
+      "enum": [null, "t4_music_569473", "t4_music_153058", "t4_music_573648", "t4_music_439622"]
+    },
+    "last_successful_render_job_id": {
+      "type": ["string", "null"],
+      "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]{7,127}$"
+    },
+    "successful_render_count": { "type": "integer", "minimum": 0 }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "last_successful_music_id": { "type": "null" } } },
+      "then": {
+        "properties": {
+          "last_successful_render_job_id": { "type": "null" },
+          "successful_render_count": { "const": 0 }
+        }
+      },
+      "else": { "properties": { "last_successful_render_job_id": { "type": "string" } } }
+    }
+  ]
+}

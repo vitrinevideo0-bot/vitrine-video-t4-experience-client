@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/raw/main/schemas/T4_integrator_package_spec.schema.json",
+  "title": "RESTAURATION-T4 deterministic integrator package specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "package_id", "template_id", "template_version", "status", "include", "external_complete_master", "constraints"],
+  "properties": {
+    "$schema": { "const": "../../schemas/T4_integrator_package_spec.schema.json" },
+    "schema_version": { "const": "1.0.0" },
+    "package_id": { "const": "restauration-t4-experience-client-v1.0.0" },
+    "template_id": { "const": "RESTAURATION-T4" },
+    "template_version": { "const": "1.0.0" },
+    "status": { "enum": ["source_spec_waiting_for_github_complete_master", "source_spec_ready_for_deterministic_build"] },
+    "include": {
+      "type": "array",
+      "minItems": 20,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "role"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1, "not": { "pattern": "(^/|(^|/)\\.\\.(/|$))" } },
+          "role": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "external_complete_master": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "required_in_built_zip", "package_path", "source_release_tag", "source_filename", "sha256", "bytes", "video_bitstream_sha256"],
+      "properties": {
+        "status": { "enum": ["pending_github_render", "locked_from_additive_release"] },
+        "required_in_built_zip": { "const": true },
+        "package_path": { "const": "golden/VIDEO_T4_COMPLETE_V1_0_0.mp4" },
+        "source_release_tag": { "type": ["string", "null"] },
+        "source_filename": { "const": "VIDEO_T4_COMPLETE_VOIX_B_MUSIQUE_ROTATION_V4_A_VALIDER.mp4" },
+        "sha256": { "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }] },
+        "bytes": { "type": ["integer", "null"], "minimum": 1 },
+        "video_bitstream_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["full_pixabay_originals_forbidden", "standalone_music_release_forbidden", "secrets_forbidden", "temporary_paths_forbidden", "node_modules_forbidden", "cloudflare_deployed", "ota_implemented", "deterministic_zip"],
+      "properties": {
+        "full_pixabay_originals_forbidden": { "const": true },
+        "standalone_music_release_forbidden": { "const": true },
+        "secrets_forbidden": { "const": true },
+        "temporary_paths_forbidden": { "const": true },
+        "node_modules_forbidden": { "const": true },
+        "cloudflare_deployed": { "const": false },
+        "ota_implemented": { "const": false },
+        "deterministic_zip": { "const": true }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "source_spec_ready_for_deterministic_build" } } },
+      "then": {
+        "properties": {
+          "external_complete_master": {
+            "properties": {
+              "status": { "const": "locked_from_additive_release" },
+              "source_release_tag": { "type": "string", "minLength": 1 },
+              "sha256": { "$ref": "#/$defs/sha256" },
+              "bytes": { "type": "integer", "minimum": 1 }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": { "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" } }
+}

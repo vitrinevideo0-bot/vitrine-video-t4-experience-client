@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/vitrinevideo0-bot/vitrine-video-t4-experience-client/raw/main/schemas/T4_voice_mix.schema.json",
+  "title": "RESTAURATION-T4 owner-approved voice and mix contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "id", "display_name", "status", "approved_on", "duration_s", "sample_rate_hz", "visual_approved", "music_pack", "voice", "mix_contract", "quality_gates"],
+  "properties": {
+    "$schema": { "const": "../schemas/T4_voice_mix.schema.json" },
+    "schema_version": { "const": "1.0.0" },
+    "id": { "const": "restauration_T4_voice_mix_v1_0_0" },
+    "display_name": { "type": "string", "minLength": 1 },
+    "status": { "const": "owner_approved_voice_mix_contract" },
+    "approved_on": { "$ref": "#/$defs/date" },
+    "duration_s": { "const": 30.0 },
+    "sample_rate_hz": { "const": 48000 },
+    "visual_approved": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commit", "github_run_id", "release_tag", "download_url", "filename", "file_sha256", "video_bitstream_sha256", "video_reencode_forbidden"],
+      "properties": {
+        "commit": { "$ref": "#/$defs/gitSha" },
+        "github_run_id": { "type": "string", "pattern": "^[0-9]+$" },
+        "release_tag": { "const": "t4-experience-client-v3.0.0-hybrid-candidate-3" },
+        "download_url": { "$ref": "#/$defs/https" },
+        "filename": { "type": "string", "pattern": "\\.mp4$" },
+        "file_sha256": { "$ref": "#/$defs/sha256" },
+        "video_bitstream_sha256": { "$ref": "#/$defs/sha256" },
+        "video_reencode_forbidden": { "const": true }
+      }
+    },
+    "music_pack": { "const": "config/T4_MUSIC_PACK_V1_0_0.json" },
+    "voice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "candidate", "voice_id", "approval", "language", "identity", "stem_file", "normalization_target_lufs", "normalization_tolerance_lu", "normalization_true_peak_dbtp_max", "retiming_forbidden", "clips", "stem_sha256", "stem_bytes"],
+      "properties": {
+        "provider": { "type": "string", "minLength": 1 },
+        "candidate": { "const": "VOIX-B" },
+        "voice_id": { "const": "voice-07" },
+        "approval": { "type": "string", "pattern": "^approvals/APPROBATION_VOIX_B_T4_.*\\.json$" },
+        "language": { "const": "fr" },
+        "identity": { "const": "masculine advertising" },
+        "stem_file": { "const": "audio/voice/t4-voice-v1/t4_voice_stem_30s.wav" },
+        "normalization_target_lufs": { "const": -20.0 },
+        "normalization_tolerance_lu": { "type": "number", "minimum": 0, "maximum": 0.2 },
+        "normalization_true_peak_dbtp_max": { "const": -3.0 },
+        "retiming_forbidden": { "const": true },
+        "clips": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "prefixItems": [
+            { "$ref": "#/$defs/clip1" },
+            { "$ref": "#/$defs/clip2" },
+            { "$ref": "#/$defs/clip3" },
+            { "$ref": "#/$defs/clip4" }
+          ],
+          "items": false
+        },
+        "stem_sha256": { "$ref": "#/$defs/sha256" },
+        "stem_bytes": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "mix_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["music_open_gain_db", "music_under_voice_gain_db", "duck_depth_db", "duck_attack_ms", "duck_release_ms", "duck_attack_curve", "duck_release_curve", "voice_gain_db", "sfx", "master_target_lufs", "master_true_peak_dbtp_max", "delivery_audio"],
+      "properties": {
+        "music_open_gain_db": { "const": -3.0 },
+        "music_under_voice_gain_db": { "const": -10.0 },
+        "duck_depth_db": { "const": -7.0 },
+        "duck_attack_ms": { "const": 120 },
+        "duck_release_ms": { "const": 450 },
+        "duck_attack_curve": { "const": "linear_db" },
+        "duck_release_curve": { "const": "linear_db" },
+        "voice_gain_db": { "const": 0.0 },
+        "sfx": { "const": "none" },
+        "master_target_lufs": { "const": -16.0 },
+        "master_true_peak_dbtp_max": { "const": -2.0 },
+        "delivery_audio": { "const": "AAC stereo 48 kHz" }
+      }
+    },
+    "quality_gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exact_music_variant_count", "duration_tolerance_s", "integrated_lufs_min", "integrated_lufs_max", "wav_true_peak_dbtp_max", "aac_true_peak_dbtp_max", "minimum_active_speech_to_music_db", "clipped_sample_count_max", "visual_video_bitstream_must_match", "human_voice_choice_required"],
+      "properties": {
+        "exact_music_variant_count": { "const": 4 },
+        "duration_tolerance_s": { "maximum": 0.001 },
+        "integrated_lufs_min": { "const": -16.5 },
+        "integrated_lufs_max": { "const": -15.5 },
+        "wav_true_peak_dbtp_max": { "const": -1.9 },
+        "aac_true_peak_dbtp_max": { "const": -1.0 },
+        "minimum_active_speech_to_music_db": { "const": 4.0 },
+        "clipped_sample_count_max": { "const": 0 },
+        "visual_video_bitstream_must_match": { "const": true },
+        "human_voice_choice_required": { "const": true }
+      }
+    }
+  },
+  "$defs": {
+    "date": { "type": "string", "format": "date" },
+    "https": { "type": "string", "format": "uri", "pattern": "^https://" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "gitSha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "clip": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scene", "scene_window_s", "start_s", "text", "source", "processed", "source_sha256", "processed_sha256", "duration_s", "end_s"],
+      "properties": {
+        "scene": { "type": "integer", "minimum": 1, "maximum": 4 },
+        "scene_window_s": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "type": "number", "minimum": 0, "maximum": 30 } },
+        "start_s": { "type": "number", "minimum": 0, "maximum": 30 },
+        "text": { "type": "string", "minLength": 1 },
+        "source": { "type": "string", "pattern": "^audio/voice/t4-voice-v1/source/.*\\.mp3$" },
+        "processed": { "type": "string", "pattern": "^audio/voice/t4-voice-v1/processed/.*\\.wav$" },
+        "source_sha256": { "$ref": "#/$defs/sha256" },
+        "processed_sha256": { "$ref": "#/$defs/sha256" },
+        "duration_s": { "type": "number", "exclusiveMinimum": 0 },
+        "end_s": { "type": "number", "exclusiveMinimum": 0, "maximum": 30 }
+      }
+    },
+    "clip1": { "allOf": [{ "$ref": "#/$defs/clip" }, { "properties": { "scene": { "const": 1 }, "scene_window_s": { "const": [0.0, 6.0] }, "start_s": { "const": 1.2 }, "end_s": { "maximum": 6.0 } } }] },
+    "clip2": { "allOf": [{ "$ref": "#/$defs/clip" }, { "properties": { "scene": { "const": 2 }, "scene_window_s": { "const": [6.0, 14.0] }, "start_s": { "const": 6.8 }, "end_s": { "maximum": 14.0 } } }] },
+    "clip3": { "allOf": [{ "$ref": "#/$defs/clip" }, { "properties": { "scene": { "const": 3 }, "scene_window_s": { "const": [14.0, 21.0] }, "start_s": { "const": 14.7 }, "end_s": { "maximum": 21.0 } } }] },
+    "clip4": { "allOf": [{ "$ref": "#/$defs/clip" }, { "properties": { "scene": { "const": 4 }, "scene_window_s": { "const": [21.0, 30.0] }, "start_s": { "const": 21.8 }, "end_s": { "maximum": 27.0 } } }] }
+  }
+}

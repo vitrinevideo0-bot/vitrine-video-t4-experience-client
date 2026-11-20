@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "target_catalogue_repository": "j9028379-hue/vitrine-video-gabarits",
+  "target_template_path": "templates/restauration/restauration-t4",
+  "source_repository": "vitrinevideo0-bot/vitrine-video-t4-experience-client",
+  "source_branch": "main",
+  "source_commit": null,
+  "canonical_contract": "config/T4_EXPERIENCE_CLIENT_PACKAGE_V1_0_0.json",
+  "integrator_package_spec": "packages/t4-experience-client-v1/package_spec.json",
+  "required_gallery_updates": [
+    "Replace the obsolete À DÉVELOPPER status with the independently proven T4 status.",
+    "Link six questions, twelve executable screens, approved visual, VOIX-B, four-track music pack and complete render proof.",
+    "Link the deterministic integrator ZIP only after clean-extraction validation passes.",
+    "Keep cloudflare_deployed=false until a production endpoint, account and R2 bucket are proven."
+  ],
+  "authenticated_account": "vitrinevideo0-bot",
+  "target_repository_permission_observed": "READ",
+  "gallery_push_completed": false,
+  "gallery_push_blocker": "The authenticated account cannot push or open a branch in the common catalogue repository without write permission or an explicitly authorized fork strategy."
+}

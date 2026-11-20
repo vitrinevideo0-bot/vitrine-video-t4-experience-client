@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "control_plane": "cloudflare_worker",
+  "render_plane": "github_actions",
+  "worker_source": "cloudflare/src/index.ts",
+  "wrangler_config": "cloudflare/wrangler.toml",
+  "r2_binding": "T4_MEDIA",
+  "music_state_key": "music/t4-last-success.json",
+  "required_secrets": [
+    "CLIENT_API_TOKEN",
+    "CALLBACK_TOKEN",
+    "GITHUB_TOKEN"
+  ],
+  "required_variables": [
+    "GITHUB_OWNER",
+    "GITHUB_REPO",
+    "GITHUB_API_BASE",
+    "PUBLIC_API_BASE"
+  ],
+  "cloudflare_rendering_forbidden": true,
+  "local_typescript_validation": "PASS",
+  "local_wrangler_dry_run": "PASS",
+  "local_black_box_integration": "PASS",
+  "cloudflare_deployed": false,
+  "production_bucket_proven": false,
+  "production_endpoint": null,
+  "deployment_claim_policy": "Local tests and wrangler dry-run must never be presented as a production deployment."
+}

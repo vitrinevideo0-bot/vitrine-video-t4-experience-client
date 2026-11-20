@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "template_id": "RESTAURATION-T4",
+  "status": "pending_github_complete_master",
+  "visual": {
+    "approved_file_sha256": "5acd4eb958c1ec00a663066d57b39bbb43e61f39dbd9c1403db458b5e34bed9a",
+    "approved_video_bitstream_sha256": "213bf4226341d3770faf18a86610b79e0cec78644c091e6666e96201afd9ede0",
+    "transition_contract_sha256": "7195c92e49c23dc7f57ee3a801b6e74f9aa098d6664eeae301b1459f577da164",
+    "scene_durations_s": [
+      6,
+      8,
+      7,
+      9
+    ],
+    "final_s4_stable_tail_s": 3.0
+  },
+  "voice": {
+    "candidate": "VOIX-B",
+    "voice_id": "voice-07",
+    "stem_sha256": "74ec6378ba0b724631793c02c2d3f0308913c1790f6606784e587ccd2e34a759",
+    "placements_s": [
+      1.2,
+      6.8,
+      14.7,
+      21.8
+    ]
+  },
+  "music": {
+    "variant_ids": [
+      "t4_music_569473",
+      "t4_music_153058",
+      "t4_music_573648",
+      "t4_music_439622"
+    ],
+    "no_immediate_repeat": true,
+    "state_commit_policy": "after_completed_qc_pass_and_verified_output_only"
+  },
+  "contracts": {
+    "form/questions_T4.json": "50480389d8052daa66c4cd9f4618115fe84f15ceadc458b2545214b1041de251",
+    "config/T4_CAPTURE_FLOW_V1_0_0.json": "228cda066d92efce3ad0caba9962bafa61eb538cc1c9f7060821139d556e13f8",
+    "config/T4_MUSIC_PACK_V1_0_0.json": "16f7957e8dd1fa282523778489c1154b735fa925271956b2a14ce5053e943aa8",
+    "config/T4_VOICE_MIX_V1_0_0.json": "16ccb6ef69effb75f033a149ddbc7cd71f2a85c0b69e66d8ad1178433de66f07",
+    "schemas/T4_render_job.schema.json": "622b59c506b54f2357e3e7f1232b2ff45ad83f648fae33683d26051aadb3f34c",
+    "schemas/T4_render_result.schema.json": "9fadf6a83919136c81f96927f537d5e3d66f6355ce1165508563d4cf5da66b63"
+  },
+  "complete_master": {
+    "github_run_id": null,
+    "release_tag": null,
+    "file_sha256": null,
+    "bytes": null,
+    "status": "pending"
+  }
+}

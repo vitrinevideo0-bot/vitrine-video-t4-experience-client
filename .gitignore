@@ -2,6 +2,11 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .venv/
+node_modules/
+.wrangler/
+.wrangler-dry-run/
+.dev.vars
+.env
 .tmp/
 output/
 release/
